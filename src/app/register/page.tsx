@@ -1,16 +1,14 @@
 "use client";
 import { LoginHeader } from "@/components/LoginHeader";
 import Lottie from "lottie-react";
-import moneyAnimation from "@/lib/lottie/money.json";
+import goldBarAnimation from "@/lib/lottie/goldBar.json";
 import useWindowSize from "@/hooks/useWindowsSize";
-import { useState } from "react";
 import { Eye, EyeSlash } from "phosphor-react";
-import GoogleIcon from '../../../public/googlcon.svg'
-import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react";
 
-export default function Login() {
+export default function Register() {
   const { isMobile } = useWindowSize();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePassword = () => {
@@ -22,22 +20,28 @@ export default function Login() {
       <LoginHeader />
       <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24 mt-[-100px]">
         <Lottie
-          animationData={moneyAnimation}
+          animationData={goldBarAnimation}
           loop={true}
-          style={{ width: isMobile ? 250 : 400, height: isMobile ? 250 : 400 }}
+          style={{ width: isMobile ? 180 : 300, height: isMobile ? 180 : 300 }}
         />
         <div className="flex flex-col gap-6 items-center justify-center md:w-80">
-          <p className="text-3xl text-gray-200 font-bold">Faça Login</p>
+          <p className="text-3xl text-gray-200 font-bold">Cadastre sua conta</p>
           <input
             className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
             type="email"
-            placeholder="Digite seu email"
+            placeholder="Escolha um nome"
+          />
+
+          <input
+            className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+            type="email"
+            placeholder="Escolha seu email"
           />
           <div className="relative w-full">
             <input
               className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
               type={showPassword ? "text" : "password"}
-              placeholder="Digite sua senha"
+              placeholder="Cadastre sua senha"
             />
             {showPassword ? (
               <Eye
@@ -53,14 +57,14 @@ export default function Login() {
               />
             )}
           </div>
-          <button className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold">Entrar</button>
-          <div className="cursor-pointer w-full items-center justify-center rounded-md py-4 bg-white flex gap-4 transition-all ease-in-out duration-300 hover:opacity-70">
-            <Image alt="Google icon" src={GoogleIcon} className="w-6 h-6" />
-            <p className="font-medium text-gray-800">Entrar com a conta Google</p>
-          </div>
-          <p className="font-bold text-lg text-gray-200">
-            Ainda não tem conta? <Link href="/register" className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300">Cadastre-se aqui</Link>
-          </p>
+            <input
+              className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirme sua senha"
+            />
+          <button className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold">
+            Cadastrar-se
+          </button>
         </div>
       </div>
     </div>
