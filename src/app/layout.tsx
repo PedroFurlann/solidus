@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 
-const inter = Roboto({ weight: '400', subsets: ['greek'] })
+const roboto = Roboto({ weight: '400', subsets: ['greek'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={roboto.className}>{children}</body>
     </html>
   )
 }

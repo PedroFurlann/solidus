@@ -6,7 +6,7 @@ export function LoginHeader() {
 
   return (
     <div className="w-full h-24 bg-amber-400 flex items-center justify-center">
-      <Link href="/login">
+      <Link href="/login" className="cursor-pointer">
         <Image alt="Solidus logo" src={Logo} className="w-16 h-16 bg-transparent cursor-pointer" />
       </Link>
     </div>
