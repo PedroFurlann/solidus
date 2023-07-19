@@ -1,17 +1,21 @@
 "use client";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
-import coinStackAnimation from "@/lib/lottie/coinStack.json";
 import useWindowSize from "@/hooks/useWindowsSize";
 import computerAnimation from "@/lib/lottie/computer.json";
 import Link from "next/link";
+import flipCoinAnimation from '@/lib/lottie/flipCoin.json'
+import goldBackground from '../../public/goldBackground.jpg'
 
 export default function Home() {
   const { isMobile } = useWindowSize();
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto md:py-12 md:px-12">
-      <div className="flex justify-center items-center mt-[-100px] mb-0">
+    <div 
+    className="min-h-screen flex flex-col bg-cover bg-no-repeat overflow-y-auto md:py-12 md:px-12" 
+    style={{ backgroundImage: `url(${goldBackground.src})` }}>
+      
+      <div className="flex justify-center items-center">
         <motion.p
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: 1, y: 0 }}
@@ -21,9 +25,9 @@ export default function Home() {
           SOLIDUS
         </motion.p>
         <Lottie
-          animationData={coinStackAnimation}
+          animationData={flipCoinAnimation}
           loop={true}
-          style={{ width: isMobile ? 180 : 300, height: isMobile ? 180 : 300 }}
+          style={{ width: isMobile ? 80 : 100, height: isMobile ? 80 : 100 }}
         />
       </div>
       <div className="flex flex-col justify-center items-center mb-8">
