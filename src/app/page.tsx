@@ -5,15 +5,15 @@ import useWindowSize from "@/hooks/useWindowsSize";
 import computerAnimation from "@/lib/lottie/computer.json";
 import Link from "next/link";
 import flipCoinAnimation from '@/lib/lottie/flipCoin.json'
-import goldBackground from '../../public/goldBackground.jpg'
+import homeBackground from '../../public/homeBackground.jpg'
 
 export default function Home() {
   const { isMobile } = useWindowSize();
 
   return (
     <div 
-    className="min-h-screen flex flex-col bg-cover bg-no-repeat overflow-y-auto md:py-12 md:px-12" 
-    style={{ backgroundImage: `url(${goldBackground.src})` }}>
+    className="min-h-screen flex flex-col bg-cover bg-no-repeat overflow-y-auto md:py-12 md:px-12 pb-6" 
+    style={{ backgroundImage: `url(${homeBackground.src})` }}>
       
       <div className="flex justify-center items-center">
         <motion.p
@@ -64,7 +64,7 @@ export default function Home() {
             funcionalidades como: registar transações, visualizar seus gastos e
             ganhos ao longo do tempo e no final te dar um resumo do seu balanço
             financeiro. Além de contar com um assistente virtual que é capaz de
-            realizar boas dicas e indicações de investimentos condizentes com
+            te auxiliar com excelentes dicas e indicações de investimentos condizentes com
             sua realidade. Não perca tempo e se registre já para usufruir desses
             benefícios!
           </motion.p>
