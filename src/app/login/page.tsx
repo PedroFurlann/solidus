@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { MainHeader } from "@/components/MainHeader";
 
 
 interface FormData {
@@ -44,7 +45,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
-      <LoginHeader />
+      <MainHeader />
       <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
         <Lottie
           animationData={moneyAnimation}

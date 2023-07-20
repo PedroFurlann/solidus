@@ -43,7 +43,7 @@ export default function Home() {
             wordWrap: "break-word",
           }}
         >
-          Solidus, a solução definitiva para sua gestão financeira pessoal.
+          A solução definitiva para sua gestão financeira pessoal.
         </motion.p>
       </div>
       <div className="flex md:flex-row flex-col md:gap-36 gap-6 items-center justify-center">
@@ -62,7 +62,7 @@ export default function Home() {
             A SOLIDUS é a solução perfeita para você que busca controlar de
             forma mais organizada suas finanças. A aplicação conta com
             funcionalidades como: registar transações, visualizar seus gastos e
-            ganhos ao longo do tempo e no final te dar um resumo do seu balanço
+            ganhos ao longo do tempo e ao final gerar um resumo do seu balanço
             financeiro. Além de contar com um assistente virtual que é capaz de
             te auxiliar com excelentes dicas e indicações de investimentos condizentes com
             sua realidade. Não perca tempo e se registre já para usufruir desses
