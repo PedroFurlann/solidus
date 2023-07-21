@@ -45,7 +45,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
-      <MainHeader />
+      <LoginHeader />
       <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
         <Lottie
           animationData={moneyAnimation}
