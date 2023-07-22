@@ -9,8 +9,8 @@ interface Props {
 
 export function TransactionCard({ id, title, amount, type }: Props) {
   return (
-    <div className="w-full h-14 bg-gray-800 px-4 py-4 flex items-center justify-center gap-8 rounded-lg">
-      <p className="text-xl font-extrabold text-gray-200">{title}:</p>
+    <div className="w-full h-14 bg-gray-800 px-4 py-4 flex items-center justify-around gap-8 rounded-lg">
+      <p className="text-lg font-extrabold text-gray-200">{title}</p>
       <div className="flex gap-1">
         <p
           className={`text-lg font-extrabold ${
