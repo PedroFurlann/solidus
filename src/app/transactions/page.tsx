@@ -15,11 +15,11 @@ export default function Transactions() {
             <p className="text-gray-50 font-extrabold">Nova Transação</p>
           </button>
         </div>
-        <div className="w-full flex gap-14 mb-8">
+        <div className="w-full flex lg:flex-row gap-14 mb-8 flex-col">
           <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
             <p className="text-xl font-bold text-gray-200">Total de gastos</p>
-            <div className="flex gap-2 items-center">
-              <p className="text-3xl text-red-500 font-extrabold">
+            <div className="flex gap-1 items-center">
+              <p className="text-2xl text-red-500 font-extrabold">
                 - {priceFormatter.format(2850.54)}
               </p>
               <ArrowDown className="text-red-500" size={36} />
@@ -27,17 +27,17 @@ export default function Transactions() {
           </div>
           <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
             <p className="text-xl font-bold text-gray-200">Balanço final</p>
-            <div className="flex gap-2 items-center">
-              <p className="text-3xl text-red-500 font-extrabold">
+            <div className="flex gap-1 items-center">
+              <p className="text-2xl text-red-500 font-extrabold">
                 - {priceFormatter.format(8002.54)}
               </p>
               <ArrowDown className="text-red-500" size={36} />
             </div>
           </div>
-          <div className="w-full flex flex-col items-center justify-center gap-6 bg-gray-800 rounded-xl">
+          <div className="w-full h-48 flex flex-col items-center justify-center gap-6 bg-gray-800 rounded-xl">
             <p className="text-xl font-bold text-gray-200">Total recebido</p>
-            <div className="flex gap-2 items-center">
-              <p className="text-3xl text-amber-400 font-extrabold">
+            <div className="flex gap-1 items-center">
+              <p className="text-2xl text-amber-400 font-extrabold">
               {priceFormatter.format(2000.54)}
               </p>
               <ArrowUp className="text-amber-500" size={36} />

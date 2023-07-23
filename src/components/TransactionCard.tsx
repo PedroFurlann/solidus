@@ -10,8 +10,8 @@ interface Props {
 
 export function TransactionCard({ id, title, amount, type }: Props) {
   return (
-    <div className="w-full h-14 bg-gray-800 px-8 py-4 flex items-center justify-between rounded-lg">
-      <div className="flex gap-8">
+    <div className="w-full sm:h-14 bg-gray-800 px-8 py-4 sm:flex-row flex-col sm:gap-0 gap-4 h-24 flex items-center sm:justify-between justify-center rounded-lg">
+      <div className="flex sm:gap-8 gap-4">
         <p className="text-lg font-extrabold text-gray-200">{title}</p>
         <div className="flex gap-1">
           <p
