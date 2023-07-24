@@ -3,38 +3,108 @@ import { MainHeader } from "@/components/MainHeader";
 import { TransactionCard } from "@/components/TransactionCard";
 import useWindowSize from "@/hooks/useWindowsSize";
 import { priceFormatter } from "@/utils/priceFormatter";
-import { ArrowDown, ArrowUp } from "phosphor-react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ArrowDown, ArrowUp, X } from "phosphor-react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import Popup from "reactjs-popup";
+import * as yup from "yup";
+
+interface FormData {
+  description: string;
+  amount: number;
+}
 
 export default function Transactions() {
   const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { isMobile } = useWindowSize();
+
+  const validationSchema = yup.object().shape({
+    description: yup
+      .string()
+      .required("A descrição da transação é obrigatória")
+      .email("Digite um e-mail válido"),
+    amount: yup.number().required("Informe um valor válido!").min(1),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(validationSchema),
+  });
+
+  function handleRegisterTransaction({ description, amount }: FormData) {
+    console.log("Description => ", description, "Amount => ", amount);
+  }
+
+  function handleOpenModal() {
+    if (isMobile) {
+      setBottomSheetIsOpen(true);
+    } else {
+      setModalIsOpen(true);
+    }
+  }
+
+  function handleCloseModal() {
+    if (isMobile) {
+      setBottomSheetIsOpen(false);
+    } else {
+      setModalIsOpen(false);
+    }
+  }
 
   function DialogAndBottomSheet({ triggerComponent }: any) {
-    const { isMobile } = useWindowSize();
-
     return !isMobile ? (
-      <Popup
-        modal
-        nested
-        trigger={triggerComponent}
-        overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
-      >
-        <div
-          className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
-          style={{ width: 700, height: 400 }}
+      <>
+        {triggerComponent}
+        <Popup
+          modal
+          nested
+          overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
+          open={modalIsOpen}
         >
-          <p>ola</p>
-        </div>
-      </Popup>
+          <div
+            className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
+            style={{ width: 700, height: 500 }}
+          >
+            <div className="flex items-center justify-between mb-8">
+              <p className="text-gray-200 text-lg font-bold">Nova Transação</p>
+              <X
+                className="text-red-500 cursor-pointer hover:opacity-70 duration-300 ease-in-out transition-all"
+                size={32}
+                onClick={handleCloseModal}
+              />
+            </div>
+            <div className="w-full flex flex-col gap-8">
+              <input
+                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                type="text"
+                placeholder="Descrição da transação"
+                {...register("description")}
+              />
+              {errors.description && (
+                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
+          </div>
+        </Popup>
+      </>
     ) : (
       <>
         {triggerComponent}
         <BottomSheet
           open={bottomSheetIsOpen}
           onDismiss={() => setBottomSheetIsOpen(false)}
-          snapPoints={({ minHeight, maxHeight }) => [minHeight + 70, maxHeight * 0.7]}
+          snapPoints={({ minHeight, maxHeight }) => [
+            minHeight + 70,
+            maxHeight * 0.7,
+          ]}
           header={<h1 style={{ textAlign: "center" }}>Header</h1>}
         >
           <div className="bg-slate-800">
@@ -56,7 +126,7 @@ export default function Transactions() {
           <DialogAndBottomSheet
             triggerComponent={
               <button
-                onClick={() => setBottomSheetIsOpen(true)}
+                onClick={handleOpenModal}
                 className="rounded-lg bg-amber-400 border-none py-4 px-4 cursor-pointer hover:opacity-70 transition-all ease-in-out duration-300"
               >
                 <p className="text-gray-50 font-extrabold">Nova Transação</p>
