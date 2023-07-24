@@ -1,19 +1,68 @@
-"use client"
+"use client";
 import { MainHeader } from "@/components/MainHeader";
 import { TransactionCard } from "@/components/TransactionCard";
+import useWindowSize from "@/hooks/useWindowsSize";
 import { priceFormatter } from "@/utils/priceFormatter";
 import { ArrowDown, ArrowUp } from "phosphor-react";
+import { useState } from "react";
+import { BottomSheet } from "react-spring-bottom-sheet";
+import Popup from "reactjs-popup";
 
 export default function Transactions() {
+  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
+
+  function DialogAndBottomSheet({ triggerComponent }: any) {
+    const { isMobile } = useWindowSize();
+
+    return !isMobile ? (
+      <Popup
+        modal
+        nested
+        trigger={triggerComponent}
+        overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
+      >
+        <div
+          className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
+          style={{ width: 700, height: 400 }}
+        >
+          <p>ola</p>
+        </div>
+      </Popup>
+    ) : (
+      <>
+        {triggerComponent}
+        <BottomSheet
+          open={bottomSheetIsOpen}
+          onDismiss={() => setBottomSheetIsOpen(false)}
+          snapPoints={({ minHeight, maxHeight }) => [minHeight + 70, maxHeight * 0.7]}
+          header={<h1 style={{ textAlign: "center" }}>Header</h1>}
+        >
+          <div className="bg-slate-800">
+            <p>ola</p>
+          </div>
+        </BottomSheet>
+      </>
+    );
+  }
+
   return (
     <>
       <MainHeader chosenPage="Transactions" />
       <div className="md:py-28 py-6 md:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-auto bg-gray-950">
         <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-8">
-          <p className="text-gray-200 font-bold text-2xl text-center">Essas é o resumo de suas transações Pedro</p>
-          <button className="rounded-lg bg-amber-400 border-none py-4 px-4 cursor-pointer hover:opacity-70 transition-all ease-in-out duration-300">
-            <p className="text-gray-50 font-extrabold">Nova Transação</p>
-          </button>
+          <p className="text-gray-200 font-bold text-2xl text-center">
+            Essas é o resumo de suas transações Pedro
+          </p>
+          <DialogAndBottomSheet
+            triggerComponent={
+              <button
+                onClick={() => setBottomSheetIsOpen(true)}
+                className="rounded-lg bg-amber-400 border-none py-4 px-4 cursor-pointer hover:opacity-70 transition-all ease-in-out duration-300"
+              >
+                <p className="text-gray-50 font-extrabold">Nova Transação</p>
+              </button>
+            }
+          />
         </div>
         <div className="w-full flex lg:flex-row gap-14 mb-8 flex-col">
           <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
@@ -38,7 +87,7 @@ export default function Transactions() {
             <p className="text-xl font-bold text-gray-200">Total recebido</p>
             <div className="flex gap-1 items-center">
               <p className="text-2xl text-amber-400 font-extrabold">
-              {priceFormatter.format(2000.54)}
+                {priceFormatter.format(2000.54)}
               </p>
               <ArrowUp className="text-amber-500" size={36} />
             </div>
@@ -55,8 +104,6 @@ export default function Transactions() {
           <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" />
           <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" />
           <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" />
-
-
         </div>
       </div>
     </>
