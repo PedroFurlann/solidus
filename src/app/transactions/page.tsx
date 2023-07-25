@@ -4,7 +4,13 @@ import { TransactionCard } from "@/components/TransactionCard";
 import useWindowSize from "@/hooks/useWindowsSize";
 import { priceFormatter } from "@/utils/priceFormatter";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ArrowCircleDown, ArrowCircleUp, ArrowDown, ArrowUp, X } from "phosphor-react";
+import {
+  ArrowCircleDown,
+  ArrowCircleUp,
+  ArrowDown,
+  ArrowUp,
+  X,
+} from "phosphor-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BottomSheet } from "react-spring-bottom-sheet";
@@ -19,18 +25,20 @@ interface FormData {
 export default function Transactions() {
   const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState("PROFIT")
-  
-  console.log(selectedType)
+  const [selectedType, setSelectedType] = useState("");
+  const [typeEmpty, setTypeEmpty] = useState(false);
 
-  const { isMobile } = useWindowSize();
+  const { isMobile, width } = useWindowSize();
 
   const validationSchema = yup.object().shape({
     description: yup
       .string()
-      .required("A descrição da transação é obrigatória")
-      .email("Digite um e-mail válido"),
-    amount: yup.number().required("Informe um valor válido!").min(1),
+      .required("A descrição da transação é obrigatória"),
+    amount: yup
+      .number()
+      .required("Informe um valor válido!")
+      .nonNullable()
+      .min(1, "O valor deve ser maior que 0"),
   });
 
   const {
@@ -39,10 +47,24 @@ export default function Transactions() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
+    defaultValues: {
+      amount: 0,
+    },
   });
 
   function handleRegisterTransaction({ description, amount }: FormData) {
-    console.log("Description => ", description, "Amount => ", amount);
+    if (selectedType === "") {
+      setTypeEmpty(true);
+      return;
+    }
+    console.log(
+      "Description => ",
+      description,
+      "Amount => ",
+      amount,
+      "Selected type => ",
+      selectedType
+    );
   }
 
   function handleOpenModal() {
@@ -62,7 +84,7 @@ export default function Transactions() {
   }
 
   function DialogAndBottomSheet({ triggerComponent }: any) {
-    return !isMobile ? (
+    return (
       <>
         {triggerComponent}
         <Popup
@@ -73,7 +95,7 @@ export default function Transactions() {
         >
           <div
             className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
-            style={{ width: 700, height: 500 }}
+            style={{ width: width > 768 ? 700 : width > 500 ? 460 : width > 400 ? 380 : 320 }}
           >
             <div className="flex items-center justify-between mb-8">
               <p className="text-gray-200 text-lg font-bold">Nova Transação</p>
@@ -97,8 +119,8 @@ export default function Transactions() {
               )}
               <input
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-                type="number"
-                placeholder="Digite o valor do input"
+                type="text"
+                placeholder="Digite o valor da transação"
                 {...register("amount")}
               />
               {errors.amount && (
@@ -106,36 +128,58 @@ export default function Transactions() {
                   {errors.amount.message}
                 </p>
               )}
-              <div className="flex gap-4">
-                <div onClick={() => setSelectedType("PROFIT")} className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${selectedType === "PROFIT" ? "border-amber-400" : "border-gray-400"}`}>
-                  <p className="text-lg font-bold text-gray-200">Lucro</p>
-                  <ArrowCircleUp size={32} className="text-amber-400" />
-                </div>
-                <div onClick={() => setSelectedType("LOSS")} className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${selectedType === "LOSS" ? "border-red-500" : "border-gray-400"}`}>
+              <div className={`flex gap-4 ${typeEmpty ? "mb-0" : "mb-12"}`}>
+                <div
+                  onClick={() => {
+                    setSelectedType("LOSS");
+                    setTypeEmpty(false);
+                  }}
+                  className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${
+                    selectedType === "LOSS"
+                      ? "border-red-500"
+                      : "border-gray-400"
+                  }`}
+                >
                   <p className="text-lg font-bold text-gray-200">Gasto</p>
                   <ArrowCircleDown size={32} className="text-red-500" />
                 </div>
+                <div
+                  onClick={() => {
+                    setSelectedType("PROFIT");
+                    setTypeEmpty(false);
+                  }}
+                  className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${
+                    selectedType === "PROFIT"
+                      ? "border-amber-400"
+                      : "border-gray-400"
+                  }`}
+                >
+                  <p className="text-lg font-bold text-gray-200">Lucro</p>
+                  <ArrowCircleUp size={32} className="text-amber-400" />
+                </div>
               </div>
+              {typeEmpty && (
+                <p className="text-red-500 text-sm font-bold self-start mb-6">
+                  Selecione o tipo da transação
+                </p>
+              )}
+            </div>
+            <div className="flex items-center justify-between gap-8">
+              <button
+                onClick={handleCloseModal}
+                className="py-4 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-gray-200  text-lg font-bold text-red-500"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleSubmit(handleRegisterTransaction)}
+                className="py-4 hover:bg-amber-400 rounded-lg hover:text-gray-200 w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
+              >
+                Confirmar
+              </button>
             </div>
           </div>
         </Popup>
-      </>
-    ) : (
-      <>
-        {triggerComponent}
-        <BottomSheet
-          open={bottomSheetIsOpen}
-          onDismiss={() => setBottomSheetIsOpen(false)}
-          snapPoints={({ minHeight, maxHeight }) => [
-            minHeight + 70,
-            maxHeight * 0.7,
-          ]}
-          header={<h1 style={{ textAlign: "center" }}>Header</h1>}
-        >
-          <div className="bg-slate-800">
-            <p>ola</p>
-          </div>
-        </BottomSheet>
       </>
     );
   }
@@ -162,29 +206,29 @@ export default function Transactions() {
         <div className="w-full flex lg:flex-row gap-14 mb-8 flex-col">
           <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
             <p className="text-xl font-bold text-gray-200">Total de gastos</p>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-2 items-center">
               <p className="text-2xl text-red-500 font-extrabold">
                 - {priceFormatter.format(2850.54)}
               </p>
-              <ArrowDown className="text-red-500" size={36} />
+              <ArrowCircleDown className="text-red-500" size={36} />
             </div>
           </div>
           <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
             <p className="text-xl font-bold text-gray-200">Balanço final</p>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-2 items-center">
               <p className="text-2xl text-red-500 font-extrabold">
                 - {priceFormatter.format(8002.54)}
               </p>
-              <ArrowDown className="text-red-500" size={36} />
+              <ArrowCircleDown className="text-red-500" size={36} />
             </div>
           </div>
           <div className="w-full h-48 flex flex-col items-center justify-center gap-6 bg-gray-800 rounded-xl">
             <p className="text-xl font-bold text-gray-200">Total recebido</p>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-2 items-center">
               <p className="text-2xl text-amber-400 font-extrabold">
                 {priceFormatter.format(2000.54)}
               </p>
-              <ArrowUp className="text-amber-500" size={36} />
+              <ArrowCircleUp className="text-amber-500" size={36} />
             </div>
           </div>
         </div>
