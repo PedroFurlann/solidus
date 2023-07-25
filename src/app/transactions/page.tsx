@@ -4,7 +4,7 @@ import { TransactionCard } from "@/components/TransactionCard";
 import useWindowSize from "@/hooks/useWindowsSize";
 import { priceFormatter } from "@/utils/priceFormatter";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ArrowDown, ArrowUp, X } from "phosphor-react";
+import { ArrowCircleDown, ArrowCircleUp, ArrowDown, ArrowUp, X } from "phosphor-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BottomSheet } from "react-spring-bottom-sheet";
@@ -19,6 +19,10 @@ interface FormData {
 export default function Transactions() {
   const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState("PROFIT")
+  
+  console.log(selectedType)
+
   const { isMobile } = useWindowSize();
 
   const validationSchema = yup.object().shape({
@@ -91,6 +95,27 @@ export default function Transactions() {
                   {errors.description.message}
                 </p>
               )}
+              <input
+                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                type="number"
+                placeholder="Digite o valor do input"
+                {...register("amount")}
+              />
+              {errors.amount && (
+                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                  {errors.amount.message}
+                </p>
+              )}
+              <div className="flex gap-4">
+                <div onClick={() => setSelectedType("PROFIT")} className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${selectedType === "PROFIT" ? "border-amber-400" : "border-gray-400"}`}>
+                  <p className="text-lg font-bold text-gray-200">Lucro</p>
+                  <ArrowCircleUp size={32} className="text-amber-400" />
+                </div>
+                <div onClick={() => setSelectedType("LOSS")} className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${selectedType === "LOSS" ? "border-red-500" : "border-gray-400"}`}>
+                  <p className="text-lg font-bold text-gray-200">Gasto</p>
+                  <ArrowCircleDown size={32} className="text-red-500" />
+                </div>
+              </div>
             </div>
           </div>
         </Popup>
