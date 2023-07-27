@@ -23,7 +23,6 @@ interface FormData {
 }
 
 export default function Transactions() {
-  const [bottomSheetIsOpen, setBottomSheetIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const [typeEmpty, setTypeEmpty] = useState(false);
@@ -68,19 +67,11 @@ export default function Transactions() {
   }
 
   function handleOpenModal() {
-    if (isMobile) {
-      setBottomSheetIsOpen(true);
-    } else {
-      setModalIsOpen(true);
-    }
+    setModalIsOpen(true);
   }
 
   function handleCloseModal() {
-    if (isMobile) {
-      setBottomSheetIsOpen(false);
-    } else {
-      setModalIsOpen(false);
-    }
+    setModalIsOpen(false);
   }
 
   function DialogAndBottomSheet({ triggerComponent }: any) {
@@ -95,7 +86,10 @@ export default function Transactions() {
         >
           <div
             className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
-            style={{ width: width > 768 ? 700 : width > 500 ? 460 : width > 400 ? 380 : 320 }}
+            style={{
+              width:
+                width > 768 ? 700 : width > 500 ? 460 : width > 400 ? 380 : 320,
+            }}
           >
             <div className="flex items-center justify-between mb-8">
               <p className="text-gray-200 text-lg font-bold">Nova Transação</p>
@@ -187,7 +181,7 @@ export default function Transactions() {
   return (
     <>
       <MainHeader chosenPage="Transactions" />
-      <div className="md:py-28 py-6 md:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-auto bg-gray-950">
+      <div className="md:py-28 py-6 md:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-gray-950">
         <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-8">
           <p className="text-gray-200 font-bold text-2xl text-center">
             Essas é o resumo de suas transações Pedro

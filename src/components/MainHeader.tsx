@@ -4,6 +4,7 @@ import Logo from "../../public/logo.png";
 import Link from "next/link";
 import useWindowSize from "@/hooks/useWindowsSize";
 import { DotsThreeVertical } from "phosphor-react";
+import { Avatar } from "./Avatar";
 
 interface Props {
   chosenPage: "Transactions" | "CoinBot" | "Profile"
@@ -19,11 +20,7 @@ export function MainHeader({ chosenPage }: Props) {
 
   return (
     <div className={`w-full h-24 bg-amber-400 flex items-center pl-8 gap-6 ${isMobile ? "justify-between" : ""}`}>
-      <Image
-        alt="Solidus logo"
-        src={Logo}
-        className="w-16 h-16 bg-transparent cursor-pointer"
-      />
+      <Avatar image="http://www.github.com/PedroFurlann.png" size="medium" />
 
       {isMobile ? (
         // Hamburger menu for mobile view
