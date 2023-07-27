@@ -203,7 +203,7 @@ export default function Transactions() {
             }
           />
         </div>
-        <div className="w-full flex lg:flex-row gap-14 mb-8 flex-col">
+        <div className="w-full flex lg:flex-row gap-14 mb-14 flex-col">
           <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
             <p className="text-xl font-bold text-gray-200">Total de gastos</p>
             <div className="flex gap-2 items-center">

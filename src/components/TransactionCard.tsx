@@ -1,5 +1,5 @@
 import { priceFormatter } from "@/utils/priceFormatter";
-import { ArrowDown, ArrowUp } from "phosphor-react";
+import { ArrowDown, ArrowUp, Trash } from "phosphor-react";
 
 interface Props {
   id: string;
@@ -28,7 +28,10 @@ export function TransactionCard({ id, title, amount, type }: Props) {
           )}
         </div>
       </div>
+      <div className="flex gap-6 items-center">
       <p className="text-gray-200 text-lg font-extrabold">22/07/2023</p>
+      <Trash className="text-red-500 cursor-pointer hover:opacity-70 duration-300 transition-all ease-in-out" size={24} weight="fill"/>
+      </div>
     </div>
   );
 }
