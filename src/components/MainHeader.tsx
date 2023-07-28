@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { HTMLAttributes, useState } from "react";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
 import Link from "next/link";
@@ -6,11 +6,12 @@ import useWindowSize from "@/hooks/useWindowsSize";
 import { DotsThreeVertical } from "phosphor-react";
 import { Avatar } from "./Avatar";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   chosenPage: "Transactions" | "CoinBot" | "Profile"
+
 }
 
-export function MainHeader({ chosenPage }: Props) {
+export function MainHeader({ chosenPage, ...rest }: Props) {
   const { isMobile } = useWindowSize();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -19,8 +20,8 @@ export function MainHeader({ chosenPage }: Props) {
   };
 
   return (
-    <div className={`w-full h-24 bg-amber-400 flex items-center pl-8 gap-6 ${isMobile ? "justify-between" : ""}`}>
-      <Avatar image="http://www.github.com/PedroFurlann.png" size="medium" />
+    <div {...rest} className={`w-full h-24 bg-amber-400 flex items-center pl-8 gap-6 ${isMobile ? "justify-between" : ""}`}>
+      <Avatar size="medium" />
 
       {isMobile ? (
         // Hamburger menu for mobile view
