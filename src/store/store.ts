@@ -1,0 +1,98 @@
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import axios, { AxiosResponse } from 'axios';
+
+interface ChatMessage {
+  message: string ;
+  isUser: boolean;
+}
+
+interface ChatState {
+  chatHistory: ChatMessage[];
+  loading: boolean;
+}
+
+interface ChatResponse {
+  choices: [{
+    message: {
+      role: string
+      content: string
+    }
+  }]
+} 
+
+const CHATBOT_API_URL = 'https://api.openai.com/v1/chat/completions'; 
+const API_KEY = process.env.REACT_APP_GPT_KEY; 
+
+export const sendMessageToChatbot = createAsyncThunk<string, string>(
+  'chat/sendMessageToChatbot',
+  async (message) => {
+    try {
+      const response = await axios.post(
+        CHATBOT_API_URL,
+        {
+          "model": "gpt-3.5-turbo",
+          "messages": [
+            {
+              "role": "assistant",
+              "content": "You are a helpful assistant."
+            },
+            {
+              "role": "user",
+              "content": message,
+            }
+          ]
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${API_KEY}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return response.data.choices[0].message.content;
+    } catch (error) {
+      throw new Error(
+        'Desculpe, ocorreu um erro. Por favor, tente novamente mais tarde.'
+      );
+    }
+  }
+);
+
+const chatSlice = createSlice({
+  name: 'chat',
+  initialState: {
+    chatHistory: [] as ChatMessage[],
+    loading: false,
+  } as ChatState,
+  reducers: {
+    addMessage: (state, action: PayloadAction<ChatMessage>) => {
+      state.chatHistory.push(action.payload);
+    },
+    clearChatHistory: (state) => {
+      state.chatHistory = [];
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(sendMessageToChatbot.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(sendMessageToChatbot.fulfilled, (state, action) => {
+        state.loading = false;
+        state.chatHistory.push({ message: action.payload, isUser: false });
+      })
+      .addCase(sendMessageToChatbot.rejected, (state, action) => {
+        state.loading = false;
+
+        state.chatHistory.push({
+          message: action.error.message ?? "Parece que ocorreu um erro! Tente novamente mais tarde.",
+          isUser: false,
+        });
+      });
+  },
+});
+
+export const { addMessage, clearChatHistory } = chatSlice.actions;
+
+export default chatSlice.reducer;
