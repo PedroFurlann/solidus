@@ -1,3 +1,5 @@
+"use client"
+
 import { HTMLAttributes, useState } from "react";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
@@ -42,7 +44,7 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
                Transações
              </p>
            </Link>
-           <Link href="/coin-bot">
+           <Link href="/CoinBot">
              <p className="block py-2 px-4 text-gray-200 hover:bg-amber-400">
                Coin Bot
              </p>

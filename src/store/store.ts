@@ -1,14 +1,18 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-interface ChatMessage {
+export interface ChatMessage {
   message: string;
   isUser: boolean;
 }
 
-interface ChatState {
+export interface ChatState {
   chatHistory: ChatMessage[];
   loading: boolean;
+}
+
+export interface RootState {
+  chat: ChatState
 }
 
 const CHATBOT_API_URL = "https://api.openai.com/v1/chat/completions";
@@ -35,7 +39,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
         },
         {
           headers: {
-            Authorization: `Bearer ${API_KEY}`,
+            Authorization: `Bearer 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`,
             "Content-Type": "application/json",
           },
         }
@@ -43,6 +47,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
 
       return response.data.choices[0].message.content;
     } catch (error) {
+      console.log(error)
       throw new Error(
         "Desculpe, ocorreu um erro. Por favor, tente novamente mais tarde."
       );

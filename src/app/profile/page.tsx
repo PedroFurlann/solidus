@@ -1,7 +1,6 @@
 "use client";
 import { Avatar } from "@/components/Avatar";
 import { MainHeader } from "@/components/MainHeader";
-import useWindowSize from "@/hooks/useWindowsSize";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Eye, EyeSlash } from "phosphor-react";
 import { useState } from "react";
@@ -16,8 +15,6 @@ interface FormData {
 }
 
 export default function Profile() {
-  const { isMobile } = useWindowSize();
-
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePassword = () => {
