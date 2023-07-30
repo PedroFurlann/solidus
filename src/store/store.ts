@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosResponse } from 'axios';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 
 interface ChatMessage {
-  message: string ;
+  message: string;
   isUser: boolean;
 }
 
@@ -11,36 +11,27 @@ interface ChatState {
   loading: boolean;
 }
 
-interface ChatResponse {
-  choices: [{
-    message: {
-      role: string
-      content: string
-    }
-  }]
-} 
-
-const CHATBOT_API_URL = 'https://api.openai.com/v1/chat/completions'; 
-const API_KEY = process.env.REACT_APP_GPT_KEY; 
+const CHATBOT_API_URL = "https://api.openai.com/v1/chat/completions";
+const API_KEY = process.env.REACT_APP_GPT_KEY;
 
 export const sendMessageToChatbot = createAsyncThunk<string, string>(
-  'chat/sendMessageToChatbot',
+  "chat/sendMessageToChatbot",
   async (message) => {
     try {
       const response = await axios.post(
         CHATBOT_API_URL,
         {
-          "model": "gpt-3.5-turbo",
-          "messages": [
+          model: "gpt-3.5-turbo",
+          messages: [
             {
-              "role": "assistant",
-              "content": "You are a helpful assistant."
+              role: "assistant",
+              content: "You are a helpful assistant.",
             },
             {
-              "role": "user",
-              "content": message,
-            }
-          ]
+              role: "user",
+              content: message,
+            },
+          ],
         },
         {
           headers: {
@@ -53,14 +44,14 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
       return response.data.choices[0].message.content;
     } catch (error) {
       throw new Error(
-        'Desculpe, ocorreu um erro. Por favor, tente novamente mais tarde.'
+        "Desculpe, ocorreu um erro. Por favor, tente novamente mais tarde."
       );
     }
   }
 );
 
 const chatSlice = createSlice({
-  name: 'chat',
+  name: "chat",
   initialState: {
     chatHistory: [] as ChatMessage[],
     loading: false,
@@ -86,7 +77,9 @@ const chatSlice = createSlice({
         state.loading = false;
 
         state.chatHistory.push({
-          message: action.error.message ?? "Parece que ocorreu um erro! Tente novamente mais tarde.",
+          message:
+            action.error.message ??
+            "Parece que ocorreu um erro! Tente novamente mais tarde.",
           isUser: false,
         });
       });
