@@ -1,8 +1,6 @@
 "use client"
 
 import { HTMLAttributes, useState } from "react";
-import Image from "next/image";
-import Logo from "../../public/logo.png";
 import Link from "next/link";
 import useWindowSize from "@/hooks/useWindowsSize";
 import { DotsThreeVertical } from "phosphor-react";
@@ -44,7 +42,7 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
                Transações
              </p>
            </Link>
-           <Link href="/CoinBot">
+           <Link href="/coinBot">
              <p className="block py-2 px-4 text-gray-200 hover:bg-amber-400">
                Coin Bot
              </p>
@@ -65,7 +63,7 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
               Transações
             </p>
           </Link>
-          <Link href="/coin-bot">
+          <Link href="/coinBot">
           <p className={`text-lg font-extrabold ${chosenPage === "CoinBot" ? "text-gray-200 bg-gray-950" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-gray-950 hover:text-gray-200 py-2 px-3 rounded-2xl`}>
               Coin Bot
             </p>
