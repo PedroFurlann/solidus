@@ -39,7 +39,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
         },
         {
           headers: {
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GPT_KEY}`,
             "Content-Type": "application/json",
           },
         }

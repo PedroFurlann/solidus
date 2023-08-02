@@ -1,5 +1,7 @@
+
 import { ChatBot } from "@/components/ChatBot";
 import { MainHeader } from "@/components/MainHeader";
+import { useEffect } from "react";
 
 export default function CoinBot() {
   return (

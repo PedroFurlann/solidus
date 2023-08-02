@@ -44,12 +44,12 @@ export function ChatBot() {
           </div>
         ))}
       </div>
-      <div className="flex mt-2 w-full px-8">
+      <div className="flex md:flex-row flex-col gap-4 mt-2 w-full items-center justify-center">
         <input
           type="text"
           value={inputMessage}
           onChange={handleInputMessageChange}
-          className="flex-1 border rounded-md px-2 py-1 focus:outline-none"
+          className="border flex-1 rounded-md px-2 py-1 focus:outline-none"
           placeholder="Digite sua mensagem..."
         />
         <button
