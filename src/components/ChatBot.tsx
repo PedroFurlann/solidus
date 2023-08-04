@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessageToChatbot, addMessage, ChatMessage } from "../store/store";
 import { RootState } from "../store/store"; // Importando o RootState corretamente
@@ -26,28 +26,36 @@ export function ChatBot() {
     dispatch(sendMessageToChatbot(inputMessage) as any);
   };
 
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSendMessage();
+    }
+  };
   return (
-    <div className="py-4 px-8 bg-gray-200 shadow-md h-2/3 w-2/3 flex flex-col justify-center items-center rounded-2xl">
+    <div className="py-4 pl-8 pr-4 bg-gray-200 shadow-md h-2/3 w-2/3 flex flex-col justify-center items-center rounded-2xl">
       <div className="overflow-y-auto h-96 w-full">
         {chatHistory.map((entry: ChatMessage, index: number) => (
           <div
-            key={index}
-            className={`p-2 ${entry.isUser ? "text-right" : "text-left"}`}
+          key={index}
+          className={`flex mb-8 mr-4  ${
+            entry.isUser ? "justify-end" : "justify-start"
+          }`}
+        >
+          <div
+            className={`p-4 inline-block chat-bubble break-words`}
+            style={{ maxWidth: "70%" }}
           >
-            <div
-              className={`bg-${
-                entry.isUser ? "blue-300" : "green-300"
-              } p-2 rounded-lg inline-block`}
-            >
-              {entry.message}
-            </div>
+            {entry.message}
           </div>
+        </div>
         ))}
       </div>
       <div className="flex md:flex-row flex-col gap-4 mt-2 w-full items-center justify-center">
         <input
           type="text"
           value={inputMessage}
+          onKeyDown={handleKeyDown}
           onChange={handleInputMessageChange}
           className="border flex-1 rounded-md px-2 py-1 focus:outline-none"
           placeholder="Digite sua mensagem..."
