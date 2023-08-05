@@ -43,7 +43,7 @@ export function ChatBot() {
           }`}
         >
           <div
-            className={`p-4 inline-block chat-bubble break-words`}
+            className={`p-4 inline-block chat-bubble break-words chat-bubble-warning`}
             style={{ maxWidth: "70%" }}
           >
             {entry.message}
