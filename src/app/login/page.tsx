@@ -62,8 +62,6 @@ export default function Login() {
                 {...register('email')}
               />
               {errors.email && <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">{errors.email.message}</p>}
-
-            <TransactionCard amount={1000} title="Teste" type="PROFIT" id="1" />
           <div className="relative w-full">
                 <input
                   className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"

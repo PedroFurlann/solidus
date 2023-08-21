@@ -7,13 +7,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   ArrowCircleDown,
   ArrowCircleUp,
-  ArrowDown,
-  ArrowUp,
   X,
 } from "phosphor-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { BottomSheet } from "react-spring-bottom-sheet";
 import Popup from "reactjs-popup";
 import * as yup from "yup";
 

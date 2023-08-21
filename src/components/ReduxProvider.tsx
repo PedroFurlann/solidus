@@ -7,7 +7,7 @@ import React, { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 
 interface Props {
-  children: ReactNode; // Utilize ReactNode como tipo para a prop children
+  children: ReactNode;
 }
 
 const ReduxProvider = ({ children }: Props) => {
