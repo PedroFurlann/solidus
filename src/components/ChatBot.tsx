@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessageToChatbot, addMessage, ChatMessage } from "../store/store";
 import { RootState } from "../store/store"; // Importando o RootState corretamente
@@ -26,7 +26,6 @@ export function ChatBot() {
     dispatch(sendMessageToChatbot(inputMessage) as any);
   };
 
-
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSendMessage();
@@ -37,18 +36,18 @@ export function ChatBot() {
       <div className="overflow-y-auto h-96 w-full">
         {chatHistory.map((entry: ChatMessage, index: number) => (
           <div
-          key={index}
-          className={`flex mb-8 mr-4  ${
-            entry.isUser ? "justify-end" : "justify-start"
-          }`}
-        >
-          <div
-            className={`p-4 inline-block chat-bubble break-words chat-bubble-warning`}
-            style={{ maxWidth: "70%" }}
+            key={index}
+            className={`flex mb-8 mr-4  ${
+              entry.isUser ? "justify-end" : "justify-start"
+            }`}
           >
-            {entry.message}
+            <div
+              className={`p-4 inline-block chat-bubble break-words chat-bubble-warning`}
+              style={{ maxWidth: "70%" }}
+            >
+              {entry.message}
+            </div>
           </div>
-        </div>
         ))}
       </div>
       <div className="flex md:flex-row flex-col gap-4 mt-2 w-full items-center justify-center">
