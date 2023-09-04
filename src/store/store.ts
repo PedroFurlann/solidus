@@ -48,7 +48,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
     } catch (error) {
       console.log(error)
       throw new Error(
-        "Desculpe, ocorreu um erro. Por favor, tente novamente mais tarde."
+        "Erro ao se comunicar com o coin bot. Tente novamente mais tarde."
       );
     }
   }
@@ -57,7 +57,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
 const chatSlice = createSlice({
   name: "chat",
   initialState: {
-    chatHistory: [] as ChatMessage[],
+    chatHistory: [{ message: "Olá! Como posso ajudar?" }] as ChatMessage[],
     loading: false,
   } as ChatState,
   reducers: {
