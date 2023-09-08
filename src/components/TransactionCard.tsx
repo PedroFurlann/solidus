@@ -7,7 +7,7 @@ interface Props {
   title: string;
   amount: number;
   type: "PROFIT" | "LOSS";
-  category: "FOOD" | "EDUCATION" | "FUN" | "HEALTH" | "FIXED" | "OTHERS";
+  category?: "FOOD" | "EDUCATION" | "FUN" | "HEALTH" | "FIXED" | "OTHERS";
 }
 
 export function TransactionCard({ id, title, amount, type, category }: Props) {
@@ -17,7 +17,8 @@ export function TransactionCard({ id, title, amount, type, category }: Props) {
       <div className="flex sm:gap-6 gap-4">
         <p className="text-lg font-extrabold text-gray-200">
           {title}: 
-          {category === "FOOD"
+          {
+            type === "LOSS" ?  category === "FOOD"
             ? " Comida"
             : category === "EDUCATION"
             ? " Educação"
@@ -27,7 +28,8 @@ export function TransactionCard({ id, title, amount, type, category }: Props) {
             ? " Saúde"
             : category === "FIXED"
             ? " Gastos Fixos"
-            : " Outros"}
+            : " Outros" : ""}
+           
         </p>
         <div className="flex gap-1">
           <p

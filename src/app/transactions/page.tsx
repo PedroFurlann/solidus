@@ -37,8 +37,10 @@ interface FormData {
 
 export default function Transactions() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedType, setSelectedType] = useState("");
+  const [selectedType, setSelectedType] = useState("PROFIT");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [typeEmpty, setTypeEmpty] = useState(false);
+  const [categoryEmpty, setCategoryEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { isMobile, width } = useWindowSize();
@@ -66,7 +68,7 @@ export default function Transactions() {
         },
       },
       tooltip: {
-        boxPadding: 6
+        boxPadding: 6,
       },
     },
     scales: {
@@ -96,6 +98,12 @@ export default function Transactions() {
     },
   };
 
+  function handleChangeSelectedCategory(
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) {
+    setSelectedCategory(event.target.value);
+  }
+
   const chartData = {
     labels: categories,
     datasets: [
@@ -120,6 +128,8 @@ export default function Transactions() {
       .min(1, "O valor deve ser maior que 0"),
   });
 
+
+
   const {
     register,
     handleSubmit,
@@ -136,13 +146,21 @@ export default function Transactions() {
       setTypeEmpty(true);
       return;
     }
+
+    if(selectedCategory === "" && selectedType === "LOSS") {
+      setCategoryEmpty(true)
+      return;
+    }
+
     console.log(
       "Description => ",
       description,
       "Amount => ",
       amount,
       "Selected type => ",
-      selectedType
+      selectedType,
+      "Selected Category => ",
+      selectedCategory
     );
   }
 
@@ -152,6 +170,14 @@ export default function Transactions() {
 
   function handleCloseModal() {
     setModalIsOpen(false);
+  }
+
+  function handleSelect() {
+    if(selectedType === "") {
+      return
+    } else {
+      setCategoryEmpty(false)
+    }
   }
 
   function DialogAndBottomSheet({ triggerComponent }: any) {
@@ -202,7 +228,7 @@ export default function Transactions() {
                   {errors.amount.message}
                 </p>
               )}
-              <div className={`flex gap-4 ${typeEmpty ? "mb-0" : "mb-12"}`}>
+              <div className={`flex gap-4 ${typeEmpty ? "mb-0" : "mb-6"}`}>
                 <div
                   onClick={() => {
                     setSelectedType("LOSS");
@@ -221,6 +247,7 @@ export default function Transactions() {
                   onClick={() => {
                     setSelectedType("PROFIT");
                     setTypeEmpty(false);
+                    setCategoryEmpty(false)
                   }}
                   className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${
                     selectedType === "PROFIT"
@@ -233,8 +260,29 @@ export default function Transactions() {
                 </div>
               </div>
               {typeEmpty && (
-                <p className="text-red-500 text-sm font-bold self-start mb-6">
+                <p className="text-red-500 text-sm font-bold self-start mb-2">
                   Selecione o tipo da transação
+                </p>
+              )}
+              <select
+                value={selectedCategory}
+                onChange={handleChangeSelectedCategory}
+                className={`select-warning p-4 ${
+                  categoryEmpty ? "mb-0" : "mb-6"
+                } rounded-md ${selectedType === "LOSS" ? "flex" : "hidden"}`}
+              >
+                <option value="">Selecione a categoria da sua transação</option>
+                <option value="FOOD">Comida</option>
+                <option value="HEALTH">Saúde</option>
+                <option value="FUN">Lazer</option>
+                <option value="EDUCATION">Educação</option>
+                <option value="FIXED">Gastos Fixos</option>
+                <option value="OTHERS">Outros</option>
+              </select>
+
+              {categoryEmpty && (
+                <p className="text-red-500 text-sm font-bold self-start mb-6">
+                  Selecione a categoria da transação
                 </p>
               )}
             </div>
@@ -282,9 +330,13 @@ export default function Transactions() {
               }
             />
           </div>
-          <div className={`${width > 600 ? "flex" : "hidden"} items-center justify-center mb-0`}>
+          <div
+            className={`${
+              width > 600 ? "flex" : "hidden"
+            } items-center justify-center mb-0`}
+          >
             <div
-              style={{ width: width > 768 ? 700 : 550 , height: 500 }}
+              style={{ width: width > 768 ? 700 : 550, height: 500 }}
               className="flex items-center justify-center self-center place-self-center"
             >
               <Bar data={chartData} options={chartOptions} />
@@ -321,8 +373,20 @@ export default function Transactions() {
             </div>
           </div>
           <div className="w-full h-full flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl">
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FOOD" />
-            <TransactionCard amount={213} id="1" title="Teste" type="LOSS" category="EDUCATION" />
+            <TransactionCard
+              amount={1000}
+              id="1"
+              title="Teste"
+              type="PROFIT"
+              category="FOOD"
+            />
+            <TransactionCard
+              amount={213}
+              id="1"
+              title="Teste"
+              type="LOSS"
+              category="EDUCATION"
+            />
             <TransactionCard
               amount={10300}
               id="1"
@@ -330,13 +394,55 @@ export default function Transactions() {
               type="PROFIT"
               category="HEALTH"
             />
-            <TransactionCard amount={20202} id="1" title="Teste" type="LOSS" category="FIXED" />
-            <TransactionCard amount={4000} id="1" title="Teste" type="PROFIT" category="OTHERS" />
-            <TransactionCard amount={20000} id="1" title="Teste" type="LOSS" category="EDUCATION" />
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FIXED" />
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FUN" />
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FUN" />
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FOOD" />
+            <TransactionCard
+              amount={20202}
+              id="1"
+              title="Teste"
+              type="LOSS"
+              category="FIXED"
+            />
+            <TransactionCard
+              amount={4000}
+              id="1"
+              title="Teste"
+              type="PROFIT"
+              category="OTHERS"
+            />
+            <TransactionCard
+              amount={20000}
+              id="1"
+              title="Teste"
+              type="LOSS"
+              category="EDUCATION"
+            />
+            <TransactionCard
+              amount={1000}
+              id="1"
+              title="Teste"
+              type="PROFIT"
+              category="FIXED"
+            />
+            <TransactionCard
+              amount={1000}
+              id="1"
+              title="Teste"
+              type="PROFIT"
+              category="FUN"
+            />
+            <TransactionCard
+              amount={1000}
+              id="1"
+              title="Teste"
+              type="PROFIT"
+              category="FUN"
+            />
+            <TransactionCard
+              amount={1000}
+              id="1"
+              title="Teste"
+              type="PROFIT"
+              category="FOOD"
+            />
           </div>
         </div>
       )}
