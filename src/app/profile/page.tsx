@@ -24,16 +24,13 @@ export default function Profile() {
   const validationSchema = yup.object().shape({
     name: yup
       .string()
-      .required("O nome é obrigatório")
       .min(6, "O nome deve conter no mímimo 6 caracteres"),
     email: yup
       .string()
       .required("O e-mail é obrigatório")
       .email("Digite um e-mail válido"),
     new_password: yup
-      .string()
-      .required("A senha é obrigatória")
-      .min(6, "A senha deve conter no mínimo 6 caracteres"),
+      .string(),
     confirm_new_password: yup
       .string()
       .oneOf([yup.ref("new_password")], "As senhas devem coincidir"),
