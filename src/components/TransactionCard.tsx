@@ -16,19 +16,19 @@ export function TransactionCard({ id, title, amount, type, category }: Props) {
     <div className={`w-full bg-gray-800 px-8 py-4 sm:flex-row flex-col sm:gap-0 gap-4 flex items-center sm:justify-between justify-center rounded-lg`}>
       <div className="flex sm:gap-6 gap-4">
         <p className="text-lg font-extrabold text-gray-200">
-          {title}: 
+          {title} 
           {
             type === "LOSS" ?  category === "FOOD"
-            ? " Comida"
+            ? ": Comida"
             : category === "EDUCATION"
-            ? " Educação"
+            ? ": Educação"
             : category === "FUN"
-            ? " Lazer"
+            ? ": Lazer"
             : category === "HEALTH"
-            ? " Saúde"
+            ? ": Saúde"
             : category === "FIXED"
-            ? " Gastos Fixos"
-            : " Outros" : ""}
+            ? ": Gastos Fixos"
+            : ": Outros" : ""}
            
         </p>
         <div className="flex gap-1">

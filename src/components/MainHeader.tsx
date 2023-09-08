@@ -3,7 +3,7 @@
 import { HTMLAttributes, useState } from "react";
 import Link from "next/link";
 import useWindowSize from "@/hooks/useWindowsSize";
-import { DotsThreeVertical } from "phosphor-react";
+import { List } from "phosphor-react";
 import { Avatar } from "./Avatar";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -30,7 +30,7 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
             className="text-lg font-extrabold text-gray-800 transition-all ease-in-out duration-500 cursor-pointer hover:bg-gray-950 hover:text-gray-200 py-2 px-3 rounded-2xl"
             onClick={toggleMenu}
           >
-            <DotsThreeVertical weight="bold" size={28} />
+            <List weight="bold" size={28} />
           </button>
           {isMenuOpen && (
            <div
