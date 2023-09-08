@@ -266,7 +266,7 @@ export default function Transactions() {
           <MainLoading size="md" />
         </div>
       ) : (
-        <div className="md:py-28 py-6 md:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-gray-950">
+        <div className="md:py-28 py-6 lg:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-gray-950">
           <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-12">
             <p className="text-gray-200 font-bold text-2xl text-center">
               Essas é o resumo de suas transações Pedro
@@ -321,21 +321,22 @@ export default function Transactions() {
             </div>
           </div>
           <div className="w-full h-full flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl">
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" />
-            <TransactionCard amount={213} id="1" title="Teste" type="LOSS" />
+            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FOOD" />
+            <TransactionCard amount={213} id="1" title="Teste" type="LOSS" category="EDUCATION" />
             <TransactionCard
               amount={10300}
               id="1"
               title="Teste"
               type="PROFIT"
+              category="HEALTH"
             />
-            <TransactionCard amount={20202} id="1" title="Teste" type="LOSS" />
-            <TransactionCard amount={4000} id="1" title="Teste" type="PROFIT" />
-            <TransactionCard amount={20000} id="1" title="Teste" type="LOSS" />
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" />
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" />
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" />
-            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" />
+            <TransactionCard amount={20202} id="1" title="Teste" type="LOSS" category="FIXED" />
+            <TransactionCard amount={4000} id="1" title="Teste" type="PROFIT" category="OTHERS" />
+            <TransactionCard amount={20000} id="1" title="Teste" type="LOSS" category="EDUCATION" />
+            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FIXED" />
+            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FUN" />
+            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FUN" />
+            <TransactionCard amount={1000} id="1" title="Teste" type="PROFIT" category="FOOD" />
           </div>
         </div>
       )}
