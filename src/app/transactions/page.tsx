@@ -10,6 +10,25 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
 import * as yup from "yup";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface FormData {
   description: string;
@@ -20,9 +39,75 @@ export default function Transactions() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const [typeEmpty, setTypeEmpty] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const { isMobile, width } = useWindowSize();
+
+  const categories = [
+    "Comida",
+    "Saúde",
+    "Lazer",
+    "Educação",
+    "Gastos fixos",
+    "Outros",
+  ];
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            size: width > 768 ? 18 : 15,
+            family: "Roboto",
+            weight: "bold",
+          },
+          color: "#e4e4e7",
+        },
+      },
+      tooltip: {
+        boxPadding: 6
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            size: width > 768 ? 18 : 15,
+            weight: "bold",
+            family: "Roboto",
+          },
+          color: "#e4e4e7",
+        },
+      },
+      y: {
+        ticks: {
+          font: {
+            size: width > 768 ? 18 : 15,
+            weight: "bold",
+            family: "Roboto",
+          },
+          color: "#e4e4e7",
+          callback: function (value: any) {
+            return "R$ " + value;
+          },
+        },
+      },
+    },
+  };
+
+  const chartData = {
+    labels: categories,
+    datasets: [
+      {
+        label: "Gastos R$",
+        data: [10, 20.55, 30, 40, 50, 60],
+        backgroundColor: "rgba(251, 191, 36, 1)", // Cor das barras
+        borderColor: "rgba(245, 158, 11, 1)", // Cor da borda das barras
+        borderWidth: 4, // Largura da borda das barras
+      },
+    ],
+  };
 
   const validationSchema = yup.object().shape({
     description: yup
@@ -182,7 +267,7 @@ export default function Transactions() {
         </div>
       ) : (
         <div className="md:py-28 py-6 md:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-gray-950">
-          <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-8">
+          <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-12">
             <p className="text-gray-200 font-bold text-2xl text-center">
               Essas é o resumo de suas transações Pedro
             </p>
@@ -197,6 +282,15 @@ export default function Transactions() {
               }
             />
           </div>
+          <div className={`${width > 600 ? "flex" : "hidden"} items-center justify-center mb-0`}>
+            <div
+              style={{ width: width > 768 ? 700 : 550 , height: 500 }}
+              className="flex items-center justify-center self-center place-self-center"
+            >
+              <Bar data={chartData} options={chartOptions} />
+            </div>
+          </div>
+          <div className="w-1/2 h-1/2 flex items-center justify-center self-center place-self-center"></div>
           <div className="w-full flex lg:flex-row gap-14 mb-14 flex-col">
             <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
               <p className="text-xl font-bold text-gray-200">Total de gastos</p>
