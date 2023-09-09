@@ -172,7 +172,7 @@ export default function Transactions() {
     setModalIsOpen(false);
   }
 
-  function handleSelect() {
+  function verifyCategoryIsEmpty() {
     if(selectedType === "") {
       setCategoryEmpty(true)
     } else {
@@ -181,7 +181,7 @@ export default function Transactions() {
   }
 
   useEffect(() => {
-    handleSelect();
+    verifyCategoryIsEmpty();
   }, [selectedCategory])
 
   function DialogAndBottomSheet({ triggerComponent }: any) {
@@ -237,7 +237,6 @@ export default function Transactions() {
                   onClick={() => {
                     setSelectedType("LOSS");
                     setTypeEmpty(false);
-
                   }}
                   className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${
                     selectedType === "LOSS"
