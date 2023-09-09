@@ -6,7 +6,7 @@ import useWindowSize from "@/hooks/useWindowsSize";
 import { priceFormatter } from "@/utils/priceFormatter";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
 import * as yup from "yup";
@@ -174,11 +174,15 @@ export default function Transactions() {
 
   function handleSelect() {
     if(selectedType === "") {
-      return
+      setCategoryEmpty(true)
     } else {
       setCategoryEmpty(false)
     }
   }
+
+  useEffect(() => {
+    handleSelect();
+  }, [selectedCategory])
 
   function DialogAndBottomSheet({ triggerComponent }: any) {
     return (
@@ -228,11 +232,12 @@ export default function Transactions() {
                   {errors.amount.message}
                 </p>
               )}
-              <div className={`flex gap-4 ${typeEmpty ? "mb-0" : "mb-6"}`}>
+              <div className={`flex gap-4 ${selectedType === "LOSS" ? "mb-2" : "mb-10"}`}>
                 <div
                   onClick={() => {
                     setSelectedType("LOSS");
                     setTypeEmpty(false);
+
                   }}
                   className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${
                     selectedType === "LOSS"
@@ -248,6 +253,7 @@ export default function Transactions() {
                     setSelectedType("PROFIT");
                     setTypeEmpty(false);
                     setCategoryEmpty(false)
+                    setSelectedCategory("");
                   }}
                   className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${
                     selectedType === "PROFIT"
@@ -268,7 +274,7 @@ export default function Transactions() {
                 value={selectedCategory}
                 onChange={handleChangeSelectedCategory}
                 className={`select-warning p-4 ${
-                  categoryEmpty ? "mb-0" : "mb-6"
+                  categoryEmpty ? "mb-0" : "mb-8"
                 } rounded-md ${selectedType === "LOSS" ? "flex" : "hidden"}`}
               >
                 <option value="">Selecione a categoria da sua transação</option>
@@ -279,7 +285,6 @@ export default function Transactions() {
                 <option value="FIXED">Gastos Fixos</option>
                 <option value="OTHERS">Outros</option>
               </select>
-
               {categoryEmpty && (
                 <p className="text-red-500 text-sm font-bold self-start mb-6">
                   Selecione a categoria da transação
