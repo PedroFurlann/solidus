@@ -1,1 +1,1 @@
-Solidus APP Web 
+Solidus APP Web developed with NextJs 13
