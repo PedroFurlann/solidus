@@ -10,10 +10,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { MainHeader } from "@/components/MainHeader";
-import { TransactionCard } from "@/components/TransactionCard";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { AppError } from "@/utils/AppError";
 
 interface FormData {
   email: string;
@@ -21,27 +21,47 @@ interface FormData {
 }
 
 export default function Login() {
-  const { isMobile } = useWindowSize();
   const [showPassword, setShowPassword] = useState(false);
+
+  const { isMobile } = useWindowSize();
+
+  const { signIn } = useAuth();
+
+  const router = useRouter();
 
   const validationSchema = yup.object().shape({
     email: yup
       .string()
       .required("O e-mail é obrigatório")
       .email("Digite um e-mail válido"),
-    password: yup.string().required("A senha é obrigatória").min(6, "A senha deve conter no mínimo 6 caracteres"),
+    password: yup
+      .string()
+      .required("A senha é obrigatória")
+      .min(6, "A senha deve conter no mínimo 6 caracteres"),
   });
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
-  })
+  });
 
-  function handleSignIn({ email, password }: FormData) {
-    console.log("Email => ", email, "Password => ", password)
+  async function handleSignIn({ email, password }: FormData) {
+    try {
+      await signIn(email, password);
+      router.push("/transactions");
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError
+        ? error.message
+        : "Não foi possível realizar o login. Tente novamente mais tarde.";
+    }
   }
 
   return (
@@ -55,21 +75,24 @@ export default function Login() {
         />
         <div className="flex flex-col gap-6 items-center justify-center md:w-80">
           <p className="text-3xl text-gray-200 font-bold">Faça Login</p>
-              <input
-                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-                type="email"
-                placeholder="Digite seu email"
-                {...register('email')}
-              />
-              {errors.email && <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">{errors.email.message}</p>}
+          <input
+            className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+            type="email"
+            placeholder="Digite seu email"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+              {errors.email.message}
+            </p>
+          )}
           <div className="relative w-full">
-                <input
-                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Digite sua senha"
-                  {...register('password')}
-                />
-
+            <input
+              className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+              type={showPassword ? "text" : "password"}
+              placeholder="Digite sua senha"
+              {...register("password")}
+            />
 
             {showPassword ? (
               <Eye
@@ -85,9 +108,17 @@ export default function Login() {
               />
             )}
           </div>
-          {errors.password && <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+              {errors.password.message}
+            </p>
+          )}
 
-          <button type="submit" onClick={handleSubmit(handleSignIn)} className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold">
+          <button
+            type="submit"
+            onClick={handleSubmit(handleSignIn)}
+            className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
+          >
             Entrar
           </button>
           <div className="cursor-pointer w-full items-center justify-center rounded-md py-4 bg-white flex gap-4 transition-all ease-in-out duration-300 hover:opacity-70">
