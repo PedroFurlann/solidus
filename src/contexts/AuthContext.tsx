@@ -65,7 +65,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   async function updateUserProfile(userUpdated: UserDTO) {
     try {
       setUser(userUpdated);
-      await storageUserSave(userUpdated);
+      storageUserSave(userUpdated);
     } catch (error) {
       throw error;
     }

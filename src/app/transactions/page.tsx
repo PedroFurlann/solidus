@@ -21,6 +21,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useAuth } from "@/hooks/useAuth";
+import { storageUserGet } from "@/storage/storageUser";
+import { useRouter } from "next/navigation";
 
 ChartJS.register(
   CategoryScale,
@@ -45,6 +47,16 @@ export default function Transactions() {
   const [loading, setLoading] = useState(false);
 
   const { isMobile, width } = useWindowSize();
+
+  const { isLoadingUserStorageData } = useAuth();
+
+  const router = useRouter()
+
+  const user = storageUserGet()
+
+  if (!user) {
+    router.push("login");
+  }
 
   const categories = [
     "Comida",
@@ -314,7 +326,7 @@ export default function Transactions() {
   return (
     <>
       <MainHeader chosenPage="Transactions" />
-      {loading ? (
+      {isLoadingUserStorageData ? (
         <div className="md:py-28 flex py-6 md:px-40 px-8 items-center justify-center flex-col min-h-screen bg-gray-950">
           <MainLoading size="md" />
         </div>

@@ -8,6 +8,13 @@ import { useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { storageUserGet } from "@/storage/storageUser";
+import { useAuth } from "@/hooks/useAuth";
+import { MainLoading } from "@/components/MainLoading";
+import { AppError } from "@/utils/AppError";
+import { toast } from "react-toastify";
+import { api } from "@/services/api";
 
 interface FormData {
   name: string;
@@ -20,6 +27,16 @@ export default function Register() {
   const { isMobile } = useWindowSize();
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
+
+  const { isLoadingUserStorageData, signIn } = useAuth();
+
+  const user = storageUserGet();
+
+  if (user) {
+    router.push("transactions");
+  }
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -51,102 +68,149 @@ export default function Register() {
     resolver: yupResolver(validationSchema),
   });
 
-  function handleSignUp({ name, email, password, confirm_password }: FormData) {
-    console.log(
-      "Name => ",
+  async function handleSignUp({
+    name,
+    email,
+    password,
+  }: FormData) {
+    let userData = {
       name,
-      "Email => ",
       email,
-      "Password => ",
-      password,
-      "Confirm Password => ",
-      confirm_password
-    );
+      password
+    }
+
+    try {
+      await api.post("/user", userData);
+      await signIn(email, password);
+
+      toast.success("Usuário criado com sucesso.", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        }
+      })
+
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError
+        ? error.message
+        : "Não foi possível realizar o login. Tente novamente mais tarde.";
+
+      toast.error(title, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
+    }
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
-      <LoginHeader />
-      <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
-        <Lottie
-          animationData={goldBarAnimation}
-          loop={true}
-          style={{ width: isMobile ? 180 : 300, height: isMobile ? 180 : 300 }}
-        />
-        <div className="flex flex-col gap-6 items-center justify-center md:w-80">
-          <p className="text-3xl text-gray-200 font-bold">Cadastre sua conta</p>
-          <input
-            className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-            type="email"
-            placeholder="Escolha um nome"
-            {...register("name")}
-          />
-          {errors.name && (
-            <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-              {errors.name.message}
-            </p>
-          )}
-
-          <input
-            className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-            type="email"
-            placeholder="Escolha seu email"
-            {...register("email")}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-              {errors.email.message}
-            </p>
-          )}
-
-          <div className="relative w-full">
-            <input
-              className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
-              type={showPassword ? "text" : "password"}
-              placeholder="Cadastre sua senha"
-              {...register("password")}
-            />
-            {showPassword ? (
-              <Eye
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
-                size={20}
-                onClick={handleTogglePassword}
-              />
-            ) : (
-              <EyeSlash
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
-                size={20}
-                onClick={handleTogglePassword}
-              />
-            )}
-          </div>
-          {errors.password && (
-            <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-              {errors.password.message}
-            </p>
-          )}
-
-          <input
-            className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
-            type={showPassword ? "text" : "password"}
-            placeholder="Confirme sua senha"
-            {...register("confirm_password")}
-          />
-          {errors.confirm_password && (
-            <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-              {errors.confirm_password.message}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            onClick={handleSubmit(handleSignUp)}
-            className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
-          >
-            Cadastrar-se
-          </button>
+    <>
+      {isLoadingUserStorageData ? (
+        <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+          <MainLoading size="md" />
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+          <LoginHeader />
+          <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
+            <Lottie
+              animationData={goldBarAnimation}
+              loop={true}
+              style={{
+                width: isMobile ? 180 : 300,
+                height: isMobile ? 180 : 300,
+              }}
+            />
+            <div className="flex flex-col gap-6 items-center justify-center md:w-80">
+              <p className="text-3xl text-gray-200 font-bold">
+                Cadastre sua conta
+              </p>
+              <input
+                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                type="email"
+                placeholder="Escolha um nome"
+                {...register("name")}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                  {errors.name.message}
+                </p>
+              )}
+
+              <input
+                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                type="email"
+                placeholder="Escolha seu email"
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                  {errors.email.message}
+                </p>
+              )}
+
+              <div className="relative w-full">
+                <input
+                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Cadastre sua senha"
+                  {...register("password")}
+                />
+                {showPassword ? (
+                  <Eye
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                    size={20}
+                    onClick={handleTogglePassword}
+                  />
+                ) : (
+                  <EyeSlash
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                    size={20}
+                    onClick={handleTogglePassword}
+                  />
+                )}
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                  {errors.password.message}
+                </p>
+              )}
+
+              <input
+                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                type={showPassword ? "text" : "password"}
+                placeholder="Confirme sua senha"
+                {...register("confirm_password")}
+              />
+              {errors.confirm_password && (
+                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                  {errors.confirm_password.message}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                onClick={handleSubmit(handleSignUp)}
+                className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
+              >
+                Cadastrar-se
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

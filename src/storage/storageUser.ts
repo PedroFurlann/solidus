@@ -4,7 +4,7 @@ export function storageUserSave(user: UserDTO) {
   localStorage.setItem('user', JSON.stringify(user));
 }
 
-export function storageUserGet(): UserDTO | null {
+export function storageUserGet(): UserDTO {
   const userString = localStorage.getItem('user');
   return userString ? JSON.parse(userString) : null;
 }
