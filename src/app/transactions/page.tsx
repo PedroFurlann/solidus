@@ -39,7 +39,7 @@ ChartJS.register(
 );
 
 interface FormData {
-  description: string;
+  title: string;
   amount: number;
 }
 
@@ -137,7 +137,7 @@ export default function Transactions() {
   };
 
   const validationSchema = yup.object().shape({
-    description: yup
+    title: yup
       .string()
       .required("A descrição da transação é obrigatória"),
     amount: yup
@@ -179,6 +179,7 @@ export default function Transactions() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
@@ -187,7 +188,7 @@ export default function Transactions() {
     },
   });
 
-  function handleRegisterTransaction({ description, amount }: FormData) {
+  async function handleRegisterTransaction({ title, amount }: FormData) {
     if (selectedType === "") {
       setTypeEmpty(true);
       return;
@@ -198,8 +199,50 @@ export default function Transactions() {
       return;
     }
 
+    const transactionData = {
+      title,
+      type: selectedType,
+      amount,
+      category: selectedType === "LOSS" ? selectedCategory : null,
+    }
+
+    setLoading(true)
+
     try {
-    } catch (error) {}
+      await api.post("/transactions", transactionData)
+      fetchTransactions();
+      setModalIsOpen(false);
+      reset()
+      toast.success("Transação criada com sucesso.", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
+    } catch (error) {
+      console.log(error)
+      const isAppError = error instanceof AppError;
+      const title = isAppError
+        ? error.message
+        : "Não foi possível cadastrar a transação. Tente novamente mais tarde.";
+
+      toast.error(title, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
+    }
   }
 
   function handleOpenModal() {
@@ -256,11 +299,11 @@ export default function Transactions() {
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                 type="text"
                 placeholder="Descrição da transação"
-                {...register("description")}
+                {...register("title")}
               />
-              {errors.description && (
+              {errors.title && (
                 <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                  {errors.description.message}
+                  {errors.title.message}
                 </p>
               )}
               <input
