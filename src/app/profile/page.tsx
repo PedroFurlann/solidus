@@ -9,7 +9,7 @@ import { AppError } from "@/utils/AppError";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { Eye, EyeSlash } from "phosphor-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -23,13 +23,13 @@ interface FormData {
 
 export default function Profile() {
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const { updateUserProfile, user, isLoadingUserStorageData } = useAuth();
 
   const router = useRouter();
 
-  const user2 = storageUserGet()
+  const user2 = storageUserGet();
 
   if (!user2) {
     router.push("login");
@@ -51,12 +51,11 @@ export default function Profile() {
       .email("Digite um e-mail válido."),
     new_password: yup
       .string()
-      .trim()
-      .min(6, "A senha deve conter no mínimo 6 caracteres."),
+      .trim(),
     confirm_new_password: yup
       .string()
       .trim()
-      .oneOf([yup.ref("new_password")], "As senhas devem coincidir"),
+      .oneOf([yup.ref("new_password")], "As senhas devem coincidir."),
   });
 
   const {
@@ -69,34 +68,41 @@ export default function Profile() {
     defaultValues: {
       name: user2?.name,
       email: user2?.email,
-      new_password: undefined
     },
   });
 
-  async function handleUpdateProfile({
-    name,
-    new_password,
-  }: FormData) {
+  async function handleUpdateProfile({ name, new_password }: FormData) {
     let userData = {
       name,
-      password: new_password,
+      password: new_password || null,
     };
+
+    if(userData.password !== null && new_password.length < 6) {
+      return toast.error("A senha deve ter no mínimo 6 caracteres.", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
+    }
 
     setLoading(true);
 
     try {
       const userUpdated = user2;
 
-      console.log(user, userData, "user")
 
-      userUpdated.name = name
-
+      userUpdated.name = name;
 
       await api.patch("/user", userData);
       await updateUserProfile(userUpdated);
-      reset()
       router.push("transactions")
-
+      reset();
 
       toast.success("Usuário atualizado com sucesso.", {
         position: "top-center",
@@ -107,26 +113,25 @@ export default function Profile() {
           justifyContent: "center",
           alignItems: "center",
           fontWeight: "bold",
-        }
-      })
-
+        },
+      });
     } catch (error) {
-      const isAppError = error instanceof AppError
+      const isAppError = error instanceof AppError;
       const title = isAppError
         ? error.message
         : "Não foi possível atualizar o usuário. Tente novamente mais tarde.";
 
-        toast.error(title, {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "dark",
-          style: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontWeight: "bold",
-          }
-        })
+      toast.error(title, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
     } finally {
       setLoading(false);
     }

@@ -28,13 +28,13 @@ export default function Login() {
 
   const { isMobile } = useWindowSize();
 
-  const { signIn, isLoadingUserStorageData } = useAuth();
+  const { signIn, isLoadingUserStorageData, user } = useAuth();
 
   const router = useRouter();
 
-  const user = storageUserGet();
+  const user2 = storageUserGet()
 
-  if (user) {
+  if (user2) {
     router.push("transactions");
   }
 
@@ -66,7 +66,7 @@ export default function Login() {
       await signIn(email, password);
       router.push("/transactions");
 
-      toast.success("Usuário criado com sucesso.", {
+      toast.success("Login realizado com sucesso!", {
         position: "top-center",
         autoClose: 3000,
         theme: "dark",

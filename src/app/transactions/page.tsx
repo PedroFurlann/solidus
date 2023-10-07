@@ -23,6 +23,11 @@ import { Bar } from "react-chartjs-2";
 import { useAuth } from "@/hooks/useAuth";
 import { storageUserGet } from "@/storage/storageUser";
 import { useRouter } from "next/navigation";
+import { api } from "@/services/api";
+import { TransactionDTO } from "@/dtos/TransactionDTO";
+import { AppError } from "@/utils/AppError";
+import { toast } from "react-toastify";
+import { storageTokenGet } from "@/storage/storageToken";
 
 ChartJS.register(
   CategoryScale,
@@ -45,16 +50,17 @@ export default function Transactions() {
   const [typeEmpty, setTypeEmpty] = useState(false);
   const [categoryEmpty, setCategoryEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [transactions, setTransactions] = useState<TransactionDTO[]>([]);
 
   const { isMobile, width } = useWindowSize();
 
-  const { isLoadingUserStorageData } = useAuth();
+  const { isLoadingUserStorageData, signOut, user } = useAuth();
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const user = storageUserGet()
+  const user2 = storageUserGet();
 
-  if (!user) {
+  if (!user2) {
     router.push("login");
   }
 
@@ -141,8 +147,35 @@ export default function Transactions() {
       .min(1, "O valor deve ser maior que 0"),
   });
 
+  async function fetchTransactions() {
+    setLoading(true);
 
+    try {
+      const response = await api.get("/transactions");
+      setTransactions(response.data.transactions);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      const isAppError = error instanceof AppError;
+      const title = isAppError
+        ? error.message
+        : "Não foi possível carregar as transações. Tente novamente mais tarde.";
 
+      toast.error(title, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
   const {
     register,
     handleSubmit,
@@ -160,21 +193,13 @@ export default function Transactions() {
       return;
     }
 
-    if(selectedCategory === "" && selectedType === "LOSS") {
-      setCategoryEmpty(true)
+    if (selectedCategory === "" && selectedType === "LOSS") {
+      setCategoryEmpty(true);
       return;
     }
 
-    console.log(
-      "Description => ",
-      description,
-      "Amount => ",
-      amount,
-      "Selected type => ",
-      selectedType,
-      "Selected Category => ",
-      selectedCategory
-    );
+    try {
+    } catch (error) {}
   }
 
   function handleOpenModal() {
@@ -186,16 +211,20 @@ export default function Transactions() {
   }
 
   function verifyCategoryIsEmpty() {
-    if(selectedType === "") {
-      setCategoryEmpty(true)
+    if (selectedType === "") {
+      setCategoryEmpty(true);
     } else {
-      setCategoryEmpty(false)
+      setCategoryEmpty(false);
     }
   }
 
   useEffect(() => {
     verifyCategoryIsEmpty();
-  }, [selectedCategory])
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
 
   function DialogAndBottomSheet({ triggerComponent }: any) {
     return (
@@ -245,7 +274,11 @@ export default function Transactions() {
                   {errors.amount.message}
                 </p>
               )}
-              <div className={`flex gap-4 ${selectedType === "LOSS" ? "mb-2" : "mb-10"}`}>
+              <div
+                className={`flex gap-4 ${
+                  selectedType === "LOSS" ? "mb-2" : "mb-10"
+                }`}
+              >
                 <div
                   onClick={() => {
                     setSelectedType("LOSS");
@@ -264,7 +297,7 @@ export default function Transactions() {
                   onClick={() => {
                     setSelectedType("PROFIT");
                     setTypeEmpty(false);
-                    setCategoryEmpty(false)
+                    setCategoryEmpty(false);
                     setSelectedCategory("");
                   }}
                   className={`cursor-pointer w-1/2 rounded-2xl py-8 flex items-center justify-center gap-3 border bg-slate-900 ${
@@ -325,143 +358,92 @@ export default function Transactions() {
 
   return (
     <>
-      <MainHeader chosenPage="Transactions" />
-      {isLoadingUserStorageData ? (
-        <div className="md:py-28 flex py-6 md:px-40 px-8 items-center justify-center flex-col min-h-screen bg-gray-950">
+      {loading || isLoadingUserStorageData ? (
+        <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col items-center justify-center">
           <MainLoading size="md" />
         </div>
       ) : (
-        <div className="md:py-28 py-6 lg:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-gray-950">
-          <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-12">
-            <p className="text-gray-200 font-bold text-2xl text-center">
-              Essas é o resumo de suas transações Pedro
-            </p>
-            <DialogAndBottomSheet
-              triggerComponent={
-                <button
-                  onClick={handleOpenModal}
-                  className="rounded-lg bg-amber-400 border-none py-4 px-4 cursor-pointer hover:opacity-70 transition-all ease-in-out duration-300"
-                >
-                  <p className="text-gray-50 font-extrabold">Nova Transação</p>
-                </button>
-              }
-            />
-          </div>
-          <div
-            className={`${
-              width > 600 ? "flex" : "hidden"
-            } items-center justify-center mb-0`}
-          >
+        <>
+          <MainHeader chosenPage="Transactions" />
+          <div className="md:py-28 py-6 lg:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-gray-950">
+            <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-12">
+              <p className="text-gray-200 font-bold text-2xl text-center">
+                Essas é o resumo de suas transações {user?.name}
+              </p>
+              <DialogAndBottomSheet
+                triggerComponent={
+                  <button
+                    onClick={handleOpenModal}
+                    className="rounded-lg bg-amber-400 border-none py-4 px-4 cursor-pointer hover:opacity-70 transition-all ease-in-out duration-300"
+                  >
+                    <p className="text-gray-50 font-extrabold">
+                      Nova Transação
+                    </p>
+                  </button>
+                }
+              />
+            </div>
             <div
-              style={{ width: width > 768 ? 700 : 550, height: 500 }}
-              className="flex items-center justify-center self-center place-self-center"
+              className={`${
+                width > 600 ? "flex" : "hidden"
+              } items-center justify-center mb-0`}
             >
-              <Bar data={chartData} options={chartOptions} />
-            </div>
-          </div>
-          <div className="w-1/2 h-1/2 flex items-center justify-center self-center place-self-center"></div>
-          <div className="w-full flex lg:flex-row gap-14 mb-14 flex-col">
-            <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
-              <p className="text-xl font-bold text-gray-200">Total de gastos</p>
-              <div className="flex gap-2 items-center">
-                <p className="text-2xl text-red-500 font-extrabold">
-                  - {priceFormatter.format(2850.54)}
-                </p>
-                <ArrowCircleDown className="text-red-500" size={36} />
+              <div
+                style={{ width: width > 768 ? 700 : 550, height: 500 }}
+                className="flex items-center justify-center self-center place-self-center"
+              >
+                <Bar data={chartData} options={chartOptions} />
               </div>
             </div>
-            <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
-              <p className="text-xl font-bold text-gray-200">Balanço final</p>
-              <div className="flex gap-2 items-center">
-                <p className="text-2xl text-red-500 font-extrabold">
-                  - {priceFormatter.format(8002.54)}
+            <div className="w-1/2 h-1/2 flex items-center justify-center self-center place-self-center"></div>
+            <div className="w-full flex lg:flex-row gap-14 mb-14 flex-col">
+              <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
+                <p className="text-xl font-bold text-gray-200">
+                  Total de gastos
                 </p>
-                <ArrowCircleDown className="text-red-500" size={36} />
+                <div className="flex gap-2 items-center">
+                  <p className="text-2xl text-red-500 font-extrabold">
+                    - {priceFormatter.format(2850.54)}
+                  </p>
+                  <ArrowCircleDown className="text-red-500" size={36} />
+                </div>
+              </div>
+              <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
+                <p className="text-xl font-bold text-gray-200">Balanço final</p>
+                <div className="flex gap-2 items-center">
+                  <p className="text-2xl text-red-500 font-extrabold">
+                    - {priceFormatter.format(8002.54)}
+                  </p>
+                  <ArrowCircleDown className="text-red-500" size={36} />
+                </div>
+              </div>
+              <div className="w-full h-48 flex flex-col items-center justify-center gap-6 bg-gray-800 rounded-xl">
+                <p className="text-xl font-bold text-gray-200">
+                  Total recebido
+                </p>
+                <div className="flex gap-2 items-center">
+                  <p className="text-2xl text-amber-400 font-extrabold">
+                    {priceFormatter.format(2000.54)}
+                  </p>
+                  <ArrowCircleUp className="text-amber-500" size={36} />
+                </div>
               </div>
             </div>
-            <div className="w-full h-48 flex flex-col items-center justify-center gap-6 bg-gray-800 rounded-xl">
-              <p className="text-xl font-bold text-gray-200">Total recebido</p>
-              <div className="flex gap-2 items-center">
-                <p className="text-2xl text-amber-400 font-extrabold">
-                  {priceFormatter.format(2000.54)}
-                </p>
-                <ArrowCircleUp className="text-amber-500" size={36} />
-              </div>
+            <div className="w-full h-96 flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl">
+              {transactions.map((transaction) => (
+                <TransactionCard
+                  key={transaction.id}
+                  id={transaction.id}
+                  amount={transaction.amount}
+                  title={transaction.title}
+                  type={transaction.type}
+                  category={transaction.category}
+                  createdAt={transaction.createdAt}
+                />
+              ))}
             </div>
           </div>
-          <div className="w-full h-full flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl">
-            <TransactionCard
-              amount={1000}
-              id="1"
-              title="Teste"
-              type="PROFIT"
-              category="FOOD"
-            />
-            <TransactionCard
-              amount={213}
-              id="1"
-              title="Teste"
-              type="LOSS"
-              category="EDUCATION"
-            />
-            <TransactionCard
-              amount={10300}
-              id="1"
-              title="Teste"
-              type="PROFIT"
-              category="HEALTH"
-            />
-            <TransactionCard
-              amount={20202}
-              id="1"
-              title="Teste"
-              type="LOSS"
-              category="FIXED"
-            />
-            <TransactionCard
-              amount={4000}
-              id="1"
-              title="Teste"
-              type="PROFIT"
-              category="OTHERS"
-            />
-            <TransactionCard
-              amount={20000}
-              id="1"
-              title="Teste"
-              type="LOSS"
-              category="EDUCATION"
-            />
-            <TransactionCard
-              amount={1000}
-              id="1"
-              title="Teste"
-              type="PROFIT"
-              category="FIXED"
-            />
-            <TransactionCard
-              amount={1000}
-              id="1"
-              title="Teste"
-              type="PROFIT"
-              category="FUN"
-            />
-            <TransactionCard
-              amount={1000}
-              id="1"
-              title="Teste"
-              type="PROFIT"
-              category="FUN"
-            />
-            <TransactionCard
-              amount={1000}
-              id="1"
-              title="Teste"
-              type="PROFIT"
-              category="FOOD"
-            />
-          </div>
-        </div>
+        </>
       )}
     </>
   );
