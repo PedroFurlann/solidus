@@ -8,7 +8,7 @@ import { storageUserGet } from "@/storage/storageUser";
 import { AppError } from "@/utils/AppError";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import { Eye, EyeSlash } from "phosphor-react";
+import { Eye, EyeSlash, SignOut } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -25,7 +25,7 @@ export default function Profile() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { updateUserProfile, user, isLoadingUserStorageData } = useAuth();
+  const { updateUserProfile, user, isLoadingUserStorageData, signOut } = useAuth();
 
   const router = useRouter();
 
@@ -137,6 +137,33 @@ export default function Profile() {
     }
   }
 
+  async function handleSignOut() {
+    setLoading(true)
+    try {
+      await signOut();
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError
+        ? error.message
+        : "Não foi possível deslogar. Tente novamente mais tarde.";
+
+      toast.error(title, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
+      
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <>
       {loading || isLoadingUserStorageData ? (
@@ -147,7 +174,7 @@ export default function Profile() {
         <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col">
           <MainHeader chosenPage="Profile" style={{ marginBottom: 120 }} />
 
-          <div className="flex flex-col justify-center items-center md:px-8 px-4 py-8">
+          <div className="flex flex-col justify-center items-center md:px-8 px-4 pt-6 pb-8">
             <Avatar size="profileSize" style={{ marginBottom: 16 }} />
             <p className="text-amber-400 text-2xl font-extrabold mb-16 cursor-pointer hover:opacity-70 transition-all duration-300">
               Alterar Foto
@@ -223,6 +250,18 @@ export default function Profile() {
                 className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
               >
                 Atualizar Perfil
+              </button>
+
+              <button
+                type="submit"
+                onClick={handleSignOut}
+                className="bg-red-500 flex items-center justify-center w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md gap-2 py-4"
+              >
+                <p className="text-gray-100 text-md font-extrabold">
+                  Sair
+                </p>
+
+                <SignOut className="text-gray-100 font-bold" size={24} />
               </button>
             </div>
           </div>

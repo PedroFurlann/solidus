@@ -156,7 +156,7 @@ export default function Transactions() {
             family: "Roboto",
           },
           color: "#e4e4e7",
-          callback: function (value: number) {
+          callback: function (value: any) {
             return "R$ " + value;
           },
         },
