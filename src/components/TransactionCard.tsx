@@ -10,9 +10,10 @@ interface Props {
   type: string;
   createdAt: Dayjs;
   category?: string;
+  openModalDelete: () => void
 }
 
-export function TransactionCard({ id, title, amount, type, category, createdAt }: Props) {
+export function TransactionCard({ id, title, amount, type, category, createdAt, openModalDelete }: Props) {
 
   return (
     <div className={`w-full bg-gray-800 px-8 py-4 sm:flex-row flex-col sm:gap-0 gap-4 flex items-center sm:justify-between justify-center rounded-lg`}>
@@ -54,6 +55,7 @@ export function TransactionCard({ id, title, amount, type, category, createdAt }
           className="text-red-500 cursor-pointer hover:opacity-70 duration-300 transition-all ease-in-out"
           size={24}
           weight="fill"
+          onClick={openModalDelete}
         />
       </div>
     </div>

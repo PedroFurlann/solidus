@@ -28,6 +28,7 @@ import { TransactionDTO } from "@/dtos/TransactionDTO";
 import { AppError } from "@/utils/AppError";
 import { toast } from "react-toastify";
 import { storageTokenGet } from "@/storage/storageToken";
+import dayjs from "dayjs";
 
 ChartJS.register(
   CategoryScale,
@@ -44,12 +45,15 @@ interface FormData {
 }
 
 export default function Transactions() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalRegisterTransactionIsOpen, setModalRegisterTransactionIsOpen] =
+    useState(false);
   const [selectedType, setSelectedType] = useState("PROFIT");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [typeEmpty, setTypeEmpty] = useState(false);
   const [categoryEmpty, setCategoryEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modalDeleteTransactionIsOpen, setModalDeleteTransactionIsOpen] =
+    useState(false);
   const [transactions, setTransactions] = useState<TransactionDTO[]>([]);
 
   const { isMobile, width } = useWindowSize();
@@ -137,9 +141,7 @@ export default function Transactions() {
   };
 
   const validationSchema = yup.object().shape({
-    title: yup
-      .string()
-      .required("A descrição da transação é obrigatória"),
+    title: yup.string().required("A descrição da transação é obrigatória"),
     amount: yup
       .number()
       .required("Informe um valor válido!")
@@ -204,15 +206,15 @@ export default function Transactions() {
       type: selectedType,
       amount,
       category: selectedType === "LOSS" ? selectedCategory : null,
-    }
+    };
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      await api.post("/transactions", transactionData)
+      await api.post("/transactions", transactionData);
       fetchTransactions();
-      setModalIsOpen(false);
-      reset()
+      setModalRegisterTransactionIsOpen(false);
+      reset();
       toast.success("Transação criada com sucesso.", {
         position: "top-center",
         autoClose: 3000,
@@ -225,7 +227,7 @@ export default function Transactions() {
         },
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       const isAppError = error instanceof AppError;
       const title = isAppError
         ? error.message
@@ -245,12 +247,20 @@ export default function Transactions() {
     }
   }
 
-  function handleOpenModal() {
-    setModalIsOpen(true);
+  function handleOpenModalRegisterTransaction() {
+    setModalRegisterTransactionIsOpen(true);
   }
 
-  function handleCloseModal() {
-    setModalIsOpen(false);
+  function handleCloseModalRegisterTransaction() {
+    setModalRegisterTransactionIsOpen(false);
+  }
+
+  function handleOpenModalDeleteTransaction() {
+    setModalDeleteTransactionIsOpen(true);
+  }
+
+  function handleCloseModalDeleteTransaction() {
+    setModalDeleteTransactionIsOpen(false);
   }
 
   function verifyCategoryIsEmpty() {
@@ -269,7 +279,7 @@ export default function Transactions() {
     fetchTransactions();
   }, []);
 
-  function DialogAndBottomSheet({ triggerComponent }: any) {
+  function DialogRegisterTransaction({ triggerComponent }: any) {
     return (
       <>
         {triggerComponent}
@@ -277,7 +287,7 @@ export default function Transactions() {
           modal
           nested
           overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
-          open={modalIsOpen}
+          open={modalRegisterTransactionIsOpen}
         >
           <div
             className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
@@ -291,7 +301,7 @@ export default function Transactions() {
               <X
                 className="text-red-500 cursor-pointer hover:opacity-70 duration-300 ease-in-out transition-all"
                 size={32}
-                onClick={handleCloseModal}
+                onClick={handleCloseModalRegisterTransaction}
               />
             </div>
             <div className="w-full flex flex-col gap-8">
@@ -381,7 +391,7 @@ export default function Transactions() {
             </div>
             <div className="flex items-center justify-between gap-8">
               <button
-                onClick={handleCloseModal}
+                onClick={handleCloseModalRegisterTransaction}
                 className="py-4 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-gray-200  text-lg font-bold text-red-500"
               >
                 Cancelar
@@ -389,6 +399,95 @@ export default function Transactions() {
               <button
                 onClick={handleSubmit(handleRegisterTransaction)}
                 className="py-4 hover:bg-amber-400 rounded-lg hover:text-gray-200 w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </Popup>
+      </>
+    );
+  }
+
+  function DialogDeleteTransaction({ title, createdAt, id }: TransactionDTO) {
+    async function handleDeleteTransaction() {
+      setLoading(true);
+      try {
+        await api.delete(`/transactions/${id}`);
+        handleCloseModalDeleteTransaction();
+        fetchTransactions();
+        toast.success("Transação deletada com sucesso!", {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+          style: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontWeight: "bold",
+          },
+        });
+      } catch (error) {
+        console.log(error);
+        const isAppError = error instanceof AppError;
+        const title = isAppError
+          ? error.message
+          : "Não foi possível carregar as transações. Tente novamente mais tarde.";
+
+        toast.error(title, {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+          style: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontWeight: "bold",
+          },
+        });
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    return (
+      <>
+        <Popup
+          modal
+          nested
+          overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
+          open={modalDeleteTransactionIsOpen}
+        >
+          <div
+            className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
+            style={{
+              width:
+                width > 768 ? 700 : width > 500 ? 460 : width > 400 ? 380 : 320,
+            }}
+          >
+            <div className="flex items-center justify-between mb-8">
+              <p className="text-gray-200 text-lg font-bold">Excluir transação</p>
+              <X
+                className="text-red-500 cursor-pointer hover:opacity-70 duration-300 ease-in-out transition-all"
+                size={32}
+                onClick={handleCloseModalDeleteTransaction}
+              />
+            </div>
+            <p className="text-gray-200 text-lg font-bold mb-10">
+              Tem certeza que deseja remover a transação {title}, criada em{" "}
+              {dayjs(createdAt).format("DD/MM/YYYY HH:mm")}? Essa ação não
+              poderá ser revertida.
+            </p>
+            <div className="flex items-center justify-end gap-8">
+              <button
+                onClick={handleCloseModalDeleteTransaction}
+                className="py-2 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-gray-200  text-lg font-bold text-red-500"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleDeleteTransaction}
+                className="py-2 hover:bg-amber-400 rounded-lg hover:text-gray-200 w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
               >
                 Confirmar
               </button>
@@ -413,10 +512,10 @@ export default function Transactions() {
               <p className="text-gray-200 font-bold text-2xl text-center">
                 Essas é o resumo de suas transações {user?.name}
               </p>
-              <DialogAndBottomSheet
+              <DialogRegisterTransaction
                 triggerComponent={
                   <button
-                    onClick={handleOpenModal}
+                    onClick={handleOpenModalRegisterTransaction}
                     className="rounded-lg bg-amber-400 border-none py-4 px-4 cursor-pointer hover:opacity-70 transition-all ease-in-out duration-300"
                   >
                     <p className="text-gray-50 font-extrabold">
@@ -474,15 +573,28 @@ export default function Transactions() {
             </div>
             <div className="w-full h-96 flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl">
               {transactions.map((transaction) => (
-                <TransactionCard
-                  key={transaction.id}
-                  id={transaction.id}
-                  amount={transaction.amount}
-                  title={transaction.title}
-                  type={transaction.type}
-                  category={transaction.category}
-                  createdAt={transaction.createdAt}
-                />
+                <>
+                  <TransactionCard
+                    key={transaction.id}
+                    id={transaction.id}
+                    amount={transaction.amount}
+                    title={transaction.title}
+                    type={transaction.type}
+                    category={transaction.category}
+                    createdAt={transaction.createdAt}
+                    openModalDelete={handleOpenModalDeleteTransaction}
+                  />
+
+                  <DialogDeleteTransaction
+                    key={transaction.id}
+                    id={transaction.id}
+                    amount={transaction.amount}
+                    title={transaction.title}
+                    type={transaction.type}
+                    category={transaction.category}
+                    createdAt={transaction.createdAt}
+                  />
+                </>
               ))}
             </div>
           </div>
