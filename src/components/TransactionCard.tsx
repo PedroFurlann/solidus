@@ -104,7 +104,7 @@ export function TransactionCard({
               ? ": Comida"
               : category === "EDUCATION"
               ? ": Educação"
-              : category === "FUN"
+              : category === "FUNNY"
               ? ": Lazer"
               : category === "HEALTH"
               ? ": Saúde"

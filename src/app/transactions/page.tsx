@@ -68,6 +68,12 @@ export default function Transactions() {
 
   let totalProfit: number = 0;
   let totalLoss: number = 0;
+  let totalFoodLoss: number = 0;
+  let totalHealthLoss: number = 0;
+  let totalFunnyLoss: number = 0;
+  let totalEducationLoss: number = 0;
+  let totalFixedLoss: number = 0;
+  let totalOthersLoss: number = 0;
 
   transactions.forEach((transactions) => {
     if (transactions.type === "PROFIT") {
@@ -76,6 +82,30 @@ export default function Transactions() {
 
     if (transactions.type === "LOSS") {
       totalLoss += transactions.amount;
+    }
+
+    if (transactions.category === "FOOD") {
+      totalFoodLoss += transactions.amount
+    }
+
+    if(transactions.category === "HEALTH") {
+      totalHealthLoss += transactions.amount
+    }
+
+    if(transactions.category === "FUNNY") {
+      totalFunnyLoss += transactions.amount
+    }
+
+    if(transactions.category === "EDUCATION") {
+      totalEducationLoss += transactions.amount
+    }
+
+    if(transactions.category === "FIXED") {
+      totalFixedLoss += transactions.amount
+    }
+
+    if (transactions.category === "OTHERS") {
+      totalOthersLoss += transactions.amount
     }
   });
 
@@ -126,7 +156,7 @@ export default function Transactions() {
             family: "Roboto",
           },
           color: "#e4e4e7",
-          callback: function (value: any) {
+          callback: function (value: number) {
             return "R$ " + value;
           },
         },
@@ -145,7 +175,14 @@ export default function Transactions() {
     datasets: [
       {
         label: "Gastos R$",
-        data: [10, 20.55, 30, 40, 50, 60],
+        data: [
+          -totalFoodLoss, 
+          -totalHealthLoss,
+          -totalFunnyLoss,
+          -totalEducationLoss, 
+          -totalFixedLoss,
+          -totalOthersLoss
+        ],
         backgroundColor: "rgba(251, 191, 36, 1)", // Cor das barras
         borderColor: "rgba(245, 158, 11, 1)", // Cor da borda das barras
         borderWidth: 4, // Largura da borda das barras
@@ -383,7 +420,7 @@ export default function Transactions() {
                 <option value="">Selecione a categoria da sua transação</option>
                 <option value="FOOD">Comida</option>
                 <option value="HEALTH">Saúde</option>
-                <option value="FUN">Lazer</option>
+                <option value="FUNNY">Lazer</option>
                 <option value="EDUCATION">Educação</option>
                 <option value="FIXED">Gastos Fixos</option>
                 <option value="OTHERS">Outros</option>
