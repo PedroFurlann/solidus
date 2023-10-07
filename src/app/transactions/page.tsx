@@ -5,7 +5,7 @@ import { TransactionCard } from "@/components/TransactionCard";
 import useWindowSize from "@/hooks/useWindowsSize";
 import { priceFormatter } from "@/utils/priceFormatter";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
+import { ArrowCircleDown, ArrowCircleUp, MinusCircle, X } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
@@ -52,8 +52,6 @@ export default function Transactions() {
   const [typeEmpty, setTypeEmpty] = useState(false);
   const [categoryEmpty, setCategoryEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [modalDeleteTransactionIsOpen, setModalDeleteTransactionIsOpen] =
-    useState(false);
   const [transactions, setTransactions] = useState<TransactionDTO[]>([]);
 
   const { isMobile, width } = useWindowSize();
@@ -67,6 +65,21 @@ export default function Transactions() {
   if (!user2) {
     router.push("login");
   }
+
+  let totalProfit: number = 0;
+  let totalLoss: number = 0;
+
+  transactions.forEach((transactions) => {
+    if (transactions.type === "PROFIT") {
+      totalProfit += transactions.amount;
+    }
+
+    if (transactions.type === "LOSS") {
+      totalLoss += transactions.amount;
+    }
+  });
+
+  const finalAmount: number = totalLoss + totalProfit;
 
   const categories = [
     "Comida",
@@ -255,14 +268,6 @@ export default function Transactions() {
     setModalRegisterTransactionIsOpen(false);
   }
 
-  function handleOpenModalDeleteTransaction() {
-    setModalDeleteTransactionIsOpen(true);
-  }
-
-  function handleCloseModalDeleteTransaction() {
-    setModalDeleteTransactionIsOpen(false);
-  }
-
   function verifyCategoryIsEmpty() {
     if (selectedType === "") {
       setCategoryEmpty(true);
@@ -409,94 +414,45 @@ export default function Transactions() {
     );
   }
 
-  function DialogDeleteTransaction({ title, createdAt, id }: TransactionDTO) {
-    async function handleDeleteTransaction() {
-      setLoading(true);
-      try {
-        await api.delete(`/transactions/${id}`);
-        handleCloseModalDeleteTransaction();
-        fetchTransactions();
-        toast.success("Transação deletada com sucesso!", {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "dark",
-          style: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontWeight: "bold",
-          },
-        });
-      } catch (error) {
-        console.log(error);
-        const isAppError = error instanceof AppError;
-        const title = isAppError
-          ? error.message
-          : "Não foi possível carregar as transações. Tente novamente mais tarde.";
+  async function handleDeleteTransaction(id: number) {
+    setLoading(true);
+    try {
+      await api.delete(`/transactions/${id}`);
+      fetchTransactions();
+      toast.success("Transação deletada com sucesso!", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      const isAppError = error instanceof AppError;
+      const title = isAppError
+        ? error.message
+        : "Não foi possível carregar as transações. Tente novamente mais tarde.";
 
-        toast.error(title, {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "dark",
-          style: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontWeight: "bold",
-          },
-        });
-      } finally {
-        setLoading(false);
-      }
+      toast.error(title, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        style: {
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+        },
+      });
+    } finally {
+      setLoading(false);
     }
-
-    return (
-      <>
-        <Popup
-          modal
-          nested
-          overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
-          open={modalDeleteTransactionIsOpen}
-        >
-          <div
-            className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
-            style={{
-              width:
-                width > 768 ? 700 : width > 500 ? 460 : width > 400 ? 380 : 320,
-            }}
-          >
-            <div className="flex items-center justify-between mb-8">
-              <p className="text-gray-200 text-lg font-bold">Excluir transação</p>
-              <X
-                className="text-red-500 cursor-pointer hover:opacity-70 duration-300 ease-in-out transition-all"
-                size={32}
-                onClick={handleCloseModalDeleteTransaction}
-              />
-            </div>
-            <p className="text-gray-200 text-lg font-bold mb-10">
-              Tem certeza que deseja remover a transação {title}, criada em{" "}
-              {dayjs(createdAt).format("DD/MM/YYYY HH:mm")}? Essa ação não
-              poderá ser revertida.
-            </p>
-            <div className="flex items-center justify-end gap-8">
-              <button
-                onClick={handleCloseModalDeleteTransaction}
-                className="py-2 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-gray-200  text-lg font-bold text-red-500"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={handleDeleteTransaction}
-                className="py-2 hover:bg-amber-400 rounded-lg hover:text-gray-200 w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
-              >
-                Confirmar
-              </button>
-            </div>
-          </div>
-        </Popup>
-      </>
-    );
   }
+    
 
   return (
     <>
@@ -544,57 +500,75 @@ export default function Transactions() {
                   Total de gastos
                 </p>
                 <div className="flex gap-2 items-center">
-                  <p className="text-2xl text-red-500 font-extrabold">
-                    - {priceFormatter.format(2850.54)}
+                  <p
+                    className={`text-2xl ${
+                      totalLoss < 0 ? "text-red-500" : "text-gray-400"
+                    } font-extrabold`}
+                  >
+                    {priceFormatter.format(totalLoss).replace("-", "- ")}
                   </p>
-                  <ArrowCircleDown className="text-red-500" size={36} />
+                  {totalLoss < 0 ? (
+                    <ArrowCircleDown className="text-red-500" size={36} />
+                  ) : (
+                    <MinusCircle className="text-gray-400" size={36} />
+                  )}
                 </div>
               </div>
               <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
-                <p className="text-xl font-bold text-gray-200">Balanço final</p>
+                <p className="text-xl font-bold text-gray-200">Balanço geral</p>
                 <div className="flex gap-2 items-center">
-                  <p className="text-2xl text-red-500 font-extrabold">
-                    - {priceFormatter.format(8002.54)}
+                  <p
+                    className={`text-2xl ${
+                      finalAmount > 0
+                        ? "text-amber-400"
+                        : finalAmount === 0
+                        ? "text-gray-400"
+                        : "text-red-500"
+                    }  font-extrabold`}
+                  >
+                    {priceFormatter.format(finalAmount).replace("-", "- ")}
                   </p>
-                  <ArrowCircleDown className="text-red-500" size={36} />
+                  {finalAmount < 0 ? (
+                    <ArrowCircleDown className="text-red-500" size={36} />
+                  ) : finalAmount === 0 ? (
+                    <MinusCircle className="text-gray-400" size={36} />
+                  ) : (
+                    <ArrowCircleUp className="text-amber-400" size={36} />
+                  )}
                 </div>
               </div>
               <div className="w-full h-48 flex flex-col items-center justify-center gap-6 bg-gray-800 rounded-xl">
                 <p className="text-xl font-bold text-gray-200">
-                  Total recebido
+                  Total de ganhos
                 </p>
                 <div className="flex gap-2 items-center">
-                  <p className="text-2xl text-amber-400 font-extrabold">
-                    {priceFormatter.format(2000.54)}
+                  <p
+                    className={`text-2xl ${
+                      totalProfit > 0 ? "text-amber-400" : "text-gray-400"
+                    } font-extrabold`}
+                  >
+                    {priceFormatter.format(totalProfit)}
                   </p>
-                  <ArrowCircleUp className="text-amber-500" size={36} />
+                  {totalProfit > 0 ? (
+                    <ArrowCircleUp className="text-amber-500" size={36} />
+                  ) : (
+                    <MinusCircle className="text-gray-400" size={36} />
+                  )}
                 </div>
               </div>
             </div>
             <div className="w-full h-96 flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl">
               {transactions.map((transaction) => (
-                <>
-                  <TransactionCard
-                    key={transaction.id}
-                    id={transaction.id}
-                    amount={transaction.amount}
-                    title={transaction.title}
-                    type={transaction.type}
-                    category={transaction.category}
-                    createdAt={transaction.createdAt}
-                    openModalDelete={handleOpenModalDeleteTransaction}
-                  />
-
-                  <DialogDeleteTransaction
-                    key={transaction.id}
-                    id={transaction.id}
-                    amount={transaction.amount}
-                    title={transaction.title}
-                    type={transaction.type}
-                    category={transaction.category}
-                    createdAt={transaction.createdAt}
-                  />
-                </>
+                <TransactionCard
+                  key={transaction.id}
+                  id={transaction.id}
+                  amount={transaction.amount}
+                  title={transaction.title}
+                  type={transaction.type}
+                  category={transaction.category}
+                  createdAt={transaction.createdAt}
+                  onDelete={() => handleDeleteTransaction(transaction.id)}
+                />
               ))}
             </div>
           </div>
