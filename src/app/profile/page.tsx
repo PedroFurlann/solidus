@@ -96,13 +96,12 @@ export default function Profile() {
     try {
       const userUpdated = user2;
 
-
       userUpdated.name = name;
 
       await api.patch("/user", userData);
       await updateUserProfile(userUpdated);
-      router.push("transactions")
       reset();
+      router.push("transactions")
 
       toast.success("Usuário atualizado com sucesso.", {
         position: "top-center",
@@ -182,7 +181,7 @@ export default function Profile() {
             <div className="flex flex-col gap-6 items-center justify-center md:w-80">
               <input
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-                type="email"
+                type="text"
                 placeholder="Nome"
                 {...register("name")}
               />

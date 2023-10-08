@@ -163,12 +163,6 @@ export default function Login() {
               >
                 Entrar
               </button>
-              <div className="cursor-pointer w-full items-center justify-center rounded-md py-4 bg-white flex gap-4 transition-all ease-in-out duration-300 hover:opacity-70">
-                <Image alt="Google icon" src={GoogleIcon} className="w-6 h-6" />
-                <p className="font-medium text-gray-800">
-                  Entrar com a conta Google
-                </p>
-              </div>
               <p className="font-bold text-lg text-gray-200">
                 Ainda não tem conta?{" "}
                 <Link
@@ -176,6 +170,15 @@ export default function Login() {
                   className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300"
                 >
                   Cadastre-se aqui
+                </Link>
+              </p>
+              <p className="font-bold text-lg text-gray-200">
+                Esqueceu sua senha?{" "}
+                <Link
+                  href="/forgotPassword"
+                  className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300"
+                >
+                  Clique aqui para recuperar.
                 </Link>
               </p>
             </div>
