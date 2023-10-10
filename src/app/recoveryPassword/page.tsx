@@ -35,7 +35,13 @@ export default function ForgotPassword() {
 
   const searchParams = useSearchParams();
 
-  const email = searchParams?.get("email")
+  const param = searchParams?.get("asdfghiieiiasmdiwmdwamdiwadwamkd");
+
+  if (param) {
+    var email = atob(param)
+  }
+
+
 
   const router = useRouter()
 
@@ -53,6 +59,8 @@ export default function ForgotPassword() {
   };
 
   async function handleRecoveryPassword({ new_password }: FormData) {
+    setLoading(true)
+
     try {
       await api.post("/reset-password", {
         email,
@@ -88,6 +96,8 @@ export default function ForgotPassword() {
           fontWeight: "bold",
         },
       });
+    } finally {
+      setLoading(false)
     }
   }
 
