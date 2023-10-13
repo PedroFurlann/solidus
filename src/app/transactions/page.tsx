@@ -356,9 +356,9 @@ export default function Transactions() {
                   <CurrencyInput
                     decimalSeparator=","
                     placeholder="R$ 0,00"
+                    allowDecimals={true}
                     decimalsLimit={2}
                     prefix="R$ "
-                    allowDecimals={true}
                     className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                     value={field.value}
                     onValueChange={(value) => {
@@ -510,7 +510,9 @@ export default function Transactions() {
     if (!user2 && typeof window !== "undefined") {
       router.push("login");
     } else {
-      fetchTransactions();
+      setTimeout(() => {
+        fetchTransactions()
+      }, 1)
     }
   }, []);
 
