@@ -64,6 +64,10 @@ export default function Transactions() {
 
   const user2 = typeof window !== "undefined" && storageUserGet();
 
+  if (!user2 && typeof window !== "undefined") {
+    router.push("login");
+  }
+
   let totalProfit: number = 0;
   let totalLoss: number = 0;
   let totalFoodLoss: number = 0;
@@ -507,13 +511,13 @@ export default function Transactions() {
   }
 
   useEffect(() => {
-    if (!user2 && typeof window !== "undefined") {
-      router.push("login");
-    } else {
+    // if (!user2 && typeof window !== "undefined") {
+    //   router.push("login");
+    // } else {
       setTimeout(() => {
         fetchTransactions()
       }, 1)
-    }
+
   }, []);
 
   useEffect(() => {
@@ -626,11 +630,11 @@ export default function Transactions() {
             <div
               className={`
                 w-full h-96 flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl
-                ${!transactions && "items-center"}
-                ${!transactions && "justify-center"}
+                ${transactions && transactions.length === 0 && "items-center"}
+                ${transactions && transactions.length === 0 && "justify-center"}
               `}
             >
-              {transactions ? (
+              {transactions && transactions.length > 0 ? (
                 <>
                   {transactions.map((transaction) => (
                     <TransactionCard

@@ -34,6 +34,10 @@ export default function Register() {
 
   const user = storageUserGet();
 
+  if (user && typeof window !== "undefined") {
+    router.push("transactions");
+  }
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -111,11 +115,11 @@ export default function Register() {
     }
   }
 
-  useEffect(() => {
-    if (user && typeof window !== undefined) {
-      router.push("transactions");
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (user && typeof window !== undefined) {
+  //     router.push("transactions");
+  //   }
+  // }, [])
 
   return (
     <>

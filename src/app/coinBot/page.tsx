@@ -17,11 +17,16 @@ export default function CoinBot() {
 
   const user = storageUserGet()
 
-  useEffect(() => {
-    if (!user && typeof window !== "undefined") {
-      router.push("login");
-    }
-  }, [])
+
+  if (!user && typeof window !== "undefined") {
+    router.push("login");
+  }
+
+  // useEffect(() => {
+  //   if (!user && typeof window !== "undefined") {
+  //     router.push("login");
+  //   }
+  // }, [])
 
   return (
     <>

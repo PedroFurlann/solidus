@@ -35,6 +35,10 @@ export default function Profile() {
     setShowPassword(!showPassword);
   };
 
+  if (!user2) {
+    router.push("login");
+  }
+
   const validationSchema = yup.object().shape({
     name: yup
       .string()
@@ -162,11 +166,11 @@ export default function Profile() {
     }
   }
 
-  useEffect(() => {
-    if (!user2 && typeof window !== "undefined") {
-      router.push("login");
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!user2 && typeof window !== "undefined") {
+  //     router.push("login");
+  //   }
+  // }, [])
 
   return (
     <>

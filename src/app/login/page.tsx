@@ -34,6 +34,10 @@ export default function Login() {
 
   const user2 = storageUserGet()
 
+  if (user2 && typeof window !== "undefined") {
+    router.push("transactions");
+  }
+
   const validationSchema = yup.object().shape({
     email: yup
       .string()
@@ -93,11 +97,11 @@ export default function Login() {
     }
   }
 
-  useEffect(() => {
-    if (user2 && typeof window !== undefined) {
-      router.push("transactions");
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (user2 && typeof window !== undefined) {
+  //     router.push("transactions");
+  //   }
+  // }, [])
 
   return (
     <>
