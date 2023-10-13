@@ -17,8 +17,8 @@ import * as yup from "yup";
 interface FormData {
   name: string;
   email: string;
-  new_password: string;
-  confirm_new_password: string;
+  new_password: string | undefined;
+  confirm_new_password: string | undefined;
 }
 
 export default function Profile() {
@@ -31,10 +31,6 @@ export default function Profile() {
 
   const user2 = storageUserGet();
 
-  if (!user2) {
-    router.push("login");
-  }
-
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -43,6 +39,7 @@ export default function Profile() {
     name: yup
       .string()
       .trim()
+      .required()
       .min(6, "O nome deve conter no mímimo 6 caracteres."),
     email: yup
       .string()
@@ -77,7 +74,7 @@ export default function Profile() {
       password: new_password || null,
     };
 
-    if(userData.password !== null && new_password.length < 6) {
+    if(userData.password !== null && new_password && new_password.length < 6) {
       return toast.error("A senha deve ter no mínimo 6 caracteres.", {
         position: "top-center",
         autoClose: 3000,
@@ -96,10 +93,12 @@ export default function Profile() {
     try {
       const userUpdated = user2;
 
-      userUpdated.name = name;
+      userUpdated ? userUpdated.name = name : undefined;
 
       await api.patch("/user", userData);
-      await updateUserProfile(userUpdated);
+      if (userUpdated) {
+        await updateUserProfile(userUpdated);
+      }
       reset();
       router.push("transactions")
 
@@ -162,6 +161,12 @@ export default function Profile() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (!user2 && typeof window !== "undefined") {
+      router.push("login");
+    }
+  }, [])
 
   return (
     <>

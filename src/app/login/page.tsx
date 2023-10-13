@@ -3,7 +3,7 @@ import { LoginHeader } from "@/components/LoginHeader";
 import Lottie from "lottie-react";
 import moneyAnimation from "@/lib/lottie/money.json";
 import useWindowSize from "@/hooks/useWindowsSize";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Eye, EyeSlash } from "phosphor-react";
 import GoogleIcon from "../../../public/googlcon.svg";
 import Image from "next/image";
@@ -33,10 +33,6 @@ export default function Login() {
   const router = useRouter();
 
   const user2 = storageUserGet()
-
-  if (user2) {
-    router.push("transactions");
-  }
 
   const validationSchema = yup.object().shape({
     email: yup
@@ -96,6 +92,12 @@ export default function Login() {
       })
     }
   }
+
+  useEffect(() => {
+    if (user2 && typeof window !== undefined) {
+      router.push("transactions");
+    }
+  }, [])
 
   return (
     <>

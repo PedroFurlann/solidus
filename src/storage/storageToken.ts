@@ -1,12 +1,20 @@
 export function storageTokenSave(token: { token: string }) {
-  localStorage.setItem('token', token.token);
+  if (typeof window !== "undefined") {
+  }
+
+  localStorage.setItem("token", token.token);
 }
 
-export function storageTokenGet(): { token: string } | null {
-  const token = localStorage.getItem('token');
-  return token ? { token } : null;
+export function storageTokenGet(): { token: string } | null | undefined {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    return token ? { token } : null;
+  }
+  
 }
 
 export function storageTokenRemove() {
-  localStorage.removeItem('token');
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token");
+  }
 }

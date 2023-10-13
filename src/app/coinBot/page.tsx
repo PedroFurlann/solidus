@@ -8,6 +8,7 @@ import { storageUserGet } from "@/storage/storageUser";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { MainLoading } from "@/components/MainLoading";
+import { useEffect } from "react";
 
 export default function CoinBot() {
   const { isLoadingUserStorageData } = useAuth();
@@ -16,9 +17,11 @@ export default function CoinBot() {
 
   const user = storageUserGet()
 
-  if (!user) {
-    router.push("login");
-  }
+  useEffect(() => {
+    if (!user && typeof window !== "undefined") {
+      router.push("login");
+    }
+  }, [])
 
   return (
     <>

@@ -4,7 +4,7 @@ import Lottie from "lottie-react";
 import goldBarAnimation from "@/lib/lottie/goldBar.json";
 import useWindowSize from "@/hooks/useWindowsSize";
 import { Eye, EyeSlash } from "phosphor-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -20,7 +20,7 @@ interface FormData {
   name: string;
   email: string;
   password: string;
-  confirm_password: string;
+  confirm_password: string | undefined;
 }
 
 export default function Register() {
@@ -33,10 +33,6 @@ export default function Register() {
   const { isLoadingUserStorageData, signIn } = useAuth();
 
   const user = storageUserGet();
-
-  if (user) {
-    router.push("transactions");
-  }
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -114,6 +110,12 @@ export default function Register() {
       });
     }
   }
+
+  useEffect(() => {
+    if (user && typeof window !== undefined) {
+      router.push("transactions");
+    }
+  }, [])
 
   return (
     <>

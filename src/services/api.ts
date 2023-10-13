@@ -4,6 +4,7 @@ import axios, { AxiosInstance } from "axios";
 
 type SignOut = () => void;
 
+
 type APIInstanceProps = AxiosInstance & {
   registerInterceptTokenManager: (signOut: SignOut) => () => void;
 };
@@ -15,13 +16,14 @@ const api = axios.create({
 api.registerInterceptTokenManager = (singOut) => {
   const interceptTokenManager = api.interceptors.response.use(
     (response) => response,
-    async (requestError) => {
+    (requestError) => {
       const token = storageTokenGet();
 
-      if (token) {
+      console.log("aquii")
+      if(token) {
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
-
+      
       if (requestError.response?.status === 401) {
         if (
           requestError.response.data?.message ===

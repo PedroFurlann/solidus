@@ -6,8 +6,8 @@ import useWindowSize from "@/hooks/useWindowsSize";
 import { priceFormatter } from "@/utils/priceFormatter";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ArrowCircleDown, ArrowCircleUp, MinusCircle, X } from "phosphor-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useCallback, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import Popup from "reactjs-popup";
 import * as yup from "yup";
 import {
@@ -28,7 +28,7 @@ import { TransactionDTO } from "@/dtos/TransactionDTO";
 import { AppError } from "@/utils/AppError";
 import { toast } from "react-toastify";
 import { storageTokenGet } from "@/storage/storageToken";
-import dayjs from "dayjs";
+import CurrencyInput from "react-currency-input-field";
 
 ChartJS.register(
   CategoryScale,
@@ -54,17 +54,15 @@ export default function Transactions() {
   const [loading, setLoading] = useState(false);
   const [transactions, setTransactions] = useState<TransactionDTO[]>([]);
 
-  const { isMobile, width } = useWindowSize();
+  const { width } = useWindowSize();
 
-  const { isLoadingUserStorageData, signOut, user } = useAuth();
+  const { isLoadingUserStorageData, user } = useAuth();
 
   const router = useRouter();
 
-  const user2 = storageUserGet();
+  const token = typeof window !== "undefined" && storageTokenGet();
 
-  if (!user2) {
-    router.push("login");
-  }
+  const user2 = typeof window !== "undefined" && storageUserGet();
 
   let totalProfit: number = 0;
   let totalLoss: number = 0;
@@ -75,39 +73,40 @@ export default function Transactions() {
   let totalFixedLoss: number = 0;
   let totalOthersLoss: number = 0;
 
-  transactions.forEach((transactions) => {
-    if (transactions.type === "PROFIT") {
-      totalProfit += transactions.amount;
-    }
+  transactions &&
+    transactions.forEach((transactions) => {
+      if (transactions.type === "PROFIT") {
+        totalProfit += transactions.amount;
+      }
 
-    if (transactions.type === "LOSS") {
-      totalLoss += transactions.amount;
-    }
+      if (transactions.type === "LOSS") {
+        totalLoss += transactions.amount;
+      }
 
-    if (transactions.category === "FOOD") {
-      totalFoodLoss += transactions.amount
-    }
+      if (transactions.category === "FOOD") {
+        totalFoodLoss += transactions.amount;
+      }
 
-    if(transactions.category === "HEALTH") {
-      totalHealthLoss += transactions.amount
-    }
+      if (transactions.category === "HEALTH") {
+        totalHealthLoss += transactions.amount;
+      }
 
-    if(transactions.category === "FUNNY") {
-      totalFunnyLoss += transactions.amount
-    }
+      if (transactions.category === "FUNNY") {
+        totalFunnyLoss += transactions.amount;
+      }
 
-    if(transactions.category === "EDUCATION") {
-      totalEducationLoss += transactions.amount
-    }
+      if (transactions.category === "EDUCATION") {
+        totalEducationLoss += transactions.amount;
+      }
 
-    if(transactions.category === "FIXED") {
-      totalFixedLoss += transactions.amount
-    }
+      if (transactions.category === "FIXED") {
+        totalFixedLoss += transactions.amount;
+      }
 
-    if (transactions.category === "OTHERS") {
-      totalOthersLoss += transactions.amount
-    }
-  });
+      if (transactions.category === "OTHERS") {
+        totalOthersLoss += transactions.amount;
+      }
+    });
 
   const finalAmount: number = totalLoss + totalProfit;
 
@@ -176,12 +175,12 @@ export default function Transactions() {
       {
         label: "Gastos R$",
         data: [
-          -totalFoodLoss, 
+          -totalFoodLoss,
           -totalHealthLoss,
           -totalFunnyLoss,
-          -totalEducationLoss, 
+          -totalEducationLoss,
           -totalFixedLoss,
-          -totalOthersLoss
+          -totalOthersLoss,
         ],
         backgroundColor: "rgba(251, 191, 36, 1)", // Cor das barras
         borderColor: "rgba(245, 158, 11, 1)", // Cor da borda das barras
@@ -232,12 +231,10 @@ export default function Transactions() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
-    defaultValues: {
-      amount: 0,
-    },
   });
 
   async function handleRegisterTransaction({ title, amount }: FormData) {
@@ -265,6 +262,8 @@ export default function Transactions() {
       fetchTransactions();
       setModalRegisterTransactionIsOpen(false);
       reset();
+      setSelectedType("PROFIT");
+      setSelectedCategory("");
       toast.success("Transação criada com sucesso.", {
         position: "top-center",
         autoClose: 3000,
@@ -313,14 +312,6 @@ export default function Transactions() {
     }
   }
 
-  useEffect(() => {
-    verifyCategoryIsEmpty();
-  }, [selectedCategory]);
-
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
-
   function DialogRegisterTransaction({ triggerComponent }: any) {
     return (
       <>
@@ -358,11 +349,36 @@ export default function Transactions() {
                   {errors.title.message}
                 </p>
               )}
-              <input
-                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-                type="text"
-                placeholder="Digite o valor da transação"
-                {...register("amount")}
+              <Controller
+                name="amount"
+                control={control}
+                render={({ field }) => (
+                  <CurrencyInput
+                    decimalSeparator=","
+                    placeholder="R$ 0,00"
+                    decimalsLimit={2}
+                    prefix="R$ "
+                    allowDecimals={true}
+                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                    value={field.value}
+                    onValueChange={(value) => {
+                      if (value === null || value === "") {
+                        field.onChange(null);
+                      } else {
+                        // Se o valor não for vazio, processe-o e atualize o campo
+                        value &&
+                          field.onChange(
+                            parseFloat(
+                              value
+                                .replace("R$ ", "")
+                                .replace(",", "")
+                            )
+                          );
+                      }
+                    }}
+                    id="amount"
+                  />
+                )}
               />
               {errors.amount && (
                 <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
@@ -489,7 +505,18 @@ export default function Transactions() {
       setLoading(false);
     }
   }
-    
+
+  useEffect(() => {
+    if (!user2 && typeof window !== "undefined") {
+      router.push("login");
+    } else {
+      fetchTransactions();
+    }
+  }, []);
+
+  useEffect(() => {
+    verifyCategoryIsEmpty();
+  }, [selectedCategory]);
 
   return (
     <>
@@ -594,19 +621,34 @@ export default function Transactions() {
                 </div>
               </div>
             </div>
-            <div className="w-full h-96 flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl">
-              {transactions.map((transaction) => (
-                <TransactionCard
-                  key={transaction.id}
-                  id={transaction.id}
-                  amount={transaction.amount}
-                  title={transaction.title}
-                  type={transaction.type}
-                  category={transaction.category}
-                  createdAt={transaction.createdAt}
-                  onDelete={() => handleDeleteTransaction(transaction.id)}
-                />
-              ))}
+            <div
+              className={`
+                w-full h-96 flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl
+                ${!transactions && "items-center"}
+                ${!transactions && "justify-center"}
+              `}
+            >
+              {transactions ? (
+                <>
+                  {transactions.map((transaction) => (
+                    <TransactionCard
+                      key={transaction.id}
+                      id={transaction.id}
+                      amount={transaction.amount}
+                      title={transaction.title}
+                      type={transaction.type}
+                      category={transaction.category}
+                      createdAt={transaction.createdAt}
+                      onDelete={() => handleDeleteTransaction(transaction.id)}
+                    />
+                  ))}
+                </>
+              ) : (
+                <p className="md:text-2xl text-lg text-center text-gray-200 font-bold">
+                  {" "}
+                  Voce ainda não tem nenhuma transação. Que tal cadastrar uma?
+                </p>
+              )}
             </div>
           </div>
         </>

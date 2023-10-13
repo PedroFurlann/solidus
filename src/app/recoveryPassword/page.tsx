@@ -6,16 +6,16 @@ import { Eye, EyeSlash } from "phosphor-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { useSearchParams } from 'next/navigation'
 import { api } from "@/services/api";
 import { AppError } from "@/utils/AppError";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { MainLoading } from "@/components/MainLoading";
+import { useSearchParams } from "next/navigation";
 
 interface FormData {
   new_password: string;
-  confirm_new_password: string;
+  confirm_new_password: string | undefined;
 }
 
 export default function ForgotPassword() {
