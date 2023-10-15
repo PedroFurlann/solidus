@@ -8,8 +8,8 @@ import { RootState } from "../store/store"; // Importando o RootState corretamen
 // Importando o componente de loading
 
 export function ChatBot() {
-  const chatHistory = useSelector((state: RootState) => state.chat.chatHistory); // Utilizando o RootState corretamente
-  const loading = useSelector((state: RootState) => state.chat.loading); // Utilizando o RootState corretamente
+  const chatHistory = useSelector((state: RootState) => state.chat.chatHistory); 
+  const loading = useSelector((state: RootState) => state.chat.loading);
   const dispatch = useDispatch();
   const [inputMessage, setInputMessage] = useState<string>("");
 
@@ -32,7 +32,7 @@ export function ChatBot() {
     }
   };
   return (
-    <div className="py-4 pl-8 pr-4 bg-gray-200 shadow-md h-2/3 w-2/3 flex flex-col justify-center items-center rounded-2xl">
+    <div className="py-4 pl-8 pr-4 bg-gray-950 border-amber-400 border-2 shadow-md h-2/3 w-2/3 flex flex-col justify-center items-center rounded-2xl">
       <div className="overflow-y-auto h-96 w-full">
         {chatHistory.map((entry: ChatMessage, index: number) => (
           <div
@@ -56,7 +56,7 @@ export function ChatBot() {
           value={inputMessage}
           onKeyDown={handleKeyDown}
           onChange={handleInputMessageChange}
-          className="border flex-1 rounded-md px-2 py-1 focus:outline-none"
+          className="border flex-1 rounded-md px-2 py-1 focus:outline-none w-full"
           placeholder="Digite sua mensagem..."
         />
         <button

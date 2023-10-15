@@ -94,10 +94,10 @@ export function TransactionCard({
 
   return (
     <div
-      className={`w-full bg-gray-800 px-8 py-4 sm:flex-row flex-col sm:gap-0 gap-4 flex items-center sm:justify-between justify-center rounded-lg`}
+      className={`w-[calc(100% - 20px)] mr-4 bg-gray-800 px-8 py-4 md:flex-row flex-col md:gap-0 gap-5 flex items-center sm:justify-between justify-center rounded-lg`}
     >
       <div className="flex sm:gap-6 gap-4">
-        <p className="text-lg font-extrabold text-gray-200">
+        <p className="text-lg font-extrabold text-gray-200 text-center">
           {title}
           {type === "LOSS"
             ? category === "FOOD"
@@ -113,6 +113,24 @@ export function TransactionCard({
               : ": Outros"
             : ""}
         </p>
+        {width > 1100 && (
+          <div className="flex gap-1">
+            <p
+              className={`text-lg font-extrabold ${
+                type === "PROFIT" ? "text-amber-500" : "text-red-500"
+              }`}
+            >
+              {priceFormatter.format(amount).replace("-", "- ")}
+            </p>
+            {type === "PROFIT" ? (
+              <ArrowUp className="text-amber-400" weight="bold" size={24} />
+            ) : (
+              <ArrowDown className="text-red-500" weight="bold" size={24} />
+            )}
+          </div>
+        )}
+      </div>
+      {width < 1100 && (
         <div className="flex gap-1">
           <p
             className={`text-lg font-extrabold ${
@@ -127,7 +145,7 @@ export function TransactionCard({
             <ArrowDown className="text-red-500" weight="bold" size={24} />
           )}
         </div>
-      </div>
+      )}
       <div className="flex gap-6 items-center">
         <p className="text-gray-200 text-lg font-extrabold">
           {dayjs(createdAt).format("DD/MM/YYYY HH:mm")}

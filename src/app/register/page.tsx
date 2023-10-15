@@ -20,7 +20,7 @@ interface FormData {
   name: string;
   email: string;
   password: string;
-  confirm_password: string | undefined;
+  confirm_password?: string | undefined;
 }
 
 export default function Register() {
@@ -45,6 +45,7 @@ export default function Register() {
   const validationSchema = yup.object().shape({
     name: yup
       .string()
+      .trim()
       .required("O nome é obrigatório")
       .min(6, "O nome deve conter no mímimo 6 caracteres"),
     email: yup

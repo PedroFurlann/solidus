@@ -194,7 +194,7 @@ export default function Transactions() {
   };
 
   const validationSchema = yup.object().shape({
-    title: yup.string().required("A descrição da transação é obrigatória"),
+    title: yup.string().trim().required("A descrição da transação é obrigatória").min(6, "O título da transação deve ter no mínimo 6 caracteres."),
     amount: yup
       .number()
       .required("Informe um valor válido!")
@@ -629,11 +629,12 @@ export default function Transactions() {
             </div>
             <div
               className={`
-                w-full h-96 flex flex-col py-8 overflow-auto bg-gray-900 md:px-8 px-4 gap-8 rounded-xl
+                w-full h-96 flex flex-col py-8 bg-gray-900 px-4 rounded-xl
                 ${transactions && transactions.length === 0 && "items-center"}
                 ${transactions && transactions.length === 0 && "justify-center"}
               `}
             >
+              <div className="overflow-y-auto w-full h-96 flex flex-col gap-8 ">
               {transactions && transactions.length > 0 ? (
                 <>
                   {transactions.map((transaction) => (
@@ -655,6 +656,7 @@ export default function Transactions() {
                   Voce ainda não tem nenhuma transação. Que tal cadastrar uma?
                 </p>
               )}
+              </div>
             </div>
           </div>
         </>

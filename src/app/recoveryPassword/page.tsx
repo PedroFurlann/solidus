@@ -15,7 +15,7 @@ import { useSearchParams } from "next/navigation";
 
 interface FormData {
   new_password: string;
-  confirm_new_password: string | undefined;
+  confirm_new_password: string ;
 }
 
 export default function ForgotPassword() {
@@ -30,7 +30,8 @@ export default function ForgotPassword() {
       .min(6, "A senha deve conter no mínimo 6 caracteres"),
     confirm_new_password: yup
       .string()
-      .oneOf([yup.ref("new_password")], "As senhas devem coincidir"),
+      .oneOf([yup.ref("new_password")], "As senhas devem coincidir")
+      .required("Confirme sua senha.")
   });
 
   const searchParams = useSearchParams();

@@ -17,8 +17,8 @@ import * as yup from "yup";
 interface FormData {
   name: string;
   email: string;
-  new_password: string | undefined;
-  confirm_new_password: string | undefined;
+  new_password?: string | undefined;
+  confirm_new_password?: string | undefined;
 }
 
 export default function Profile() {
@@ -35,7 +35,7 @@ export default function Profile() {
     setShowPassword(!showPassword);
   };
 
-  if (!user2) {
+  if (!user2 && typeof window !== "undefined") {
     router.push("login");
   }
 
