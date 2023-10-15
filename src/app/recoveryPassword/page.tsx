@@ -118,7 +118,7 @@ export default function ForgotPassword() {
               <input
                 className="border border-gray-300 px-4 py-4 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
                 type={showPassword ? "text" : "password"}
-                placeholder="Digite sua nova senha"
+                placeholder="Nova senha"
                 {...register("new_password")}
               />
 
@@ -147,7 +147,7 @@ export default function ForgotPassword() {
             <input
               className="border border-gray-300 px-4 py-4 mb-6  rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
               type={showPassword ? "text" : "password"}
-              placeholder="Confirme sua senha"
+              placeholder="Confirme sua nova senha"
               {...register("confirm_new_password")}
             />
 

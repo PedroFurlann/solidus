@@ -84,7 +84,8 @@ export default function ForgotPassword() {
       ) : (
         <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
           <LoginHeader />
-          <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
+          <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow gap-12">
+          <p className="text-3xl text-gray-200 font-bold">Recuperar senha</p>
             <div className="sm:w-[600px] w-96 rounded-lg p-12 flex flex-col gap-6 bg-gray-900">
               <div className="w-full">
                 <input
@@ -105,7 +106,7 @@ export default function ForgotPassword() {
                 onClick={handleSubmit(handleSendEmail)}
                 className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
               >
-                Enviar email de recuperação.
+                Enviar email de recuperação
               </button>
             </div>
           </div>

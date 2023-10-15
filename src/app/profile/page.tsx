@@ -43,7 +43,7 @@ export default function Profile() {
     name: yup
       .string()
       .trim()
-      .required()
+      .required("O nome é obrigatório")
       .min(6, "O nome deve conter no mímimo 6 caracteres."),
     email: yup
       .string()
@@ -79,7 +79,7 @@ export default function Profile() {
     };
 
     if(userData.password !== null && new_password && new_password.length < 6) {
-      return toast.error("A senha deve ter no mínimo 6 caracteres.", {
+      return toast.error("A senha deve conter no mínimo 6 caracteres.", {
         position: "top-center",
         autoClose: 3000,
         theme: "dark",
@@ -106,7 +106,7 @@ export default function Profile() {
       reset();
       router.push("transactions")
 
-      toast.success("Usuário atualizado com sucesso.", {
+      toast.success("Usuário atualizado com sucesso!", {
         position: "top-center",
         autoClose: 3000,
         theme: "dark",
@@ -203,7 +203,7 @@ export default function Profile() {
               <input
                 className="border border-gray-300 px-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                 type="email"
-                placeholder="E-mail"
+                placeholder="Email"
                 disabled
                 {...register("email")}
               />

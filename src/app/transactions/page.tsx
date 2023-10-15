@@ -194,12 +194,12 @@ export default function Transactions() {
   };
 
   const validationSchema = yup.object().shape({
-    title: yup.string().trim().required("A descrição da transação é obrigatória").min(6, "O título da transação deve ter no mínimo 6 caracteres."),
+    title: yup.string().trim().required("Informe o título da transação").min(6, "O título da transação deve conter no mínimo 6 caracteres."),
     amount: yup
       .number()
-      .required("Informe um valor válido!")
+      .required("Informe a quantidade transacionada.")
       .nonNullable()
-      .min(1, "O valor deve ser maior que 0"),
+      .min(1, "A quantidade transacionada deve ser maior que 0"),
   });
 
   async function fetchTransactions() {
@@ -268,7 +268,7 @@ export default function Transactions() {
       reset();
       setSelectedType("PROFIT");
       setSelectedCategory("");
-      toast.success("Transação criada com sucesso.", {
+      toast.success("Transação criada com sucesso!", {
         position: "top-center",
         autoClose: 3000,
         theme: "dark",
@@ -284,7 +284,7 @@ export default function Transactions() {
       const isAppError = error instanceof AppError;
       const title = isAppError
         ? error.message
-        : "Não foi possível cadastrar a transação. Tente novamente mais tarde.";
+        : "Não foi possível criar a transação. Tente novamente mais tarde.";
 
       toast.error(title, {
         position: "top-center",
@@ -345,7 +345,7 @@ export default function Transactions() {
               <input
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                 type="text"
-                placeholder="Descrição da transação"
+                placeholder="Título"
                 {...register("title")}
               />
               {errors.title && (
@@ -492,7 +492,7 @@ export default function Transactions() {
       const isAppError = error instanceof AppError;
       const title = isAppError
         ? error.message
-        : "Não foi possível carregar as transações. Tente novamente mais tarde.";
+        : "Não foi possível deletar a transação. Tente novamente mais tarde.";
 
       toast.error(title, {
         position: "top-center",

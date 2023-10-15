@@ -84,7 +84,7 @@ export default function Register() {
       await api.post("/user", userData);
       await signIn(email, password);
 
-      toast.success("Usuário criado com sucesso.", {
+      toast.success("Usuário criado com sucesso!", {
         position: "top-center",
         autoClose: 3000,
         theme: "dark",
@@ -100,7 +100,7 @@ export default function Register() {
       const isAppError = error instanceof AppError;
       const title = isAppError
         ? error.message
-        : "Não foi possível realizar o login. Tente novamente mais tarde.";
+        : "Não foi possível criar a conta. Tente novamente mais tarde.";
 
       toast.error(title, {
         position: "top-center",
@@ -147,7 +147,7 @@ export default function Register() {
               <input
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                 type="email"
-                placeholder="Escolha um nome"
+                placeholder="Nome"
                 {...register("name")}
               />
               {errors.name && (
@@ -159,7 +159,7 @@ export default function Register() {
               <input
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                 type="email"
-                placeholder="Escolha seu email"
+                placeholder="Email"
                 {...register("email")}
               />
               {errors.email && (
@@ -172,7 +172,7 @@ export default function Register() {
                 <input
                   className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Cadastre sua senha"
+                  placeholder="Senha"
                   {...register("password")}
                 />
                 {showPassword ? (

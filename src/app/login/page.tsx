@@ -126,7 +126,7 @@ export default function Login() {
               <input
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                 type="email"
-                placeholder="Digite seu email"
+                placeholder="Email"
                 {...register("email")}
               />
               {errors.email && (
@@ -138,7 +138,7 @@ export default function Login() {
                 <input
                   className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Digite sua senha"
+                  placeholder="Senha"
                   {...register("password")}
                 />
 
