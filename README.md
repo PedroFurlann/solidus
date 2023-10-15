@@ -1,1 +1,1 @@
-Solidus APP
+Solidus Web App
