@@ -111,7 +111,10 @@ export default function ForgotPassword() {
     ) : (
       <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
       <LoginHeader />
-      <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
+      <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow  gap-10">
+      <p className="text-3xl text-gray-200 font-bold">Redefinir senha</p>
+
+       
         <div className="sm:w-[600px] w-96 rounded-lg p-12 flex flex-col gap-8 bg-gray-900">
           <div className="w-full flex flex-col gap-6">
             <div className="relative w-full">
