@@ -194,7 +194,11 @@ export default function Transactions() {
   };
 
   const validationSchema = yup.object().shape({
-    title: yup.string().trim().required("Informe o título da transação").min(6, "O título da transação deve conter no mínimo 6 caracteres."),
+    title: yup
+      .string()
+      .trim()
+      .required("Informe o título da transação")
+      .min(6, "O título da transação deve conter no mínimo 6 caracteres."),
     amount: yup
       .number()
       .required("Informe a quantidade transacionada.")
@@ -373,9 +377,7 @@ export default function Transactions() {
                         value &&
                           field.onChange(
                             parseFloat(
-                              value
-                                .replace("R$ ", "")
-                                .replace(",", "")
+                              value.replace("R$ ", "").replace(",", "")
                             )
                           );
                       }
@@ -514,10 +516,9 @@ export default function Transactions() {
     // if (!user2 && typeof window !== "undefined") {
     //   router.push("login");
     // } else {
-      setTimeout(() => {
-        fetchTransactions()
-      }, 1)
-
+    setTimeout(() => {
+      fetchTransactions();
+    }, 1);
   }, []);
 
   useEffect(() => {
@@ -630,32 +631,35 @@ export default function Transactions() {
             <div
               className={`
                 w-full h-96 flex flex-col py-8 bg-gray-900 px-4 rounded-xl
-                ${transactions && transactions.length === 0 && "items-center"}
-                ${transactions && transactions.length === 0 && "justify-center"}
+                
               `}
             >
-              <div className="overflow-y-auto w-full h-96 flex flex-col gap-8 ">
-              {transactions && transactions.length > 0 ? (
-                <>
-                  {transactions.map((transaction) => (
-                    <TransactionCard
-                      key={transaction.id}
-                      id={transaction.id}
-                      amount={transaction.amount}
-                      title={transaction.title}
-                      type={transaction.type}
-                      category={transaction.category}
-                      createdAt={transaction.createdAt}
-                      onDelete={() => handleDeleteTransaction(transaction.id)}
-                    />
-                  ))}
-                </>
-              ) : (
-                <p className="md:text-2xl text-lg text-center text-gray-200 font-bold">
-                  {" "}
-                  Voce ainda não tem nenhuma transação. Que tal cadastrar uma?
-                </p>
-              )}
+              <div
+                className={`overflow-y-auto w-full h-96 flex flex-col gap-8 ${
+                  transactions.length === 0 && "items-center"
+                } ${transactions.length === 0 && "justify-center"}`}
+              >
+                {transactions && transactions.length > 0 ? (
+                  <>
+                    {transactions.map((transaction) => (
+                      <TransactionCard
+                        key={transaction.id}
+                        id={transaction.id}
+                        amount={transaction.amount}
+                        title={transaction.title}
+                        type={transaction.type}
+                        category={transaction.category}
+                        createdAt={transaction.createdAt}
+                        onDelete={() => handleDeleteTransaction(transaction.id)}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <p className="md:text-2xl text-lg text-center text-gray-200 font-bold">
+                    {" "}
+                    Voce ainda não tem nenhuma transação. Que tal cadastrar uma?
+                  </p>
+                )}
               </div>
             </div>
           </div>
