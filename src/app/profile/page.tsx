@@ -36,7 +36,7 @@ export default function Profile() {
   };
 
   if (!user2 && typeof window !== "undefined") {
-    router.push("login");
+    window.location.href = "http://localhost:3000/login"
   }
 
   const validationSchema = yup.object().shape({

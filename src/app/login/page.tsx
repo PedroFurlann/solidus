@@ -35,7 +35,8 @@ export default function Login() {
   const user2 = storageUserGet()
 
   if (user2 && typeof window !== "undefined") {
-    router.push("transactions");
+    window.location.href = "http://localhost:3000/transactions"
+
   }
 
   const validationSchema = yup.object().shape({
@@ -122,7 +123,7 @@ export default function Login() {
               }}
             />
             <div className="flex flex-col gap-6 items-center justify-center md:w-80">
-              <p className="text-3xl text-gray-200 font-bold">Faça Login</p>
+              <p className="text-3xl text-gray-200 font-bold">Login</p>
               <input
                 className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                 type="email"

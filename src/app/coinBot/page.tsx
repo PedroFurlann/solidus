@@ -19,7 +19,7 @@ export default function CoinBot() {
 
 
   if (!user && typeof window !== "undefined") {
-    router.push("login");
+    window.location.href = "http://localhost:3000/login"
   }
 
   // useEffect(() => {

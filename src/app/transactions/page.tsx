@@ -58,14 +58,10 @@ export default function Transactions() {
 
   const { isLoadingUserStorageData, user } = useAuth();
 
-  const router = useRouter();
-
-  const token = typeof window !== "undefined" && storageTokenGet();
-
-  const user2 = typeof window !== "undefined" && storageUserGet();
+  const user2 = storageUserGet();
 
   if (!user2 && typeof window !== "undefined") {
-    router.push("login");
+    window.location.href = "http://localhost:3000/login"
   }
 
   let totalProfit: number = 0;
