@@ -1,3 +1,4 @@
+
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -7,17 +8,17 @@ export interface ChatMessage {
 }
 
 export interface ChatState {
-  chatHistory: ChatMessage[];
+  chatHistory: ChatMessage[]; 
   loading: boolean;
 }
 
 export interface RootState {
-  chat: ChatState
+  chat: ChatState;
 }
 
 const CHATBOT_API_URL = "https://api.openai.com/v1/chat/completions";
 
-export const sendMessageToChatbot = createAsyncThunk<string, string>(
+export const sendMessageToChatbot = createAsyncThunk<string, { role: string; content: string }[]>(
   "chat/sendMessageToChatbot",
   async (message) => {
     try {
@@ -27,13 +28,14 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
           model: "gpt-3.5-turbo",
           messages: [
             {
-              role: "assistant",
-              content: "You are a helpful assistant.",
+              role: "system",
+              content: "You are a helpful investment assistant, be as friendly as possible.",
             },
             {
-              role: "user",
-              content: message,
+              role: "system",
+              content: "Give shorter answers, being as succinct as possible",
             },
+            ...message,
           ],
         },
         {
@@ -46,7 +48,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
 
       return response.data.choices[0].message.content;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       throw new Error(
         "Erro ao se comunicar com o coin bot. Tente novamente mais tarde."
       );
@@ -57,7 +59,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, string>(
 const chatSlice = createSlice({
   name: "chat",
   initialState: {
-    chatHistory: [{ message: "Olá! Como posso ajudar?" }] as ChatMessage[],
+    chatHistory: [{ message: "Olá! Como posso ajudar?", isUser: false }] as ChatMessage[],
     loading: false,
   } as ChatState,
   reducers: {
