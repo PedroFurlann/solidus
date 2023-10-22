@@ -46,6 +46,7 @@ export function TransactionCard({
           nested
           overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
           open={modalDeleteTransactionIsOpen}
+          onClose={handleCloseModalDeleteTransaction}
         >
           <div
             className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"

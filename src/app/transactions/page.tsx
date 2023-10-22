@@ -22,13 +22,12 @@ import {
 import { Bar } from "react-chartjs-2";
 import { useAuth } from "@/hooks/useAuth";
 import { storageUserGet } from "@/storage/storageUser";
-import { useRouter } from "next/navigation";
 import { api } from "@/services/api";
 import { TransactionDTO } from "@/dtos/TransactionDTO";
 import { AppError } from "@/utils/AppError";
 import { toast } from "react-toastify";
-import { storageTokenGet } from "@/storage/storageToken";
 import CurrencyInput from "react-currency-input-field";
+import { useRouter } from "next/navigation";
 
 ChartJS.register(
   CategoryScale,
@@ -60,8 +59,10 @@ export default function Transactions() {
 
   const user2 = storageUserGet();
 
+  const router = useRouter()
+
   if (!user2 && typeof window !== "undefined") {
-    window.location.href = "http://localhost:3000/login"
+    router.push("/login")
   }
 
   let totalProfit: number = 0;
@@ -325,6 +326,7 @@ export default function Transactions() {
           nested
           overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
           open={modalRegisterTransactionIsOpen}
+          onClose={handleCloseModalRegisterTransaction}
         >
           <div
             className="bg-gray-800 py-8 px-6 flex flex-col rounded-xl"
@@ -509,9 +511,6 @@ export default function Transactions() {
   }
 
   useEffect(() => {
-    // if (!user2 && typeof window !== "undefined") {
-    //   router.push("login");
-    // } else {
     setTimeout(() => {
       fetchTransactions();
     }, 1);

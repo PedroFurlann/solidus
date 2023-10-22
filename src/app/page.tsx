@@ -6,9 +6,17 @@ import computerAnimation from "@/lib/lottie/computer.json";
 import Link from "next/link";
 import flipCoinAnimation from '@/lib/lottie/flipCoin.json'
 import homeBackground from '../../public/homeBackground.jpg'
+import { storageUserGet } from "@/storage/storageUser";
 
 export default function Home() {
   const { isMobile } = useWindowSize();
+
+  const user2 = storageUserGet()
+
+  if (user2 && typeof window !== "undefined") {
+    window.location.href = "http://localhost:3000/transactions"
+
+  }
 
   return (
     <div 
@@ -89,7 +97,7 @@ export default function Home() {
               wordWrap: "break-word",
             }}
           >
-            Já possui conta ou quer usar sua conta Google?{" "}
+            Já possui uma conta? {" "}
             <Link
               href="/login"
               className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300"

@@ -19,7 +19,6 @@ api.registerInterceptTokenManager = (singOut) => {
     (requestError) => {
       const token = storageTokenGet();
 
-      console.log("aquii")
       if(token) {
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }

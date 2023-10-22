@@ -35,7 +35,7 @@ export default function Register() {
   const user = storageUserGet();
 
   if (user && typeof window !== "undefined") {
-    window.location.href = "http://localhost:3000/transactions"
+    router.push("/transactions")
   }
 
   const handleTogglePassword = () => {

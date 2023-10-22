@@ -1,10 +1,10 @@
-
+import { api } from "@/services/api";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export interface ChatMessage {
-  message: string;
-  isUser: boolean;
+  content: string;
+  isUserMessage: boolean;
 }
 
 export interface ChatState {
@@ -46,6 +46,10 @@ export const sendMessageToChatbot = createAsyncThunk<string, { role: string; con
         }
       );
 
+      await api.post("/messages", {
+        content: response.data.choices[0].message.content, isUserMessage: false
+      })
+
       return response.data.choices[0].message.content;
     } catch (error) {
       console.log(error);
@@ -59,7 +63,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, { role: string; con
 const chatSlice = createSlice({
   name: "chat",
   initialState: {
-    chatHistory: [{ message: "Olá! Como posso ajudar?", isUser: false }] as ChatMessage[],
+    chatHistory: [{ content: "Olá! Como posso ajudar?", isUserMessage: false }] as ChatMessage[],
     loading: false,
   } as ChatState,
   reducers: {
@@ -67,7 +71,7 @@ const chatSlice = createSlice({
       state.chatHistory.push(action.payload);
     },
     clearChatHistory: (state) => {
-      state.chatHistory = [];
+      state.chatHistory = [{ content: "Olá! Como posso ajudar?", isUserMessage: false }] as ChatMessage[];
     },
   },
   extraReducers: (builder) => {
@@ -77,16 +81,16 @@ const chatSlice = createSlice({
       })
       .addCase(sendMessageToChatbot.fulfilled, (state, action) => {
         state.loading = false;
-        state.chatHistory.push({ message: action.payload, isUser: false });
+        state.chatHistory.push({ content: action.payload, isUserMessage: false });
       })
       .addCase(sendMessageToChatbot.rejected, (state, action) => {
         state.loading = false;
 
         state.chatHistory.push({
-          message:
+          content:
             action.error.message ??
             "Parece que ocorreu um erro! Tente novamente mais tarde.",
-          isUser: false,
+          isUserMessage: false,
         });
       });
   },

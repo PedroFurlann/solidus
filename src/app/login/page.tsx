@@ -3,10 +3,8 @@ import { LoginHeader } from "@/components/LoginHeader";
 import Lottie from "lottie-react";
 import moneyAnimation from "@/lib/lottie/money.json";
 import useWindowSize from "@/hooks/useWindowsSize";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Eye, EyeSlash } from "phosphor-react";
-import GoogleIcon from "../../../public/googlcon.svg";
-import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -35,7 +33,7 @@ export default function Login() {
   const user2 = storageUserGet()
 
   if (user2 && typeof window !== "undefined") {
-    window.location.href = "http://localhost:3000/transactions"
+    router.push("/transactions")
 
   }
 
