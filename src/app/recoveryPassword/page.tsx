@@ -115,7 +115,7 @@ export default function ForgotPassword() {
       <p className="text-3xl text-gray-200 font-bold">Redefinir senha</p>
 
        
-        <div className="sm:w-[600px] w-96 rounded-lg p-12 flex flex-col gap-8 bg-gray-900">
+      <div className="sm:w-[600px] sm:bg-gray-900 w-full rounded-lg sm:p-12 p-3 flex flex-col gap-8 bg-transparent">
           <div className="w-full flex flex-col gap-6">
             <div className="relative w-full">
               <input

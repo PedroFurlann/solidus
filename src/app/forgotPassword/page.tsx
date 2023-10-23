@@ -86,7 +86,7 @@ export default function ForgotPassword() {
           <LoginHeader />
           <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow gap-12">
           <p className="text-3xl text-gray-200 font-bold">Recuperar senha</p>
-            <div className="sm:w-[600px] w-96 rounded-lg p-12 flex flex-col gap-6 bg-gray-900">
+            <div className="sm:w-[600px] sm:bg-gray-900 w-full rounded-lg sm:p-12 p-3 flex flex-col gap-6 bg-transparent">
               <div className="w-full">
                 <input
                   className="border border-gray-300 px-4 py-4 mb-6 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"

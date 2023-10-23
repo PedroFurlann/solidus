@@ -19,6 +19,7 @@ import useWindowSize from "@/hooks/useWindowsSize";
 import Popup from "reactjs-popup";
 import { X } from "phosphor-react";
 
+
 export interface MessagesProps {
   content: string;
   isUserMessage: boolean;
@@ -35,6 +36,7 @@ export default function CoinBot() {
     useState(false);
 
     const chatHistory = useSelector((state: RootState) => state.chat.chatHistory);
+    const loadingMessage = useSelector((state: RootState) => state.chat.loading)
 
   const { width } = useWindowSize();
 
@@ -125,7 +127,7 @@ export default function CoinBot() {
       const isAppError = error instanceof AppError;
       const title = isAppError
         ? error.message
-        : "Não foi possível carregar o histórico de mensagens. Tente novamente mais tarde.";
+        : "Não foi possível deletar o histórico de mensagens. Tente novamente mais tarde.";
 
       toast.error(title, {
         position: "top-center",
@@ -230,8 +232,8 @@ export default function CoinBot() {
             <ChatBot />
             <DialogDeleteMessagesHistoric />
             <button
-              className="px-4 py-3 bg-red-500 text-gray-200 font-semibold rounded-2xl focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-70 transition-all ease-in-out duration-300"
-              disabled={loading || chatHistory.length <= 1}
+              className="px-4 py-3 bg-red-500 text-gray-200 font-semibold rounded-2xl focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 transition-all ease-in-out duration-300"
+              disabled={loading || chatHistory.length <= 1 || loadingMessage}
               onClick={handleOpenModalDeleteMessagesHistoric}
             >
               Limpar histórico de mensagens
