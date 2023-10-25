@@ -28,6 +28,7 @@ import { AppError } from "@/utils/AppError";
 import { toast } from "react-toastify";
 import CurrencyInput from "react-currency-input-field";
 import { useRouter } from "next/navigation";
+import { Footer } from "@/components/Footer";
 
 ChartJS.register(
   CategoryScale,
@@ -59,10 +60,10 @@ export default function Transactions() {
 
   const user2 = storageUserGet();
 
-  const router = useRouter()
+  const router = useRouter();
 
   if (!user2 && typeof window !== "undefined") {
-    router.push("/login")
+    router.push("/login");
   }
 
   let totalProfit: number = 0;
@@ -658,6 +659,7 @@ export default function Transactions() {
               </div>
             </div>
           </div>
+          <Footer />
         </>
       )}
     </>

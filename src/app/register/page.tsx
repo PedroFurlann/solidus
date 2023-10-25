@@ -15,6 +15,7 @@ import { MainLoading } from "@/components/MainLoading";
 import { AppError } from "@/utils/AppError";
 import { toast } from "react-toastify";
 import { api } from "@/services/api";
+import { Footer } from "@/components/Footer";
 
 interface FormData {
   name: string;
@@ -35,7 +36,7 @@ export default function Register() {
   const user = storageUserGet();
 
   if (user && typeof window !== "undefined") {
-    router.push("/transactions")
+    router.push("/transactions");
   }
 
   const handleTogglePassword = () => {
@@ -69,16 +70,12 @@ export default function Register() {
     resolver: yupResolver(validationSchema),
   });
 
-  async function handleSignUp({
-    name,
-    email,
-    password,
-  }: FormData) {
+  async function handleSignUp({ name, email, password }: FormData) {
     let userData = {
       name,
       email,
-      password
-    }
+      password,
+    };
 
     try {
       await api.post("/user", userData);
@@ -93,9 +90,8 @@ export default function Register() {
           justifyContent: "center",
           alignItems: "center",
           fontWeight: "bold",
-        }
-      })
-
+        },
+      });
     } catch (error) {
       const isAppError = error instanceof AppError;
       const title = isAppError
@@ -129,94 +125,97 @@ export default function Register() {
           <MainLoading size="md" />
         </div>
       ) : (
-        <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
-          <LoginHeader />
-          <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
-            <Lottie
-              animationData={goldBarAnimation}
-              loop={true}
-              style={{
-                width: isMobile ? 180 : 300,
-                height: isMobile ? 180 : 300,
-              }}
-            />
-            <div className="flex flex-col gap-6 items-center justify-center md:w-80">
-              <p className="text-3xl text-gray-200 font-bold">
-                Cadastre sua conta
-              </p>
-              <input
-                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-                type="email"
-                placeholder="Nome"
-                {...register("name")}
+        <>
+          <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+            <LoginHeader />
+            <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
+              <Lottie
+                animationData={goldBarAnimation}
+                loop={true}
+                style={{
+                  width: isMobile ? 180 : 300,
+                  height: isMobile ? 180 : 300,
+                }}
               />
-              {errors.name && (
-                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                  {errors.name.message}
+              <div className="flex flex-col gap-6 items-center justify-center md:w-80">
+                <p className="text-3xl text-gray-200 font-bold">
+                  Cadastre sua conta
                 </p>
-              )}
+                <input
+                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                  type="email"
+                  placeholder="Nome"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                    {errors.name.message}
+                  </p>
+                )}
 
-              <input
-                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-                type="email"
-                placeholder="Email"
-                {...register("email")}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                  {errors.email.message}
-                </p>
-              )}
+                <input
+                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                  type="email"
+                  placeholder="Email"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                    {errors.email.message}
+                  </p>
+                )}
 
-              <div className="relative w-full">
+                <div className="relative w-full">
+                  <input
+                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Senha"
+                    {...register("password")}
+                  />
+                  {showPassword ? (
+                    <Eye
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                      size={20}
+                      onClick={handleTogglePassword}
+                    />
+                  ) : (
+                    <EyeSlash
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                      size={20}
+                      onClick={handleTogglePassword}
+                    />
+                  )}
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                    {errors.password.message}
+                  </p>
+                )}
+
                 <input
                   className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Senha"
-                  {...register("password")}
+                  placeholder="Confirme sua senha"
+                  {...register("confirm_password")}
                 />
-                {showPassword ? (
-                  <Eye
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
-                    size={20}
-                    onClick={handleTogglePassword}
-                  />
-                ) : (
-                  <EyeSlash
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
-                    size={20}
-                    onClick={handleTogglePassword}
-                  />
+                {errors.confirm_password && (
+                  <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                    {errors.confirm_password.message}
+                  </p>
                 )}
+
+                <button
+                  type="submit"
+                  onClick={handleSubmit(handleSignUp)}
+                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
+                >
+                  Cadastrar-se
+                </button>
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                  {errors.password.message}
-                </p>
-              )}
-
-              <input
-                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
-                type={showPassword ? "text" : "password"}
-                placeholder="Confirme sua senha"
-                {...register("confirm_password")}
-              />
-              {errors.confirm_password && (
-                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                  {errors.confirm_password.message}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                onClick={handleSubmit(handleSignUp)}
-                className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
-              >
-                Cadastrar-se
-              </button>
             </div>
           </div>
-        </div>
+          <Footer />
+        </>
       )}
     </>
   );

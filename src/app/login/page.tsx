@@ -15,6 +15,7 @@ import { AppError } from "@/utils/AppError";
 import { storageUserGet } from "@/storage/storageUser";
 import { MainLoading } from "@/components/MainLoading";
 import { toast } from "react-toastify";
+import { Footer } from "@/components/Footer";
 
 interface FormData {
   email: string;
@@ -30,11 +31,10 @@ export default function Login() {
 
   const router = useRouter();
 
-  const user2 = storageUserGet()
+  const user2 = storageUserGet();
 
   if (user2 && typeof window !== "undefined") {
-    router.push("/transactions")
-
+    router.push("/transactions");
   }
 
   const validationSchema = yup.object().shape({
@@ -74,8 +74,8 @@ export default function Login() {
           justifyContent: "center",
           alignItems: "center",
           fontWeight: "bold",
-        }
-      })
+        },
+      });
     } catch (error) {
       const isAppError = error instanceof AppError;
       const title = isAppError
@@ -91,8 +91,8 @@ export default function Login() {
           justifyContent: "center",
           alignItems: "center",
           fontWeight: "bold",
-        }
-      })
+        },
+      });
     }
   }
 
@@ -109,86 +109,90 @@ export default function Login() {
           <MainLoading size="md" />
         </div>
       ) : (
-        <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
-          <LoginHeader />
-          <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
-            <Lottie
-              animationData={moneyAnimation}
-              loop={true}
-              style={{
-                width: isMobile ? 250 : 400,
-                height: isMobile ? 250 : 400,
-              }}
-            />
-            <div className="flex flex-col gap-6 items-center justify-center md:w-80">
-              <p className="text-3xl text-gray-200 font-bold">Login</p>
-              <input
-                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
-                type="email"
-                placeholder="Email"
-                {...register("email")}
+        <>
+          <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+            <LoginHeader />
+            <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
+              <Lottie
+                animationData={moneyAnimation}
+                loop={true}
+                style={{
+                  width: isMobile ? 250 : 400,
+                  height: isMobile ? 250 : 400,
+                }}
               />
-              {errors.email && (
-                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                  {errors.email.message}
-                </p>
-              )}
-              <div className="relative w-full">
+              <div className="flex flex-col gap-6 items-center justify-center md:w-80">
+                <p className="text-3xl text-gray-200 font-bold">Login</p>
                 <input
-                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Senha"
-                  {...register("password")}
+                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                  type="email"
+                  placeholder="Email"
+                  {...register("email")}
                 />
-
-                {showPassword ? (
-                  <Eye
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
-                    size={20}
-                    onClick={handleTogglePassword}
-                  />
-                ) : (
-                  <EyeSlash
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
-                    size={20}
-                    onClick={handleTogglePassword}
-                  />
+                {errors.email && (
+                  <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                    {errors.email.message}
+                  </p>
                 )}
-              </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                  {errors.password.message}
-                </p>
-              )}
+                <div className="relative w-full">
+                  <input
+                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Senha"
+                    {...register("password")}
+                  />
 
-              <button
-                type="submit"
-                onClick={handleSubmit(handleSignIn)}
-                className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
-              >
-                Entrar
-              </button>
-              <p className="font-bold text-lg text-gray-200">
-                Ainda não tem conta?{" "}
-                <Link
-                  href="/register"
-                  className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300"
+                  {showPassword ? (
+                    <Eye
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                      size={20}
+                      onClick={handleTogglePassword}
+                    />
+                  ) : (
+                    <EyeSlash
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                      size={20}
+                      onClick={handleTogglePassword}
+                    />
+                  )}
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                    {errors.password.message}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  onClick={handleSubmit(handleSignIn)}
+                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
                 >
-                  Cadastre-se aqui
-                </Link>
-              </p>
-              <p className="font-bold text-lg text-gray-200">
-                Esqueceu sua senha?{" "}
-                <Link
-                  href="/forgotPassword"
-                  className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300"
-                >
-                  Clique aqui para recuperar.
-                </Link>
-              </p>
+                  Entrar
+                </button>
+                <p className="font-bold text-lg text-gray-200">
+                  Ainda não tem conta?{" "}
+                  <Link
+                    href="/register"
+                    className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300"
+                  >
+                    Cadastre-se aqui
+                  </Link>
+                </p>
+                <p className="font-bold text-lg text-gray-200">
+                  Esqueceu sua senha?{" "}
+                  <Link
+                    href="/forgotPassword"
+                    className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300"
+                  >
+                    Clique aqui para recuperar.
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+
+          <Footer />
+        </>
       )}
     </>
   );

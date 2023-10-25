@@ -5,6 +5,7 @@ import Lottie from "lottie-react";
 import useWindowSize from "@/hooks/useWindowsSize";
 import NotFoundAnimation from "@/lib/lottie/404.json";
 import { LoginHeader } from "@/components/LoginHeader";
+import { Footer } from "@/components/Footer";
 
 export default function NotFound() {
   const { isMobile } = useWindowSize();
@@ -26,22 +27,30 @@ export default function NotFound() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
-      <LoginHeader />
-      <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow gap-12">
-        <Lottie
-          animationData={NotFoundAnimation}
-          loop={true}
-          style={{
-            width: isMobile ? 180 : 340,
-            height: isMobile ? 180 : 340,
-          }}
-        />
+    <>
+      <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+        <LoginHeader />
+        <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow gap-12">
+          <Lottie
+            animationData={NotFoundAnimation}
+            loop={true}
+            style={{
+              width: isMobile ? 180 : 340,
+              height: isMobile ? 180 : 340,
+            }}
+          />
 
-        <p className={`${isMobile ? "text-2xl" : "text-3xl"} text-gray-200 font-bold text-center`}>
-          Página não encontrada. Você será redirecionado em alguns instantes...
-        </p>
+          <p
+            className={`${
+              isMobile ? "text-2xl" : "text-3xl"
+            } text-gray-200 font-bold text-center`}
+          >
+            Página não encontrada. Você será redirecionado em alguns
+            instantes...
+          </p>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }

@@ -18,7 +18,7 @@ import { Dayjs } from "dayjs";
 import useWindowSize from "@/hooks/useWindowsSize";
 import Popup from "reactjs-popup";
 import { X } from "phosphor-react";
-
+import { Footer } from "@/components/Footer";
 
 export interface MessagesProps {
   content: string;
@@ -28,15 +28,13 @@ export interface MessagesProps {
   createdAt: Dayjs;
 }
 
-
-
 export default function CoinBot() {
   const [loading, setLoading] = useState(false);
   const [modalDeleteMessagesHistoricOpen, setModalDeleteMessagesHistoricOpen] =
     useState(false);
 
-    const chatHistory = useSelector((state: RootState) => state.chat.chatHistory);
-    const loadingMessage = useSelector((state: RootState) => state.chat.loading)
+  const chatHistory = useSelector((state: RootState) => state.chat.chatHistory);
+  const loadingMessage = useSelector((state: RootState) => state.chat.loading);
 
   const { width } = useWindowSize();
 
@@ -109,7 +107,7 @@ export default function CoinBot() {
   async function handleDeleteMessagesHistoric() {
     setLoading(true);
     try {
-      await api.delete("/messages")
+      await api.delete("/messages");
       dispatch(clearChatHistory());
       toast.success("Histórico de mensagens deletado com sucesso!", {
         position: "top-center",
@@ -120,10 +118,10 @@ export default function CoinBot() {
           justifyContent: "center",
           alignItems: "center",
           fontWeight: "bold",
-        }
-      })
+        },
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       const isAppError = error instanceof AppError;
       const title = isAppError
         ? error.message
@@ -141,7 +139,7 @@ export default function CoinBot() {
         },
       });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -173,7 +171,8 @@ export default function CoinBot() {
               />
             </div>
             <p className="text-gray-200 text-lg font-bold mb-10">
-              Tem certeza que deseja deletar seu histórico de mensagens com o Coin Bot? Essa ação não poderá ser revertida.
+              Tem certeza que deseja deletar seu histórico de mensagens com o
+              Coin Bot? Essa ação não poderá ser revertida.
             </p>
             <div className="flex items-center justify-end gap-8">
               <button
@@ -195,7 +194,7 @@ export default function CoinBot() {
           </div>
         </Popup>
       </>
-    )
+    );
   }
 
   return (
@@ -205,41 +204,44 @@ export default function CoinBot() {
           <MainLoading size="md" />
         </div>
       ) : (
-        <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col pb-12">
-          <MainHeader chosenPage="CoinBot" style={{ marginBottom: 12 }} />
-          <div className="flex md:flex-row flex-col items-center justify-center mb-16 mt-4 md:gap-4 gap-8">
-            <motion.p
-              initial={{ opacity: 0, x: -100 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.5 }}
-              className="text-center text-gray-200 font-bold text-2xl"
-              style={{
-                maxWidth: "80%",
-                textAlign: "center",
-                whiteSpace: "normal",
-                wordWrap: "break-word",
-              }}
-            >
-              Olá, meu nome é Coin bot seu assistente virtual de investimentos.
-              Como posso te ajudar hoje?
-            </motion.p>
-            <Lottie
-              animationData={coinBotAnimation}
-              style={{ height: 300, width: 300 }}
-            />
+        <>
+          <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col pb-12">
+            <MainHeader chosenPage="CoinBot" style={{ marginBottom: 12 }} />
+            <div className="flex md:flex-row flex-col items-center justify-center mb-16 mt-4 md:gap-4 gap-8">
+              <motion.p
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1.5 }}
+                className="text-center text-gray-200 font-bold text-2xl"
+                style={{
+                  maxWidth: "80%",
+                  textAlign: "center",
+                  whiteSpace: "normal",
+                  wordWrap: "break-word",
+                }}
+              >
+                Olá, meu nome é Coin bot seu assistente virtual de
+                investimentos. Como posso te ajudar hoje?
+              </motion.p>
+              <Lottie
+                animationData={coinBotAnimation}
+                style={{ height: 300, width: 300 }}
+              />
+            </div>
+            <div className="flex flex-col items-center justify-center mt-[-116px] gap-6">
+              <ChatBot />
+              <DialogDeleteMessagesHistoric />
+              <button
+                className="px-4 py-3 bg-red-500 text-gray-200 font-semibold rounded-2xl focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 transition-all ease-in-out duration-300"
+                disabled={loading || chatHistory.length <= 1 || loadingMessage}
+                onClick={handleOpenModalDeleteMessagesHistoric}
+              >
+                Limpar histórico de mensagens
+              </button>
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-center mt-[-116px] gap-6">
-            <ChatBot />
-            <DialogDeleteMessagesHistoric />
-            <button
-              className="px-4 py-3 bg-red-500 text-gray-200 font-semibold rounded-2xl focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 transition-all ease-in-out duration-300"
-              disabled={loading || chatHistory.length <= 1 || loadingMessage}
-              onClick={handleOpenModalDeleteMessagesHistoric}
-            >
-              Limpar histórico de mensagens
-            </button>
-          </div>
-        </div>
+          <Footer />
+        </>
       )}
     </>
   );
