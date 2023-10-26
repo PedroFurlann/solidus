@@ -183,10 +183,10 @@ export default function Profile() {
             <MainHeader chosenPage="Profile" style={{ marginBottom: 120 }} />
 
             <div className="flex flex-col justify-center items-center md:px-8 px-4 pt-6 pb-8">
-              <Avatar size="profileSize" style={{ marginBottom: 16 }} />
-              <p className="text-amber-400 text-2xl font-extrabold mb-16 cursor-pointer hover:opacity-70 transition-all duration-300">
+              <Avatar size="profileSize" style={{ marginBottom: 64 }} />
+              {/* <p className="text-amber-400 text-2xl font-extrabold mb-16 cursor-pointer hover:opacity-70 transition-all duration-300">
                 Alterar Foto
-              </p>
+              </p> */}
               <div className="flex flex-col gap-6 items-center justify-center md:w-80">
                 <input
                   className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"

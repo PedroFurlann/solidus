@@ -56,7 +56,7 @@ export function TransactionCard({
             }}
           >
             <div className="flex items-center justify-between mb-8">
-              <p className="text-gray-200 text-lg font-bold">
+              <p className="text-gray-200 text-xl font-bold">
                 Excluir transação
               </p>
               <X

@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { HTMLAttributes, useState } from "react"
+import UserPlaceHolderImage from '../../public/Portrait_Placeholder.png'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   size: "small" | "medium" | "large" | "extraLarge" | "profileSize"
@@ -14,7 +15,7 @@ export function Avatar({ size = "medium", ...rest }: Props) {
     className={`border flex items-center justify-center border-amber-600 rounded-full ${size === "small" ? "h-8 w-8" : size === "medium" ? "h-12 w-12" : size === "large" ? "h-16 w-16" : size === "extraLarge" ? "h-20 w-20" : "h-40 w-40"}`}>
       <Image 
         alt="Avatar Image"
-        src={imgUrl}
+        src={UserPlaceHolderImage}
         width={size === "small" ? 32 : size === "medium" ? 48 : size === "large" ? 64 : size === "extraLarge" ? 80 : 160 }
         height={size === "small" ? 32 : size === "medium" ? 48 : size === "large" ? 64 :  size === "extraLarge" ? 80 : 160 }
         className="rounded-full"

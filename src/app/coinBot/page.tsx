@@ -161,8 +161,8 @@ export default function CoinBot() {
             }}
           >
             <div className="flex items-center justify-between mb-8">
-              <p className="text-gray-200 text-lg font-bold">
-                Excluir transação
+              <p className="text-gray-200 text-xl font-bold">
+                Excluir histórico de mensagens
               </p>
               <X
                 className="text-red-500 cursor-pointer hover:opacity-70 duration-300 ease-in-out transition-all"
