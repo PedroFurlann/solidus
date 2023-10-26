@@ -26,9 +26,9 @@ import { api } from "@/services/api";
 import { TransactionDTO } from "@/dtos/TransactionDTO";
 import { AppError } from "@/utils/AppError";
 import { toast } from "react-toastify";
-import CurrencyInput from "react-currency-input-field";
 import { useRouter } from "next/navigation";
 import { Footer } from "@/components/Footer";
+import { NumericFormat } from "react-number-format";
 
 ChartJS.register(
   CategoryScale,
@@ -41,7 +41,7 @@ ChartJS.register(
 
 interface FormData {
   title: string;
-  amount: number;
+  amount: string;
 }
 
 export default function Transactions() {
@@ -62,6 +62,8 @@ export default function Transactions() {
 
   const router = useRouter();
 
+  const regex = /^\d*\.?\d+$/;
+
   if (!user2 && typeof window !== "undefined") {
     router.push("/login");
   }
@@ -78,35 +80,35 @@ export default function Transactions() {
   transactions &&
     transactions.forEach((transactions) => {
       if (transactions.type === "PROFIT") {
-        totalProfit += transactions.amount;
+        totalProfit += Number(transactions.amount);
       }
 
       if (transactions.type === "LOSS") {
-        totalLoss += transactions.amount;
+        totalLoss += Number(transactions.amount);
       }
 
       if (transactions.category === "FOOD") {
-        totalFoodLoss += transactions.amount;
+        totalFoodLoss += Number(transactions.amount);
       }
 
       if (transactions.category === "HEALTH") {
-        totalHealthLoss += transactions.amount;
+        totalHealthLoss += Number(transactions.amount);
       }
 
       if (transactions.category === "FUNNY") {
-        totalFunnyLoss += transactions.amount;
+        totalFunnyLoss += Number(transactions.amount);
       }
 
       if (transactions.category === "EDUCATION") {
-        totalEducationLoss += transactions.amount;
+        totalEducationLoss += Number(transactions.amount);
       }
 
       if (transactions.category === "FIXED") {
-        totalFixedLoss += transactions.amount;
+        totalFixedLoss += Number(transactions.amount);
       }
 
       if (transactions.category === "OTHERS") {
-        totalOthersLoss += transactions.amount;
+        totalOthersLoss += Number(transactions.amount);
       }
     });
 
@@ -196,12 +198,11 @@ export default function Transactions() {
       .string()
       .trim()
       .required("Informe o título da transação")
-      .min(6, "O título da transação deve conter no mínimo 6 caracteres."),
+      .min(3, "O título da transação deve conter no mínimo 3 caracteres."),
     amount: yup
-      .number()
+      .string()
       .required("Informe a quantidade transacionada.")
-      .nonNullable()
-      .min(1, "A quantidade transacionada deve ser maior que 0"),
+      .nonNullable(),
   });
 
   async function fetchTransactions() {
@@ -254,12 +255,38 @@ export default function Transactions() {
       return;
     }
 
+    const formattedAmount = amount
+      .replace("R$ ", "")
+      .replaceAll(".", "")
+      .replaceAll(",", ".")
+
+    const numberAmount = Number(formattedAmount);
+
+    if ((!regex.test(numberAmount.toString())) || numberAmount === 0) {
+      return toast.warning(
+        "Digite um valor válido, positivo e diferente de 0. Ex: R$ 1000,00",
+        {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+          style: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontWeight: "bold",
+          },
+        }
+      );
+    }
+
     const transactionData = {
       title,
       type: selectedType,
-      amount,
+      amount: numberAmount,
       category: selectedType === "LOSS" ? selectedCategory : null,
     };
+
+    console.log(transactionData);
 
     setLoading(true);
 
@@ -360,28 +387,16 @@ export default function Transactions() {
                 name="amount"
                 control={control}
                 render={({ field }) => (
-                  <CurrencyInput
-                    decimalSeparator=","
-                    placeholder="R$ 0,00"
-                    allowDecimals={true}
-                    decimalsLimit={2}
-                    prefix="R$ "
-                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                  <NumericFormat
                     value={field.value}
-                    onValueChange={(value) => {
-                      if (value === null || value === "") {
-                        field.onChange(null);
-                      } else {
-                        // Se o valor não for vazio, processe-o e atualize o campo
-                        value &&
-                          field.onChange(
-                            parseFloat(
-                              value.replace("R$ ", "").replace(",", "")
-                            )
-                          );
-                      }
-                    }}
-                    id="amount"
+                    onChange={field.onChange}
+                    decimalScale={2}
+                    thousandSeparator="."
+                    fixedDecimalScale
+                    decimalSeparator=","
+                    prefix="R$ "
+                    placeholder="R$ 0,00"
+                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
                   />
                 )}
               />

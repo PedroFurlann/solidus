@@ -10,7 +10,7 @@ import { AppError } from "@/utils/AppError";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { Eye, EyeSlash, SignOut } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
