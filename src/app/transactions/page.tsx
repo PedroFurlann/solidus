@@ -264,7 +264,7 @@ export default function Transactions() {
 
     if ((!regex.test(numberAmount.toString())) || numberAmount === 0) {
       return toast.warning(
-        "Digite um valor válido, positivo e diferente de 0. Ex: R$ 1000,00",
+        "Digite um valor válido, positivo e diferente de 0. Ex: R$ 1.000,00",
         {
           position: "top-center",
           autoClose: 3000,
