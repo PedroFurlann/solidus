@@ -220,8 +220,8 @@ export default function CoinBot() {
                   wordWrap: "break-word",
                 }}
               >
-                Olá, meu nome é Coin bot seu assistente virtual de
-                investimentos. Como posso te ajudar hoje?
+                Olá, meu nome é Coin bot seu assistente de finanças virtual.
+                Como posso te ajudar hoje?
               </motion.p>
               <Lottie
                 animationData={coinBotAnimation}

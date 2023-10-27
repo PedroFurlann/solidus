@@ -29,7 +29,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, { role: string; con
           messages: [
             {
               role: "system",
-              content: "You are a helpful investment assistant, be as friendly as possible.",
+              content: "You are a helpful investment and financial assistant, be as friendly as possible.",
             },
             {
               role: "system",

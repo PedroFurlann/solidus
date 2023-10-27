@@ -73,7 +73,7 @@ export default function Home() {
               funcionalidades como: registar transações, visualizar seus gastos
               e ganhos ao longo do tempo e ao final gerar um resumo do seu
               balanço financeiro. Além de contar com um assistente virtual que é
-              capaz de te auxiliar com excelentes dicas e indicações de
+              capaz de como lidar com suas economias e com excelentes dicas e indicações de
               investimentos condizentes com sua realidade. Não perca tempo e se
               registre já para usufruir desses benefícios!
             </motion.p>
