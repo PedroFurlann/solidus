@@ -68,7 +68,7 @@ export default function ForgotPassword() {
       reset();
       router.push("login");
       toast.success("Senha redefinida com sucesso!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -85,7 +85,7 @@ export default function ForgotPassword() {
         : "Não foi possível redefinir sua senha. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {

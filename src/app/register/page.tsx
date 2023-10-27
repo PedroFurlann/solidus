@@ -82,7 +82,7 @@ export default function Register() {
       await signIn(email, password);
 
       toast.success("Usuário criado com sucesso!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -99,7 +99,7 @@ export default function Register() {
         : "Não foi possível criar a conta. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {

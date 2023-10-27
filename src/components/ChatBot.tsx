@@ -22,7 +22,7 @@ export function ChatBot() {
     if(inputMessage.trim().length > 200) {
       return (
         toast.warning("Limite de 200 caracteres ultrapassado", {
-          position: "top-center",
+          position: "top-right",
           autoClose: 3000,
           theme: "dark",
           style: {

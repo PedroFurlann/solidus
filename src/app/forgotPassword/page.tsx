@@ -45,7 +45,7 @@ export default function ForgotPassword() {
       reset();
       router.push("login");
       toast.success("Email enviado com sucesso!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -62,7 +62,7 @@ export default function ForgotPassword() {
         : "Não foi possível enviar o email de recuperação. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {

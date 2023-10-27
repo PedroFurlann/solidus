@@ -220,7 +220,7 @@ export default function Transactions() {
         : "Não foi possível carregar as transações. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -266,7 +266,7 @@ export default function Transactions() {
       return toast.warning(
         "Digite um valor válido, positivo e diferente de 0. Ex: R$ 1.000,00",
         {
-          position: "top-center",
+          position: "top-right",
           autoClose: 3000,
           theme: "dark",
           style: {
@@ -298,7 +298,7 @@ export default function Transactions() {
       setSelectedType("PROFIT");
       setSelectedCategory("");
       toast.success("Transação criada com sucesso!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -316,7 +316,7 @@ export default function Transactions() {
         : "Não foi possível criar a transação. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -493,7 +493,7 @@ export default function Transactions() {
       await api.delete(`/transactions/${id}`);
       fetchTransactions();
       toast.success("Transação deletada com sucesso!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -511,7 +511,7 @@ export default function Transactions() {
         : "Não foi possível deletar a transação. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {

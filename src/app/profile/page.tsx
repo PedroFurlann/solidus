@@ -80,7 +80,7 @@ export default function Profile() {
 
     if (userData.password !== null && new_password && new_password.length < 6) {
       return toast.error("A senha deve conter no mínimo 6 caracteres.", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -107,7 +107,7 @@ export default function Profile() {
       router.push("transactions");
 
       toast.success("Usuário atualizado com sucesso!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -124,7 +124,7 @@ export default function Profile() {
         : "Não foi possível atualizar o usuário. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -150,7 +150,7 @@ export default function Profile() {
         : "Não foi possível deslogar. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {

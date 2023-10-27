@@ -66,7 +66,7 @@ export default function Login() {
       router.push("/transactions");
 
       toast.success("Login realizado com sucesso!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -83,7 +83,7 @@ export default function Login() {
         : "Não foi possível realizar o login. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {

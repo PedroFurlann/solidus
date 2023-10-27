@@ -83,7 +83,7 @@ export default function CoinBot() {
         : "Não foi possível carregar o histórico de mensagens. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -110,7 +110,7 @@ export default function CoinBot() {
       await api.delete("/messages");
       dispatch(clearChatHistory());
       toast.success("Histórico de mensagens deletado com sucesso!", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
@@ -128,7 +128,7 @@ export default function CoinBot() {
         : "Não foi possível deletar o histórico de mensagens. Tente novamente mais tarde.";
 
       toast.error(title, {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3000,
         theme: "dark",
         style: {
