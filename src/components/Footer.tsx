@@ -15,26 +15,34 @@ export function Footer() {
         </p>
       </aside>
       <nav className="flex flex-col items-center">
-        <header className="footer-title opacity-80 text-center text-gray-200 font-bold">Social</header>
+        <header className="footer-title opacity-80 text-center text-gray-200 font-bold">
+          Social
+        </header>
         <div className="grid grid-flow-col gap-4">
           <Link
             href="https://www.linkedin.com/in/pedro-furlan-b77707245/"
             className="no-underline"
             target="_blank"
           >
-            <Image alt="Linkedin logo" src={LinkedinIcon} />
+            <Image
+              alt="Linkedin logo"
+              src={LinkedinIcon}
+              className="w-12 h-12 transition-all duration-300 ease-in-out hover:w-14 hover:h-14"
+            />
           </Link>{" "}
           <Link
             href="https://github.com/PedroFurlann"
             className="no-underline"
             target="_blank"
           >
-            <Image alt="Github logo" src={GitHubIcon} className="w-12 h-12 bg-transparent" />
+            <Image
+              alt="Github logo"
+              src={GitHubIcon}
+              className="w-12 h-12 bg-transparent transition-all duration-300 ease-in-out hover:w-14 hover:h-14"
+            />
           </Link>{" "}
         </div>
       </nav>
     </footer>
-
-    
   );
 }
