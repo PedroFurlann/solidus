@@ -16,13 +16,13 @@ export default function NotFound() {
 
   if (user && typeof window !== "undefined") {
     setTimeout(() => {
-      window.location.href = "http://localhost:3000/transactions";
+      window.location.href = "http://solidusapp.com.br/transactions";
     }, 5000);
   }
 
   if (!user && typeof window !== "undefined") {
     setTimeout(() => {
-      window.location.href = "http://localhost:3000/login";
+      window.location.href = "http://solidusapp.com.br/login";
     }, 5000);
   }
 

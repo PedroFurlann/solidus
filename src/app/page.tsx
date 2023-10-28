@@ -7,7 +7,6 @@ import Link from "next/link";
 import flipCoinAnimation from "@/lib/lottie/flipCoin.json";
 import homeBackground from "../../public/homeBackground.jpg";
 import { storageUserGet } from "@/storage/storageUser";
-import { Footer } from "@/components/Footer";
 
 export default function Home() {
   const { isMobile } = useWindowSize();
@@ -15,7 +14,7 @@ export default function Home() {
   const user2 = storageUserGet();
 
   if (user2 && typeof window !== "undefined") {
-    window.location.href = "http://localhost:3000/transactions";
+    window.location.href = "http://solidusapp.com.br/transactions";
   }
 
   return (
@@ -128,7 +127,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
