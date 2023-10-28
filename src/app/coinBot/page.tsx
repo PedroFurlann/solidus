@@ -62,6 +62,7 @@ export default function CoinBot() {
     setLoading(true);
 
     try {
+      dispatch(clearChatHistory())
       const response = await api.get("/messages");
 
       if (response.data.messages.length > 0) {
