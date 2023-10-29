@@ -115,7 +115,7 @@ export default function Transactions() {
   const finalAmount: number = totalLoss + totalProfit;
 
   const categories = [
-    "Comida",
+    "Alimentação",
     "Saúde",
     "Lazer",
     "Educação",
@@ -454,7 +454,7 @@ export default function Transactions() {
                 } rounded-md ${selectedType === "LOSS" ? "flex" : "hidden"}`}
               >
                 <option value="">Selecione a categoria da sua transação</option>
-                <option value="FOOD">Comida</option>
+                <option value="FOOD">Alimentação</option>
                 <option value="HEALTH">Saúde</option>
                 <option value="FUNNY">Lazer</option>
                 <option value="EDUCATION">Educação</option>

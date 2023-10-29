@@ -99,10 +99,10 @@ export function TransactionCard({
     >
       <div className="flex sm:gap-6 gap-4">
         <p className="text-lg font-extrabold text-gray-200 text-center">
-          {title}
+          {title.charAt(0).toUpperCase() + title.slice(1)}
           {type === "LOSS"
             ? category === "FOOD"
-              ? ": Comida"
+              ? ": Alimentação"
               : category === "EDUCATION"
               ? ": Educação"
               : category === "FUNNY"
