@@ -67,14 +67,14 @@ export default function Home() {
                 wordWrap: "break-word",
               }}
             >
-              A SOLIDUS é a solução perfeita para você que busca controlar de
+              A Solidus é a solução perfeita para você que busca controlar de
               forma mais organizada suas finanças. A aplicação conta com
-              funcionalidades como: registar transações, visualizar seus gastos
-              e ganhos ao longo do tempo e ao final gerar um resumo do seu
-              balanço financeiro. Além de contar com um assistente virtual que é
-              capaz de como lidar com suas economias e com excelentes dicas e indicações de
-              investimentos condizentes com sua realidade. Não perca tempo e se
-              registre já para usufruir desses benefícios!
+              funcionalidades como: registrar transações, visualizar seus gastos
+              e ganhos ao longo do tempo e gerar um resumo do seu balanço
+              financeiro. Você também contará com o Coin bot, um assistente virtual que lhe
+              auxiliará sobre como lidar com suas economias além de proporcionar excelentes dicas e
+              de investimentos. Não
+              perca tempo e se registre já para usufruir desses benefícios!
             </motion.p>
           </div>
           <div className="flex flex-col gap-4 items-center justify-center">
