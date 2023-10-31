@@ -65,7 +65,7 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
   });
@@ -121,12 +121,12 @@ export default function Register() {
   return (
     <>
       {isLoadingUserStorageData ? (
-        <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+        <div className="min-h-screen flex flex-col bg-black overflow-y-auto">
           <MainLoading size="md" />
         </div>
       ) : (
         <>
-          <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+          <div className="min-h-screen flex flex-col bg-black overflow-y-auto">
             <LoginHeader />
             <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow md:flex-row gap-12 md:gap-24">
               <Lottie
@@ -138,7 +138,7 @@ export default function Register() {
                 }}
               />
               <div className="flex flex-col gap-6 items-center justify-center md:w-80">
-                <p className="text-3xl text-gray-200 font-bold">
+                <p className="text-3xl text-white font-bold">
                   Cadastre sua conta
                 </p>
                 <input
@@ -207,7 +207,8 @@ export default function Register() {
                 <button
                   type="submit"
                   onClick={handleSubmit(handleSignUp)}
-                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
+                  className="bg-amber-400 w-full transition-all disabled:bg-gray-400 disabled:cursor-not-allowed ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
+                  disabled={isSubmitting || isLoadingUserStorageData}
                 >
                   Cadastrar-se
                 </button>

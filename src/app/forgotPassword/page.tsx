@@ -79,15 +79,15 @@ export default function ForgotPassword() {
   return (
     <>
       {loading ? (
-        <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto items-center justify-center">
+        <div className="min-h-screen flex flex-col bg-black overflow-y-auto items-center justify-center">
           <MainLoading size="md" />
         </div>
       ) : (
         <>
-          <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+          <div className="min-h-screen flex flex-col bg-black overflow-y-auto">
             <LoginHeader />
             <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow gap-12">
-              <p className="text-3xl text-gray-200 font-bold">
+              <p className="text-3xl text-white font-bold">
                 Recuperar senha
               </p>
               <div className="sm:w-[600px] sm:bg-gray-900 w-full rounded-lg sm:p-12 p-3 flex flex-col gap-6 bg-transparent">

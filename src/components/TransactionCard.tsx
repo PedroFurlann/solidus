@@ -56,7 +56,7 @@ export function TransactionCard({
             }}
           >
             <div className="flex items-center justify-between mb-8">
-              <p className="text-gray-200 text-xl font-bold">
+              <p className="text-white text-xl font-bold">
                 Excluir transação
               </p>
               <X
@@ -65,7 +65,7 @@ export function TransactionCard({
                 onClick={handleCloseModalDeleteTransaction}
               />
             </div>
-            <p className="text-gray-200 text-lg font-bold mb-10">
+            <p className="text-white text-lg font-bold mb-10">
               Tem certeza que deseja remover a transação {title}, criada em{" "}
               {dayjs(createdAt).format("DD/MM/YYYY HH:mm")}? Essa ação não
               poderá ser revertida.
@@ -73,7 +73,7 @@ export function TransactionCard({
             <div className="flex items-center justify-end gap-8">
               <button
                 onClick={handleCloseModalDeleteTransaction}
-                className="py-2 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-gray-200  text-lg font-bold text-red-500"
+                className="py-2 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-white  text-lg font-bold text-red-500"
               >
                 Cancelar
               </button>
@@ -82,7 +82,7 @@ export function TransactionCard({
                   onDelete(id);
                   handleCloseModalDeleteTransaction();
                 }}
-                className="py-2 hover:bg-amber-400 rounded-lg hover:text-gray-200 w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
+                className="py-2 hover:bg-amber-400 rounded-lg hover:text-white w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
               >
                 Confirmar
               </button>
@@ -98,7 +98,7 @@ export function TransactionCard({
       className={`w-[calc(100% - 20px)] mr-4 bg-gray-800 px-8 py-4 md:flex-row flex-col md:gap-0 gap-5 flex items-center sm:justify-between justify-center rounded-lg`}
     >
       <div className="flex sm:gap-6 gap-4">
-        <p className="text-lg font-extrabold text-gray-200 text-center">
+        <p className="text-lg font-extrabold text-white text-center">
           {title.charAt(0).toUpperCase() + title.slice(1)}
           {type === "LOSS"
             ? category === "FOOD"
@@ -148,7 +148,7 @@ export function TransactionCard({
         </div>
       )}
       <div className="flex gap-6 items-center">
-        <p className="text-gray-200 text-lg font-extrabold">
+        <p className="text-white text-lg font-extrabold">
           {dayjs(createdAt).format("DD/MM/YYYY HH:mm")}
         </p>
         <Trash

@@ -364,7 +364,7 @@ export default function Transactions() {
             }}
           >
             <div className="flex items-center justify-between mb-8">
-              <p className="text-gray-200 text-lg font-bold">Nova Transação</p>
+              <p className="text-white text-lg font-bold">Nova Transação</p>
               <X
                 className="text-red-500 cursor-pointer hover:opacity-70 duration-300 ease-in-out transition-all"
                 size={32}
@@ -421,7 +421,7 @@ export default function Transactions() {
                       : "border-gray-400"
                   }`}
                 >
-                  <p className="text-lg font-bold text-gray-200">Gasto</p>
+                  <p className="text-lg font-bold text-white">Gasto</p>
                   <ArrowCircleDown size={32} className="text-red-500" />
                 </div>
                 <div
@@ -437,7 +437,7 @@ export default function Transactions() {
                       : "border-gray-400"
                   }`}
                 >
-                  <p className="text-lg font-bold text-gray-200">Lucro</p>
+                  <p className="text-lg font-bold text-white">Lucro</p>
                   <ArrowCircleUp size={32} className="text-amber-400" />
                 </div>
               </div>
@@ -470,13 +470,13 @@ export default function Transactions() {
             <div className="flex items-center justify-between gap-8">
               <button
                 onClick={handleCloseModalRegisterTransaction}
-                className="py-4 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-gray-200  text-lg font-bold text-red-500"
+                className="py-4 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-white  text-lg font-bold text-red-500"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleSubmit(handleRegisterTransaction)}
-                className="py-4 hover:bg-amber-400 rounded-lg hover:text-gray-200 w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
+                className="py-4 hover:bg-amber-400 rounded-lg hover:text-white w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
               >
                 Confirmar
               </button>
@@ -539,15 +539,15 @@ export default function Transactions() {
   return (
     <>
       {loading || isLoadingUserStorageData ? (
-        <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col items-center justify-center">
+        <div className="min-h-screen overflow-y-auto bg-black flex flex-col items-center justify-center">
           <MainLoading size="md" />
         </div>
       ) : (
         <>
           <MainHeader chosenPage="Transactions" />
-          <div className="md:py-28 py-6 lg:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-gray-950">
+          <div className="md:py-28 py-6 lg:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-black">
             <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-12">
-              <p className="text-gray-200 font-bold text-2xl text-center">
+              <p className="text-white font-bold text-2xl text-center">
                 Essas é o resumo de suas transações {user?.name}
               </p>
               <DialogRegisterTransaction
@@ -578,7 +578,7 @@ export default function Transactions() {
             <div className="w-1/2 h-1/2 flex items-center justify-center self-center place-self-center"></div>
             <div className="w-full flex lg:flex-row gap-14 mb-14 flex-col">
               <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
-                <p className="text-xl font-bold text-gray-200">
+                <p className="text-xl font-bold text-white">
                   Total de gastos
                 </p>
                 <div className="flex gap-2 items-center">
@@ -597,7 +597,7 @@ export default function Transactions() {
                 </div>
               </div>
               <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
-                <p className="text-xl font-bold text-gray-200">Balanço geral</p>
+                <p className="text-xl font-bold text-white">Balanço geral</p>
                 <div className="flex gap-2 items-center">
                   <p
                     className={`text-2xl ${
@@ -620,7 +620,7 @@ export default function Transactions() {
                 </div>
               </div>
               <div className="w-full h-48 flex flex-col items-center justify-center gap-6 bg-gray-800 rounded-xl">
-                <p className="text-xl font-bold text-gray-200">
+                <p className="text-xl font-bold text-white">
                   Total de ganhos
                 </p>
                 <div className="flex gap-2 items-center">
@@ -666,7 +666,7 @@ export default function Transactions() {
                     ))}
                   </>
                 ) : (
-                  <p className="md:text-2xl text-lg text-center text-gray-200 font-bold">
+                  <p className="md:text-2xl text-lg text-center text-white font-bold">
                     {" "}
                     Voce ainda não tem nenhuma transação. Que tal cadastrar uma?
                   </p>

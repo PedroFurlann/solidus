@@ -162,7 +162,7 @@ export default function CoinBot() {
             }}
           >
             <div className="flex items-center justify-between mb-8">
-              <p className="text-gray-200 text-xl font-bold">
+              <p className="text-white text-xl font-bold">
                 Excluir histórico de mensagens
               </p>
               <X
@@ -171,14 +171,14 @@ export default function CoinBot() {
                 onClick={handleCloseModalDeleteMessagesHistoric}
               />
             </div>
-            <p className="text-gray-200 text-lg font-bold mb-10">
+            <p className="text-white text-lg font-bold mb-10">
               Tem certeza que deseja deletar seu histórico de mensagens com o
               Coin Bot? Essa ação não poderá ser revertida.
             </p>
             <div className="flex items-center justify-end gap-8">
               <button
                 onClick={handleCloseModalDeleteMessagesHistoric}
-                className="py-2 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-gray-200  text-lg font-bold text-red-500"
+                className="py-2 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-white  text-lg font-bold text-red-500"
               >
                 Cancelar
               </button>
@@ -187,7 +187,7 @@ export default function CoinBot() {
                   handleDeleteMessagesHistoric();
                   handleCloseModalDeleteMessagesHistoric();
                 }}
-                className="py-2 hover:bg-amber-400 rounded-lg hover:text-gray-200 w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
+                className="py-2 hover:bg-amber-400 rounded-lg hover:text-white w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
               >
                 Confirmar
               </button>
@@ -201,19 +201,19 @@ export default function CoinBot() {
   return (
     <>
       {isLoadingUserStorageData || loading ? (
-        <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col pb-12 items-center justify-center">
+        <div className="min-h-screen overflow-y-auto bg-black flex flex-col pb-12 items-center justify-center">
           <MainLoading size="md" />
         </div>
       ) : (
         <>
-          <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col pb-12">
+          <div className="min-h-screen overflow-y-auto bg-black flex flex-col pb-12">
             <MainHeader chosenPage="CoinBot" style={{ marginBottom: 12 }} />
             <div className="flex md:flex-row flex-col items-center justify-center mb-16 mt-4 md:gap-4 gap-8">
               <motion.p
                 initial={{ opacity: 0, x: -100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.5 }}
-                className="text-center text-gray-200 font-bold text-2xl"
+                className="text-center text-white font-bold text-2xl"
                 style={{
                   maxWidth: "80%",
                   textAlign: "center",
@@ -233,7 +233,7 @@ export default function CoinBot() {
               <ChatBot />
               <DialogDeleteMessagesHistoric />
               <button
-                className="px-4 py-3 bg-red-500 text-gray-200 font-semibold rounded-2xl focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 transition-all ease-in-out duration-300"
+                className="px-4 py-3 bg-red-500 text-white font-semibold rounded-2xl focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 transition-all ease-in-out duration-300"
                 disabled={loading || chatHistory.length <= 1 || loadingMessage}
                 onClick={handleOpenModalDeleteMessagesHistoric}
               >

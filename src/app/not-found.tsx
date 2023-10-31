@@ -28,7 +28,7 @@ export default function NotFound() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col bg-gray-950 overflow-y-auto">
+      <div className="min-h-screen flex flex-col bg-black overflow-y-auto">
         <LoginHeader />
         <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow gap-12">
           <Lottie
@@ -43,7 +43,7 @@ export default function NotFound() {
           <p
             className={`${
               isMobile ? "text-2xl" : "text-3xl"
-            } text-gray-200 font-bold text-center`}
+            } text-white font-bold text-center`}
           >
             Página não encontrada. Você será redirecionado em alguns
             instantes...

@@ -66,7 +66,7 @@ export function ChatBot() {
 
 
   return (
-    <div className="py-4 pl-8 pr-4 bg-gray-950 border-amber-400 border-2 shadow-md h-2/3 w-2/3 flex flex-col justify-center items-center rounded-2xl">
+    <div className="py-4 pl-8 pr-4 bg-black border-amber-400 border-2 shadow-md h-2/3 w-2/3 flex flex-col justify-center items-center rounded-2xl">
       <div className="overflow-y-auto h-96 w-full">
         {chatHistory.map((entry: ChatMessage, index: number) => (
           <div
@@ -93,7 +93,7 @@ export function ChatBot() {
               className={`p-4 flex items-center justify-center chat-bubble chat-bubble-warning`}
               style={{ maxWidth: "70%" }}
             >
-              <div className="loading-dots w-6 h-6 text-gray-950 bg-gray-950" />
+              <div className="loading-dots w-6 h-6 text-gray-950 bg-black" />
             </div>
           </div>
         )}
@@ -110,7 +110,7 @@ export function ChatBot() {
         />
         <button
           onClick={handleSendMessage}
-          className="ml-2 px-4 py-1 bg-amber-400 text-gray-200 font-semibold rounded-md focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-70 transition-all ease-in-out duration-300"
+          className="ml-2 px-4 py-1 bg-amber-400 text-white font-semibold rounded-md focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-70 transition-all ease-in-out duration-300"
           disabled={loadingMessages}
         >
           Enviar

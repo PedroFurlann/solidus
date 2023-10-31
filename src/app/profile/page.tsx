@@ -174,12 +174,12 @@ export default function Profile() {
   return (
     <>
       {loading || isLoadingUserStorageData ? (
-        <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col items-center justify-center">
+        <div className="min-h-screen overflow-y-auto bg-black flex flex-col items-center justify-center">
           <MainLoading size="md" />
         </div>
       ) : (
         <>
-          <div className="min-h-screen overflow-y-auto bg-gray-950 flex flex-col">
+          <div className="min-h-screen overflow-y-auto bg-black flex flex-col">
             <MainHeader chosenPage="Profile" style={{ marginBottom: 120 }} />
 
             <div className="flex flex-col justify-center items-center md:px-8 px-4 pt-6 pb-8">

@@ -43,7 +43,7 @@ export default function Home() {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.5 }}
-            className="text-center text-gray-200 font-bold text-2xl"
+            className="text-center text-white font-bold text-2xl"
             style={{
               maxWidth: "80%",
               textAlign: "center",
@@ -60,7 +60,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.5 }}
-              className="text-center text-gray-200 font-bold text-2xl"
+              className="text-center text-white font-bold text-2xl"
               style={{
                 textAlign: "center",
                 whiteSpace: "normal",
@@ -90,7 +90,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.5 }}
-              className="text-center text-gray-200 font-bold text-lg"
+              className="text-center text-white font-bold text-lg"
               style={{
                 textAlign: "center",
                 whiteSpace: "normal",
@@ -109,7 +109,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.5 }}
-              className="text-center text-gray-200 font-bold text-lg"
+              className="text-center text-white font-bold text-lg"
               style={{
                 textAlign: "center",
                 whiteSpace: "normal",

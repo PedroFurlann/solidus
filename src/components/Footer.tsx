@@ -6,16 +6,16 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="footer p-6 bg-gray-950 text-gray-200 font-bold items-center flex  justify-center gap-12 ">
+    <footer className="footer p-6 bg-black text-white font-bold items-center flex  justify-center gap-12 ">
       <aside className="flex flex-col items-center justify-center mt-6">
-        <p className="text-center text-gray-200 font-bold">
+        <p className="text-center text-white font-bold">
           Solidus
           <br />
           Developed by Pedro Furlan
         </p>
       </aside>
       <nav className="flex flex-col items-center">
-        <header className="footer-title opacity-80 text-center text-gray-200 font-bold">
+        <header className="footer-title opacity-80 text-center text-white font-bold">
           Social
         </header>
         <div className="grid grid-flow-col gap-4">

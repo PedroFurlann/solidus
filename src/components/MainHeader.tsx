@@ -26,28 +26,28 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
       {isMobile ? (
         <div>
           <button
-            className="text-lg font-extrabold text-gray-800 transition-all ease-in-out duration-500 cursor-pointer hover:bg-gray-950 hover:text-gray-200 py-2 px-3 rounded-2xl"
+            className="text-lg font-extrabold text-gray-800 transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl"
             onClick={toggleMenu}
           >
             <List weight="bold" size={28} />
           </button>
           {isMenuOpen && (
            <div
-           className="absolute right-8 top-12 bg-gray-950 w-48 border border-amber-400 rounded-md shadow-lg"
+           className="absolute right-8 top-12 bg-black w-48 border border-amber-400 rounded-md shadow-lg"
            style={{ transform: "translateX(-10%)" }} // Ajuste para a esquerda
          >
            <Link href="/transactions">
-             <p className="block py-2 px-4 text-gray-200 hover:bg-amber-400">
+             <p className="block py-2 px-4 text-white hover:bg-amber-400">
                Transações
              </p>
            </Link>
            <Link href="/coinBot">
-             <p className="block py-2 px-4 text-gray-200 hover:bg-amber-400">
+             <p className="block py-2 px-4 text-white hover:bg-amber-400">
                Coin Bot
              </p>
            </Link>
            <Link href="/profile">
-             <p className="block py-2 px-4 text-gray-200 hover:bg-amber-400">
+             <p className="block py-2 px-4 text-white hover:bg-amber-400">
                Perfil
              </p>
            </Link>
@@ -58,17 +58,17 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
         // Regular header for larger screens
         <div className="flex gap-4">
           <Link href="/transactions">
-          <p className={`text-lg font-extrabold ${chosenPage === "Transactions" ? "text-gray-200 bg-gray-950" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-gray-950 hover:text-gray-200 py-2 px-3 rounded-2xl`}>
+          <p className={`text-lg font-extrabold ${chosenPage === "Transactions" ? "text-white bg-black" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl`}>
               Transações
             </p>
           </Link>
           <Link href="/coinBot">
-          <p className={`text-lg font-extrabold ${chosenPage === "CoinBot" ? "text-gray-200 bg-gray-950" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-gray-950 hover:text-gray-200 py-2 px-3 rounded-2xl`}>
+          <p className={`text-lg font-extrabold ${chosenPage === "CoinBot" ? "text-white bg-black" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl`}>
               Coin Bot
             </p>
           </Link>
           <Link href="/profile">
-          <p className={`text-lg font-extrabold ${chosenPage === "Profile" ? "text-gray-200 bg-gray-950" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-gray-950 hover:text-gray-200 py-2 px-3 rounded-2xl`}>
+          <p className={`text-lg font-extrabold ${chosenPage === "Profile" ? "text-white bg-black" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl`}>
               Perfil
             </p>
           </Link>
