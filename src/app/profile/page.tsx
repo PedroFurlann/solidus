@@ -165,11 +165,7 @@ export default function Profile() {
     }
   }
 
-  // useEffect(() => {
-  //   if (!user2 && typeof window !== "undefined") {
-  //     router.push("login");
-  //   }
-  // }, [])
+
 
   return (
     <>
@@ -189,7 +185,7 @@ export default function Profile() {
               </p> */}
               <div className="flex flex-col gap-6 items-center justify-center md:w-80">
                 <input
-                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                  className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
                   type="text"
                   placeholder="Nome"
                   {...register("name")}
@@ -215,20 +211,20 @@ export default function Profile() {
 
                 <div className="relative w-full">
                   <input
-                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                    className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
                     type={showPassword ? "text" : "password"}
                     placeholder="Nova senha"
                     {...register("new_password")}
                   />
                   {showPassword ? (
                     <Eye
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
                       size={20}
                       onClick={handleTogglePassword}
                     />
                   ) : (
                     <EyeSlash
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
                       size={20}
                       onClick={handleTogglePassword}
                     />
@@ -241,7 +237,7 @@ export default function Profile() {
                 )}
 
                 <input
-                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                  className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
                   type={showPassword ? "text" : "password"}
                   placeholder="Confirme sua nova senha"
                   {...register("confirm_new_password")}

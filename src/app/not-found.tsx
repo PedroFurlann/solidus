@@ -42,7 +42,7 @@ export default function NotFound() {
 
           <p
             className={`${
-              isMobile ? "text-2xl" : "text-3xl"
+              isMobile ? "text-lg" : "text-3xl"
             } text-white font-bold text-center`}
           >
             Página não encontrada. Você será redirecionado em alguns

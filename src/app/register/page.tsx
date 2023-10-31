@@ -143,7 +143,7 @@ export default function Register() {
                   Cadastre sua conta
                 </p>
                 <input
-                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                  className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
                   type="email"
                   placeholder="Nome"
                   {...register("name")}
@@ -155,7 +155,7 @@ export default function Register() {
                 )}
 
                 <input
-                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                  className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
                   type="email"
                   placeholder="Email"
                   {...register("email")}
@@ -168,20 +168,20 @@ export default function Register() {
 
                 <div className="relative w-full">
                   <input
-                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                    className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
                     type={showPassword ? "text" : "password"}
                     placeholder="Senha"
                     {...register("password")}
                   />
                   {showPassword ? (
                     <Eye
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
                       size={20}
                       onClick={handleTogglePassword}
                     />
                   ) : (
                     <EyeSlash
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
                       size={20}
                       onClick={handleTogglePassword}
                     />
@@ -194,7 +194,7 @@ export default function Register() {
                 )}
 
                 <input
-                  className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                  className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
                   type={showPassword ? "text" : "password"}
                   placeholder="Confirme sua senha"
                   {...register("confirm_password")}

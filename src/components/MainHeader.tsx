@@ -34,7 +34,7 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
           {isMenuOpen && (
            <div
            className="absolute right-8 top-12 bg-black w-48 border border-amber-400 rounded-md shadow-lg"
-           style={{ transform: "translateX(-10%)" }} // Ajuste para a esquerda
+           style={{ transform: "translateX(-10%)" }}
          >
            <Link href="/transactions">
              <p className="block py-2 px-4 text-white hover:bg-amber-400">
@@ -55,7 +55,7 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
           )}
         </div>
       ) : (
-        // Regular header for larger screens
+        
         <div className="flex gap-4">
           <Link href="/transactions">
           <p className={`text-lg font-extrabold ${chosenPage === "Transactions" ? "text-white bg-black" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl`}>

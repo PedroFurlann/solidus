@@ -119,7 +119,7 @@ export default function ForgotPassword() {
                 <div className="w-full flex flex-col gap-6">
                   <div className="relative w-full">
                     <input
-                      className="border border-gray-300 px-4 py-4 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                      className="border bg-white border-gray-300 px-4 py-4 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
                       type={showPassword ? "text" : "password"}
                       placeholder="Nova senha"
                       {...register("new_password")}
@@ -148,7 +148,7 @@ export default function ForgotPassword() {
 
                 <div className="w-full">
                   <input
-                    className="border border-gray-300 px-4 py-4 mb-6  rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-gray-700 w-full"
+                    className="border bg-white border-gray-300 px-4 py-4 mb-6  rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
                     type={showPassword ? "text" : "password"}
                     placeholder="Confirme sua nova senha"
                     {...register("confirm_new_password")}

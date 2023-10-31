@@ -186,9 +186,9 @@ export default function Transactions() {
           -totalFixedLoss,
           -totalOthersLoss,
         ],
-        backgroundColor: "rgba(251, 191, 36, 1)", // Cor das barras
-        borderColor: "rgba(245, 158, 11, 1)", // Cor da borda das barras
-        borderWidth: 4, // Largura da borda das barras
+        backgroundColor: "rgba(251, 191, 36, 1)", 
+        borderColor: "rgba(245, 158, 11, 1)", 
+        borderWidth: 4,
       },
     ],
   };
@@ -211,7 +211,6 @@ export default function Transactions() {
     try {
       const response = await api.get("/transactions");
       setTransactions(response.data.transactions);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
       const isAppError = error instanceof AppError;
@@ -285,8 +284,6 @@ export default function Transactions() {
       amount: numberAmount,
       category: selectedType === "LOSS" ? selectedCategory : null,
     };
-
-    console.log(transactionData);
 
     setLoading(true);
 
@@ -373,7 +370,7 @@ export default function Transactions() {
             </div>
             <div className="w-full flex flex-col gap-8">
               <input
-                className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
                 type="text"
                 placeholder="Título"
                 {...register("title")}
@@ -396,7 +393,7 @@ export default function Transactions() {
                     decimalSeparator=","
                     prefix="R$ "
                     placeholder="R$ 0,00"
-                    className="border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                    className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
                   />
                 )}
               />
