@@ -28,6 +28,7 @@ export default function Register() {
   const { isMobile } = useWindowSize();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter();
 
@@ -77,6 +78,8 @@ export default function Register() {
       password,
     };
 
+    setLoading(true)
+
     try {
       await api.post("/user", userData);
       await signIn(email, password);
@@ -109,14 +112,12 @@ export default function Register() {
           fontWeight: "bold",
         },
       });
+    } finally {
+      setLoading(false)
     }
   }
 
-  // useEffect(() => {
-  //   if (user && typeof window !== undefined) {
-  //     router.push("transactions");
-  //   }
-  // }, [])
+
 
   return (
     <>
@@ -208,7 +209,7 @@ export default function Register() {
                   type="submit"
                   onClick={handleSubmit(handleSignUp)}
                   className="bg-amber-400 w-full transition-all disabled:bg-gray-400 disabled:cursor-not-allowed ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
-                  disabled={isSubmitting || isLoadingUserStorageData}
+                  disabled={isSubmitting || isLoadingUserStorageData || loading}
                 >
                   Cadastrar-se
                 </button>

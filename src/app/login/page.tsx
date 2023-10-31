@@ -24,6 +24,7 @@ interface FormData {
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const { isMobile } = useWindowSize();
 
@@ -61,6 +62,7 @@ export default function Login() {
   });
 
   async function handleSignIn({ email, password }: FormData) {
+    setLoading(true)
     try {
       await signIn(email, password);
       router.push("/transactions");
@@ -93,6 +95,8 @@ export default function Login() {
           fontWeight: "bold",
         },
       });
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -166,7 +170,7 @@ export default function Login() {
                   type="submit"
                   onClick={handleSubmit(handleSignIn)}
                   className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 rounded-md py-4 text-gray-100 text-md font-extrabold"
-                  disabled={isSubmitting || isLoadingUserStorageData}
+                  disabled={isSubmitting || isLoadingUserStorageData || loading}
                 >
                   Entrar
                 </button>
