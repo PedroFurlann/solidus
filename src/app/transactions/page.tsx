@@ -545,7 +545,7 @@ export default function Transactions() {
           <div className="md:py-28 py-6 lg:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-black">
             <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-12">
               <p className="text-white font-bold text-2xl text-center">
-                Essas é o resumo de suas transações {user?.name}
+                Esse é o resumo de suas transações {user?.name}
               </p>
               <DialogRegisterTransaction
                 triggerComponent={
