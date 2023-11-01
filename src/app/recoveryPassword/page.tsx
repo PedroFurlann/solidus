@@ -127,13 +127,13 @@ export default function ForgotPassword() {
 
                     {showPassword ? (
                       <Eye
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
                         size={20}
                         onClick={handleTogglePassword}
                       />
                     ) : (
                       <EyeSlash
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-700"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
                         size={20}
                         onClick={handleTogglePassword}
                       />

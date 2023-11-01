@@ -93,7 +93,7 @@ export default function ForgotPassword() {
               <div className="sm:w-[600px] sm:bg-gray-900 w-full rounded-lg sm:p-12 p-3 flex flex-col gap-6 bg-transparent">
                 <div className="w-full">
                   <input
-                    className="border border-gray-300 px-4 py-4 mb-6 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
+                    className="border bg-white border-gray-300 px-4 py-4 mb-6 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
                     type="email"
                     placeholder="Digite o email para recuperação"
                     {...register("email")}
