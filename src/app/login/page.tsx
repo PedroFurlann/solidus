@@ -104,7 +104,7 @@ export default function Login() {
 
   return (
     <>
-      {isLoadingUserStorageData || loading ? (
+      {isLoadingUserStorageData ? (
         <div className="min-h-screen flex flex-col bg-black overflow-y-auto items-center justify-center">
           <MainLoading size="sm" />
         </div>
