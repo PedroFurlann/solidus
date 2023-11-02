@@ -73,7 +73,7 @@ export function TransactionCard({
             <div className="flex items-center justify-end gap-8">
               <button
                 onClick={handleCloseModalDeleteTransaction}
-                className="py-2 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-white  text-lg font-bold text-red-500"
+                className="py-3 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-white  text-lg font-bold text-red-500"
               >
                 Cancelar
               </button>
@@ -82,7 +82,7 @@ export function TransactionCard({
                   onDelete(id);
                   handleCloseModalDeleteTransaction();
                 }}
-                className="py-2 hover:bg-amber-400 rounded-lg hover:text-white w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
+                className="py-3 hover:bg-amber-400 rounded-lg hover:text-white w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
               >
                 Confirmar
               </button>

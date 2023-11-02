@@ -467,7 +467,7 @@ export default function Transactions() {
             <div className="flex items-center justify-between gap-8">
               <button
                 onClick={handleCloseModalRegisterTransaction}
-                className="py-4 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-white  text-lg font-bold text-red-500"
+                className="py-3 w-40 border rounded-lg border-red-500 ease-in-out duration-300 cursor-pointer hover:bg-red-500 hover:text-white  text-lg font-bold text-red-500"
               >
                 Cancelar
               </button>
