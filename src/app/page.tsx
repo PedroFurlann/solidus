@@ -22,12 +22,12 @@ export default function Home() {
       <div
         className="min-h-screen flex flex-col bg-cover bg-no-repeat overflow-y-auto md:py-12 items-center justify-center bg-black md:px-12 pb-6"
       >
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center gap-2">
           <motion.p
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5 }}
-            className="text-amber-400 font-extrabold font-mono text-6xl self-center mt-4"
+            className="text-amber-400 font-extrabold font-mono xl:text-6xl text-2xl self-center mt-4"
           >
             SOLIDUS
           </motion.p>
@@ -42,7 +42,7 @@ export default function Home() {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.5 }}
-            className="text-center text-white font-bold text-xl"
+            className="text-center text-white font-bold xl:text-xl text-lg"
             style={{
               maxWidth: "80%",
               textAlign: "center",
@@ -59,7 +59,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.5 }}
-              className="text-center text-white font-bold text-xl"
+              className="text-center text-white font-bold xl:text-xl text-lg"
               style={{
                 textAlign: "center",
                 whiteSpace: "normal",

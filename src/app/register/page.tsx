@@ -121,7 +121,7 @@ export default function Register() {
 
   return (
     <>
-      {isLoadingUserStorageData ? (
+      {isLoadingUserStorageData || loading ? (
         <div className="min-h-screen flex flex-col bg-black overflow-y-auto">
           <MainLoading size="sm" />
         </div>

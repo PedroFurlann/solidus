@@ -67,7 +67,7 @@ export function ChatBot() {
 
   return (
     <div className="py-4 pl-8 pr-4 bg-black border-amber-400 border-2 shadow-md h-1/2 w-1/2 flex flex-col justify-center items-center rounded-2xl">
-      <div className="overflow-y-auto max-h-96 w-full">
+      <div className="overflow-y-auto h-96 w-full">
         {chatHistory.map((entry: ChatMessage, index: number) => (
           <div
             key={index}
