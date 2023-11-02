@@ -104,14 +104,14 @@ export default function ForgotPassword() {
     <>
       {loading ? (
         <div className="min-h-screen flex flex-col bg-black overflow-y-auto items-center justify-center">
-          <MainLoading size="md" />
+          <MainLoading size="sm" />
         </div>
       ) : (
         <>
           <div className="min-h-screen flex flex-col bg-black overflow-y-auto">
             <LoginHeader />
             <div className="px-6  py-20 flex flex-col items-center justify-center flex-grow  gap-10">
-              <p className="text-3xl text-white font-bold">
+              <p className="text-2xl text-white font-bold">
                 Redefinir senha
               </p>
 
@@ -119,7 +119,7 @@ export default function ForgotPassword() {
                 <div className="w-full flex flex-col gap-6">
                   <div className="relative w-full">
                     <input
-                      className="border bg-white border-gray-300 px-4 py-4 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
+                      className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
                       type={showPassword ? "text" : "password"}
                       placeholder="Nova senha"
                       {...register("new_password")}
@@ -148,7 +148,7 @@ export default function ForgotPassword() {
 
                 <div className="w-full">
                   <input
-                    className="border bg-white border-gray-300 px-4 py-4 mb-6  rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
+                    className="border bg-white border-gray-300 px-4 py-2 mb-6  rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
                     type={showPassword ? "text" : "password"}
                     placeholder="Confirme sua nova senha"
                     {...register("confirm_new_password")}
@@ -164,7 +164,7 @@ export default function ForgotPassword() {
                 <button
                   type="submit"
                   onClick={handleSubmit(handleRecoveryPassword)}
-                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
+                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-3 text-white text-md font-extrabold"
                 >
                   Redefinir senha
                 </button>

@@ -20,8 +20,7 @@ export default function Home() {
   return (
     <>
       <div
-        className="min-h-screen flex flex-col bg-cover bg-no-repeat overflow-y-auto md:py-12 md:px-12 pb-6"
-        style={{ backgroundImage: `url(${homeBackground.src})` }}
+        className="min-h-screen flex flex-col bg-cover bg-no-repeat overflow-y-auto md:py-12 items-center justify-center bg-black md:px-12 pb-6"
       >
         <div className="flex justify-center items-center">
           <motion.p
@@ -43,7 +42,7 @@ export default function Home() {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.5 }}
-            className="text-center text-white font-bold text-2xl"
+            className="text-center text-white font-bold text-xl"
             style={{
               maxWidth: "80%",
               textAlign: "center",
@@ -60,7 +59,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.5 }}
-              className="text-center text-white font-bold text-2xl"
+              className="text-center text-white font-bold text-xl"
               style={{
                 textAlign: "center",
                 whiteSpace: "normal",
@@ -82,8 +81,8 @@ export default function Home() {
               animationData={computerAnimation}
               loop={true}
               style={{
-                width: isMobile ? 180 : 300,
-                height: isMobile ? 180 : 300,
+                width: isMobile ? 160 : 250,
+                height: isMobile ? 160 : 250,
               }}
             />
             <motion.p

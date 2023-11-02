@@ -95,10 +95,10 @@ export function TransactionCard({
 
   return (
     <div
-      className={`w-[calc(100% - 20px)] mr-4 bg-gray-800 px-8 py-4 md:flex-row flex-col md:gap-0 gap-5 flex items-center sm:justify-between justify-center rounded-lg`}
+      className={`w-[calc(100% - 20px)] mr-4 bg-gray-800 px-4 py-4 xl:flex-row flex-col md:gap-0 gap-2 flex items-center sm:justify-between justify-center rounded-lg`}
     >
-      <div className="flex sm:gap-6 gap-4">
-        <p className="text-lg font-extrabold text-white text-center">
+      <div className="flex sm:gap-2 gap-2">
+        <p className="text-md font-extrabold text-white text-center">
           {title.charAt(0).toUpperCase() + title.slice(1)}
           {type === "LOSS"
             ? category === "FOOD"
@@ -114,10 +114,10 @@ export function TransactionCard({
               : ": Outros"
             : ""}
         </p>
-        {width > 1100 && (
+        {width > 1280 && (
           <div className="flex gap-1">
             <p
-              className={`text-lg font-extrabold ${
+              className={`text-md font-extrabold ${
                 type === "PROFIT" ? "text-amber-500" : "text-red-500"
               }`}
             >
@@ -131,10 +131,10 @@ export function TransactionCard({
           </div>
         )}
       </div>
-      {width < 1100 && (
+      {width < 1280 && (
         <div className="flex gap-1">
           <p
-            className={`text-lg font-extrabold ${
+            className={`text-md font-extrabold ${
               type === "PROFIT" ? "text-amber-500" : "text-red-500"
             }`}
           >
@@ -147,13 +147,13 @@ export function TransactionCard({
           )}
         </div>
       )}
-      <div className="flex gap-6 items-center">
-        <p className="text-white text-lg font-extrabold">
+      <div className="flex gap-2 items-center">
+        <p className="text-white text-md font-extrabold">
           {dayjs(createdAt).format("DD/MM/YYYY HH:mm")}
         </p>
         <Trash
           className="text-red-500 cursor-pointer hover:opacity-70 duration-300 transition-all ease-in-out"
-          size={24}
+          size={20}
           weight="fill"
           onClick={handleOpenModalDeleteTransaction}
         />

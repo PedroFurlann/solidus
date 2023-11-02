@@ -26,7 +26,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false)
 
-  const { isMobile } = useWindowSize();
+  const { isMobile, width } = useWindowSize();
 
   const { signIn, isLoadingUserStorageData, user } = useAuth();
 
@@ -106,7 +106,7 @@ export default function Login() {
     <>
       {isLoadingUserStorageData ? (
         <div className="min-h-screen flex flex-col bg-black overflow-y-auto items-center justify-center">
-          <MainLoading size="md" />
+          <MainLoading size="sm" />
         </div>
       ) : (
         <>
@@ -117,12 +117,13 @@ export default function Login() {
                 animationData={moneyAnimation}
                 loop={true}
                 style={{
-                  width: isMobile ? 250 : 400,
-                  height: isMobile ? 250 : 400,
+                  width: width < 768 ? 220 : width < 1300 ? 300 : 330,
+                  height: width < 768 ? 220 : width < 1300 ? 300 : 330,
                 }}
               />
               <div className="flex flex-col gap-6 items-center justify-center md:w-80">
-                <p className="text-3xl text-white font-bold">Login</p>
+                <p className="text-2xl text-white font-bold">Login</p>
+
                 <input
                   className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
                   type="email"
@@ -165,13 +166,14 @@ export default function Login() {
                 <button
                   type="submit"
                   onClick={handleSubmit(handleSignIn)}
-                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 rounded-md py-4 text-gray-100 text-md font-extrabold"
+                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 rounded-md py-3 text-white text-md font-extrabold"
                   disabled={isSubmitting || isLoadingUserStorageData || loading}
                 >
                   Entrar
                 </button>
-                <p className="font-bold text-lg text-white">
-                  Ainda não tem conta?{" "}
+               <div className="flex flex-col items-start justify-center gap-4 mt-2">
+               <p className="font-bold text-lg text-white">
+                  Ainda não possui uma conta?{" "}
                   <Link
                     href="/register"
                     className="text-amber-500 text-lg font-bold hover:opacity-70 transition-all ease-in-out duration-300"
@@ -188,6 +190,7 @@ export default function Login() {
                     Clique aqui para recuperar.
                   </Link>
                 </p>
+               </div>
               </div>
             </div>
           </div>

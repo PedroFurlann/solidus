@@ -202,34 +202,32 @@ export default function CoinBot() {
     <>
       {isLoadingUserStorageData || loading ? (
         <div className="min-h-screen overflow-y-auto bg-black flex flex-col pb-12 items-center justify-center">
-          <MainLoading size="md" />
+          <MainLoading size="sm" />
         </div>
       ) : (
         <>
           <div className="min-h-screen overflow-y-auto bg-black flex flex-col pb-12">
             <MainHeader chosenPage="CoinBot" style={{ marginBottom: 12 }} />
-            <div className="flex md:flex-row flex-col items-center justify-center mb-16 mt-4 md:gap-4 gap-8">
+            <div className="px-8 flex md:flex-row flex-col items-center justify-center mt-4 md:gap-12 gap-8">
               <motion.p
                 initial={{ opacity: 0, x: -100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.5 }}
-                className="text-center text-white font-bold text-2xl"
+                className="text-center text-white font-bold text-xl"
                 style={{
-                  maxWidth: "80%",
                   textAlign: "center",
-                  whiteSpace: "normal",
                   wordWrap: "break-word",
                 }}
               >
-                Olá, meu nome é Coin bot seu assistente de finanças virtual.
+                Olá, meu nome é Coin bot seu assistente de finanças virtual. <br />
                 Como posso te ajudar hoje?
               </motion.p>
               <Lottie
                 animationData={coinBotAnimation}
-                style={{ height: 300, width: 300 }}
+                style={{ height: width > 1280 ? 250 : 200, width: width > 1280 ? 250 : 200 }}
               />
             </div>
-            <div className="flex flex-col items-center justify-center mt-[-116px] gap-6">
+            <div className="flex flex-col items-center justify-center gap-6">
               <ChatBot />
               <DialogDeleteMessagesHistoric />
               <button

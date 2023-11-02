@@ -20,13 +20,13 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
   };
 
   return (
-    <div {...rest} className={`w-full h-24 bg-amber-400 flex items-center pl-8 gap-6 ${isMobile ? "justify-between" : ""}`}>
+    <div {...rest} className={`w-full h-20 bg-amber-400 flex items-center pl-8 gap-6 ${isMobile ? "justify-between" : ""}`}>
       <Avatar size="medium" />
 
       {isMobile ? (
         <div>
           <button
-            className="text-lg font-extrabold text-gray-800 transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl"
+            className="text-md font-extrabold text-black transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl"
             onClick={toggleMenu}
           >
             <List weight="bold" size={28} />
@@ -58,17 +58,17 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
         
         <div className="flex gap-4">
           <Link href="/transactions">
-          <p className={`text-lg font-extrabold ${chosenPage === "Transactions" ? "text-white bg-black" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl`}>
+          <p className={`text-md font-extrabold ${chosenPage === "Transactions" ? "text-white bg-black" : "text-black"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-1 px-3 rounded-2xl`}>
               Transações
             </p>
           </Link>
           <Link href="/coinBot">
-          <p className={`text-lg font-extrabold ${chosenPage === "CoinBot" ? "text-white bg-black" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl`}>
+          <p className={`text-md font-extrabold ${chosenPage === "CoinBot" ? "text-white bg-black" : "text-black"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-1 px-3 rounded-2xl`}>
               Coin Bot
             </p>
           </Link>
           <Link href="/profile">
-          <p className={`text-lg font-extrabold ${chosenPage === "Profile" ? "text-white bg-black" : "text-gray-800"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-2 px-3 rounded-2xl`}>
+          <p className={`text-md font-extrabold ${chosenPage === "Profile" ? "text-white bg-black" : "text-black"} transition-all ease-in-out duration-500 cursor-pointer hover:bg-black hover:text-white py-1 px-3 rounded-2xl`}>
               Perfil
             </p>
           </Link>

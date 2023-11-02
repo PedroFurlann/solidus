@@ -35,14 +35,14 @@ export default function NotFound() {
             animationData={NotFoundAnimation}
             loop={true}
             style={{
-              width: isMobile ? 180 : 340,
-              height: isMobile ? 180 : 340,
+              width: isMobile ? 180 : 250,
+              height: isMobile ? 180 : 250,
             }}
           />
 
           <p
             className={`${
-              isMobile ? "text-lg" : "text-3xl"
+              isMobile ? "text-lg" : "text-xl"
             } text-white font-bold text-center`}
           >
             Página não encontrada. Você será redirecionado em alguns

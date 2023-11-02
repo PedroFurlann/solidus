@@ -171,7 +171,7 @@ export default function Profile() {
     <>
       {loading || isLoadingUserStorageData ? (
         <div className="min-h-screen overflow-y-auto bg-black flex flex-col items-center justify-center">
-          <MainLoading size="md" />
+          <MainLoading size="sm" />
         </div>
       ) : (
         <>
@@ -179,7 +179,7 @@ export default function Profile() {
             <MainHeader chosenPage="Profile" style={{ marginBottom: 120 }} />
 
             <div className="flex flex-col justify-center items-center md:px-8 px-4 pt-6 pb-8">
-              <Avatar size="profileSize" style={{ marginBottom: 64 }} />
+              <Avatar size="extraLarge" style={{ marginBottom: 64 }} />
               {/* <p className="text-amber-400 text-2xl font-extrabold mb-16 cursor-pointer hover:opacity-70 transition-all duration-300">
                 Alterar Foto
               </p> */}
@@ -197,7 +197,7 @@ export default function Profile() {
                 )}
 
                 <input
-                  className="border border-gray-300 px-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 py-2 rounded-md focus:outline-none focus:ring-2 text-gray-700 focus:ring-amber-400 w-full"
+                  className="border border-gray-300 px-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
                   type="email"
                   placeholder="Email"
                   disabled
@@ -251,7 +251,7 @@ export default function Profile() {
                 <button
                   type="submit"
                   onClick={handleSubmit(handleUpdateProfile)}
-                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
+                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md py-3 text-white text-md font-extrabold"
                 >
                   Atualizar Perfil
                 </button>
@@ -259,11 +259,11 @@ export default function Profile() {
                 <button
                   type="submit"
                   onClick={handleSignOut}
-                  className="bg-red-500 flex items-center justify-center w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md gap-2 py-4"
+                  className="bg-red-500 flex items-center justify-center w-full transition-all ease-in-out duration-300 hover:opacity-70 rounded-md gap-2 py-3"
                 >
-                  <p className="text-gray-100 text-md font-extrabold">Sair</p>
+                  <p className="text-white text-md font-extrabold">Sair</p>
 
-                  <SignOut className="text-gray-100 font-bold" size={24} />
+                  <SignOut className="text-white font-bold" size={24} />
                 </button>
               </div>
             </div>

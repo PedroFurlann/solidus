@@ -473,7 +473,7 @@ export default function Transactions() {
               </button>
               <button
                 onClick={handleSubmit(handleRegisterTransaction)}
-                className="py-4 hover:bg-amber-400 rounded-lg hover:text-white w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
+                className="py-3 hover:bg-amber-400 rounded-lg hover:text-white w-40 border ease-in-out duration-300 border-amber-400 text-lg font-bold text-amber-400"
               >
                 Confirmar
               </button>
@@ -537,23 +537,23 @@ export default function Transactions() {
     <>
       {loading || isLoadingUserStorageData ? (
         <div className="min-h-screen overflow-y-auto bg-black flex flex-col items-center justify-center">
-          <MainLoading size="md" />
+          <MainLoading size="sm" />
         </div>
       ) : (
         <>
           <MainHeader chosenPage="Transactions" />
           <div className="md:py-28 py-6 lg:px-40 px-8 items-center justify-center flex-col md:gap-16 gap-8 min-h-screen overflow-y-auto bg-black">
             <div className="flex md:flex-row flex-col items-center md:justify-between md:gap-0 gap-4 mb-12">
-              <p className="text-white font-bold text-2xl text-center">
+              <p className="text-white font-bold text-xl text-center">
                 Esse é o resumo de suas transações {user?.name}
               </p>
               <DialogRegisterTransaction
                 triggerComponent={
                   <button
                     onClick={handleOpenModalRegisterTransaction}
-                    className="rounded-lg bg-amber-400 border-none py-4 px-4 cursor-pointer hover:opacity-70 transition-all ease-in-out duration-300"
+                    className="rounded-lg bg-amber-400 border-none py-3 px-3 cursor-pointer hover:opacity-70 transition-all ease-in-out duration-300"
                   >
-                    <p className="text-gray-50 font-extrabold">
+                    <p className="text-white font-extrabold">
                       Nova Transação
                     </p>
                   </button>
@@ -572,24 +572,24 @@ export default function Transactions() {
                 <Bar data={chartData} options={chartOptions} />
               </div>
             </div>
-            <div className="w-1/2 h-1/2 flex items-center justify-center self-center place-self-center"></div>
-            <div className="w-full flex lg:flex-row gap-14 mb-14 flex-col">
+            <div className="flex items-center justify-center">
+            <div className="w-2/3 flex xl:flex-row gap-14 mb-14 flex-col">
               <div className="w-full h-48 flex flex-col justify-center items-center gap-6 bg-gray-800 rounded-xl">
                 <p className="text-xl font-bold text-white">
                   Total de gastos
                 </p>
                 <div className="flex gap-2 items-center">
                   <p
-                    className={`text-2xl ${
+                    className={`text-xl ${
                       totalLoss < 0 ? "text-red-500" : "text-gray-400"
                     } font-extrabold`}
                   >
                     {priceFormatter.format(totalLoss).replace("-", "- ")}
                   </p>
                   {totalLoss < 0 ? (
-                    <ArrowCircleDown className="text-red-500" size={36} />
+                    <ArrowCircleDown className="text-red-500" size={24} />
                   ) : (
-                    <MinusCircle className="text-gray-400" size={36} />
+                    <MinusCircle className="text-gray-400" size={24} />
                   )}
                 </div>
               </div>
@@ -597,7 +597,7 @@ export default function Transactions() {
                 <p className="text-xl font-bold text-white">Balanço geral</p>
                 <div className="flex gap-2 items-center">
                   <p
-                    className={`text-2xl ${
+                    className={`text-xl ${
                       finalAmount > 0
                         ? "text-amber-400"
                         : finalAmount === 0
@@ -608,11 +608,11 @@ export default function Transactions() {
                     {priceFormatter.format(finalAmount).replace("-", "- ")}
                   </p>
                   {finalAmount < 0 ? (
-                    <ArrowCircleDown className="text-red-500" size={36} />
+                    <ArrowCircleDown className="text-red-500" size={24} />
                   ) : finalAmount === 0 ? (
-                    <MinusCircle className="text-gray-400" size={36} />
+                    <MinusCircle className="text-gray-400" size={24} />
                   ) : (
-                    <ArrowCircleUp className="text-amber-400" size={36} />
+                    <ArrowCircleUp className="text-amber-400" size={24} />
                   )}
                 </div>
               </div>
@@ -622,28 +622,30 @@ export default function Transactions() {
                 </p>
                 <div className="flex gap-2 items-center">
                   <p
-                    className={`text-2xl ${
+                    className={`text-xl ${
                       totalProfit > 0 ? "text-amber-400" : "text-gray-400"
                     } font-extrabold`}
                   >
                     {priceFormatter.format(totalProfit)}
                   </p>
                   {totalProfit > 0 ? (
-                    <ArrowCircleUp className="text-amber-500" size={36} />
+                    <ArrowCircleUp className="text-amber-500" size={24} />
                   ) : (
-                    <MinusCircle className="text-gray-400" size={36} />
+                    <MinusCircle className="text-gray-400" size={24} />
                   )}
                 </div>
               </div>
             </div>
+            </div>
+            <div className="flex items-center justify-center">
             <div
               className={`
-                w-full h-96 flex flex-col py-8 bg-gray-900 px-4 rounded-xl
+                w-2/3 max-h-96 flex flex-col py-8 bg-gray-900 px-4 rounded-xl
                 
               `}
             >
               <div
-                className={`overflow-y-auto w-full h-96 flex flex-col gap-8 ${
+                className={`overflow-y-auto w-full max-h-96 flex flex-col gap-8 ${
                   transactions.length === 0 && "items-center"
                 } ${transactions.length === 0 && "justify-center"}`}
               >
@@ -663,12 +665,13 @@ export default function Transactions() {
                     ))}
                   </>
                 ) : (
-                  <p className="md:text-2xl text-lg text-center text-white font-bold">
+                  <p className="xl:text-xl text-lg text-center text-white font-bold">
                     {" "}
                     Voce ainda não tem nenhuma transação. Que tal cadastrar uma?
                   </p>
                 )}
               </div>
+            </div>
             </div>
           </div>
           <Footer />

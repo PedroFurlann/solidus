@@ -66,8 +66,8 @@ export function ChatBot() {
 
 
   return (
-    <div className="py-4 pl-8 pr-4 bg-black border-amber-400 border-2 shadow-md h-2/3 w-2/3 flex flex-col justify-center items-center rounded-2xl">
-      <div className="overflow-y-auto h-96 w-full">
+    <div className="py-4 pl-8 pr-4 bg-black border-amber-400 border-2 shadow-md h-1/2 w-1/2 flex flex-col justify-center items-center rounded-2xl">
+      <div className="overflow-y-auto max-h-96 w-full">
         {chatHistory.map((entry: ChatMessage, index: number) => (
           <div
             key={index}
@@ -76,10 +76,10 @@ export function ChatBot() {
             }`}
           >
             <div
-              className={`p-4 inline-block chat-bubble break-words chat-bubble-warning`}
+              className={`xl:p-4 lg:p-3 p-2 inline-block chat-bubble break-words chat-bubble-warning`}
               style={{ maxWidth: "70%" }}
             >
-              <p className="font-medium text-gray-950">{entry.content}</p>
+              <p className="font-medium text-black">{entry.content}</p>
             </div>
           </div>
         ))}
@@ -90,27 +90,27 @@ export function ChatBot() {
         }`}
           >
             <div
-              className={`p-4 flex items-center justify-center chat-bubble chat-bubble-warning`}
+              className={`xl:p-4 lg:p-3 p-2 flex items-center justify-center chat-bubble chat-bubble-warning`}
               style={{ maxWidth: "70%" }}
             >
-              <div className="loading-dots w-6 h-6 text-gray-950 bg-black" />
+              <div className="loading-dots w-6 h-6 text-black bg-black" />
             </div>
           </div>
         )}
       </div>
-      <div className="flex md:flex-row flex-col gap-4 mt-2 w-full items-center justify-center">
+      <div className="flex md:flex-row flex-col gap-4 mt-4 w-full items-center justify-center">
         <input
           type="text"
           value={inputMessage}
           onKeyDown={handleKeyDown}
           onChange={handleInputMessageChange}
-          className="border flex-1 rounded-md px-2 py-1 focus:outline-none w-full disabled:cursor-not-allowed disabled:opacity-70"
+          className="border flex-1 rounded-md px-4 py-2 focus:outline-none w-full disabled:cursor-not-allowed disabled:opacity-70"
           placeholder="Digite sua mensagem..."
           disabled={loadingMessages}
         />
         <button
           onClick={handleSendMessage}
-          className="ml-2 px-4 py-1 bg-amber-400 text-white font-semibold rounded-md focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-70 transition-all ease-in-out duration-300"
+          className="ml-2 px-4 py-2 bg-amber-400 text-white font-semibold rounded-md focus:outline-none cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-70 transition-all ease-in-out duration-300"
           disabled={loadingMessages}
         >
           Enviar

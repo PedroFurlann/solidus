@@ -25,7 +25,7 @@ interface FormData {
 }
 
 export default function Register() {
-  const { isMobile } = useWindowSize();
+  const { isMobile, width } = useWindowSize();
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false)
@@ -123,7 +123,7 @@ export default function Register() {
     <>
       {isLoadingUserStorageData ? (
         <div className="min-h-screen flex flex-col bg-black overflow-y-auto">
-          <MainLoading size="md" />
+          <MainLoading size="sm" />
         </div>
       ) : (
         <>
@@ -134,12 +134,12 @@ export default function Register() {
                 animationData={goldBarAnimation}
                 loop={true}
                 style={{
-                  width: isMobile ? 180 : 300,
-                  height: isMobile ? 180 : 300,
+                  width: width < 768 ? 180 : width < 1300 ? 250 : 300,
+                  height: width < 768 ? 180 : width < 1300 ? 250 : 300,
                 }}
               />
               <div className="flex flex-col gap-6 items-center justify-center md:w-80">
-                <p className="text-3xl text-white font-bold">
+                <p className="text-2xl text-white font-bold">
                   Cadastre sua conta
                 </p>
                 <input
@@ -208,7 +208,7 @@ export default function Register() {
                 <button
                   type="submit"
                   onClick={handleSubmit(handleSignUp)}
-                  className="bg-amber-400 w-full transition-all disabled:bg-gray-400 disabled:cursor-not-allowed ease-in-out duration-300 hover:opacity-70 rounded-md py-4 text-gray-100 text-md font-extrabold"
+                  className="bg-amber-400 w-full transition-all disabled:bg-gray-400 disabled:cursor-not-allowed ease-in-out duration-300 hover:opacity-70 rounded-md py-3 text-white text-md font-extrabold"
                   disabled={isSubmitting || isLoadingUserStorageData || loading}
                 >
                   Cadastrar-se
