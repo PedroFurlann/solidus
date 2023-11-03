@@ -97,7 +97,7 @@ export function TransactionCard({
     <div
       className={`w-[calc(100% - 20px)] mr-4 bg-gray-800 px-4 py-4 xl:flex-row flex-col md:gap-0 gap-2 flex items-center sm:justify-between justify-center rounded-lg`}
     >
-      <div className="flex sm:gap-2 gap-2">
+      <div className="flex sm:gap-3 gap-2">
         <p className="text-md font-extrabold text-white text-center">
           {title.charAt(0).toUpperCase() + title.slice(1)}
           {type === "LOSS"
