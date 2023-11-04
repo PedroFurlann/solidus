@@ -49,11 +49,8 @@
 
   <img src="https://raw.githubusercontent.com/PedroFurlann/solidus/master/public/Captura%20de%20tela%20de%202023-11-04%2016-23-26.png" />
 
-  <img src="https://raw.githubusercontent.com/PedroFurlann/ignite-call/main/src/images/twoRegister.png" />
+  <img src="https://raw.githubusercontent.com/PedroFurlann/solidus/master/public/Captura%20de%20tela%20de%202023-11-04%2016-22-28.png" />
 
-  <img src="https://raw.githubusercontent.com/PedroFurlann/ignite-call/main/src/images/threeRegister.png" />
+  <img src="https://github.com/PedroFurlann/solidus/blob/master/public/Captura%20de%20tela%20de%202023-11-04%2017-07-55.png" />
 
-  <img src="https://raw.githubusercontent.com/PedroFurlann/ignite-call/main/src/images/fourRegister.png" />
-
-  <img src="https://raw.githubusercontent.com/PedroFurlann/ignite-call/main/src/images/calendar.png" />
 </div>
