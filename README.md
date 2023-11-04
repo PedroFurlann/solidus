@@ -12,6 +12,8 @@
 - ####  Redux Toolkit
 - ####  Tailwind
 
+### Website :arrow_down:
+
 ### [Solidus](https://solidusapp.com.br)
 
 <hr>
@@ -27,6 +29,8 @@
 - ####  Redux Toolkit
 - ####  Tailwind
 
+### Website :arrow_down:
+
 ### [Solidus](https://solidusapp.com.br)
 
 <hr>
@@ -41,9 +45,9 @@
 ### Imagens do site / Website images :camera:
 
 <div>
-  <img src="https://raw.githubusercontent.com/PedroFurlann/ignite-call/main/src/images/home.png" />
+  <img src="https://raw.githubusercontent.com/PedroFurlann/solidus/master/public/Captura%20de%20tela%20de%202023-11-04%2016-22-03.png" />
 
-  <img src="https://raw.githubusercontent.com/PedroFurlann/ignite-call/main/src/images/firstRegister.png" />
+  <img src="https://raw.githubusercontent.com/PedroFurlann/solidus/master/public/Captura%20de%20tela%20de%202023-11-04%2016-23-26.png" />
 
   <img src="https://raw.githubusercontent.com/PedroFurlann/ignite-call/main/src/images/twoRegister.png" />
 
