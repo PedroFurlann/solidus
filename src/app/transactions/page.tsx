@@ -144,7 +144,7 @@ export default function Transactions() {
       x: {
         ticks: {
           font: {
-            size: width > 768 ? 18 : 15,
+            size: width > 768 ? 16 : 12,
             weight: "bold",
             family: "Roboto",
           },
