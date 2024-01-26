@@ -54,7 +54,7 @@ export default function Transactions() {
   const [loading, setLoading] = useState(false);
   const [transactions, setTransactions] = useState<TransactionDTO[]>([]);
 
-  const { width } = useWindowSize();
+  const { width, height } = useWindowSize();
 
   const { isLoadingUserStorageData, user } = useAuth();
 
