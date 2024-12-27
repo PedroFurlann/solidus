@@ -19,7 +19,7 @@
 <hr>
 <br>
 
-### The application has features such as: recording transactions, visualizing your spending and earnings over time and generating a summary of your financial statement. You'll also have the Coin bot, a virtual assistant that will help you with your savings and provide excellent investment tips. The front-end web version has been fully developed in the NextJs environment, using React + Redux + Typescript + Tailwind. It also has a Chatbot created from integration with the OpenAI API. :bookmark_tabs:
+### The application has features such as: recording transactions, visualizing your spending and earnings over time and generating a summary of your financial statement. You'll also have the Coin bot, a virtual assistant that will help you with your savings and provide excellent investment tips. The front-end web version has been fully developed in the NextJs environment, using React + Redux + Typescript + Tailwind. It also has a Chatbot created from integration with the OpenAI API. :bookmark_tabs: 
 
 ### Main technologies used :computer:
 
