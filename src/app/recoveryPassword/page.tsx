@@ -15,7 +15,7 @@ import { MainLoading } from "@/components/MainLoading";
 
 interface FormData {
   new_password: string;
-  confirm_new_password: string;
+  confirm_new_password?: string;
 }
 
 export default function ForgotPassword() {
