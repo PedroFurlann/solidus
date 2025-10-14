@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import ReduxProvider from "@/components/ReduxProvider";
 import "./globals.css";
 import type { Metadata } from "next";
