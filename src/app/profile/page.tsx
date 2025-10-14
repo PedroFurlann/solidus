@@ -43,25 +43,6 @@ export default function Profile() {
     setShowPassword(!showPassword);
   };
 
-  const validationSchema = yup.object().shape({
-    name: yup
-      .string()
-      .trim()
-      .min(6, "O nome deve conter no mímimo 6 caracteres."),
-    email: yup
-      .string()
-      .trim()
-      .required("O e-mail é obrigatório.")
-      .email("Digite um e-mail válido."),
-    new_password: yup
-      .string()
-      .trim(),
-    confirm_new_password: yup
-      .string()
-      .trim()
-      .oneOf([yup.ref("new_password")], "As senhas devem coincidir."),
-  });
-
   const {
     register,
     handleSubmit,
