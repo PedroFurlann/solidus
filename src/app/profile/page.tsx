@@ -1,3 +1,4 @@
+// @ts-ignore
 "use client";
 import { Avatar } from "@/components/Avatar";
 import { MainHeader } from "@/components/MainHeader";

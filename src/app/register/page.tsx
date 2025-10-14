@@ -1,3 +1,4 @@
+// @ts-ignore
 "use client";
 import { LoginHeader } from "@/components/LoginHeader";
 import Lottie from "lottie-react";
