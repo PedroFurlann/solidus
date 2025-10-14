@@ -14,12 +14,15 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 
-interface FormData {
-  name?: string;
-  email: string;
-  new_password?: string;
-  confirm_new_password?: string;
-}
+
+const validationSchema = yup.object().shape({
+  name: yup.string().trim().min(6, "O nome deve conter no mímimo 6 caracteres."),
+  email: yup.string().trim().required("O e-mail é obrigatório.").email("Digite um e-mail válido."),
+  new_password: yup.string().trim(),
+  confirm_new_password: yup.string().trim().oneOf([yup.ref("new_password")], "As senhas devem coincidir."),
+});
+
+type FormData = yup.InferType<typeof validationSchema>;
 
 export default function Profile() {
   const [showPassword, setShowPassword] = useState(false);
