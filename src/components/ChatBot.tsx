@@ -44,8 +44,16 @@ export function ChatBot() {
 
     setLoadingMessages(true);
 
-    // Agora enviamos apenas o conteúdo da mensagem para o backend
-    await dispatch(sendMessageToChatbot({ content: inputMessage }) as any).then(() => {
+    const messagesToSend: { role: string; content: string }[] = chatHistory.map(
+      (message) => ({
+        role: message.isUserMessage ? "user" : "assistant",
+        content: message.content,
+      })
+    );
+
+    messagesToSend.push({ role: "user", content: inputMessage });
+
+    await dispatch(sendMessageToChatbot({ messages: messagesToSend }) as any).then(() => {
       setLoadingMessages(false);
     });
   };

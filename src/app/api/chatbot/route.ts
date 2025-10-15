@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { content } = await request.json();
+    const { messages } = await request.json();
 
-    if (!content) {
+    if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
-        { error: 'Conteúdo da mensagem é obrigatório' },
+        { error: 'Histórico de mensagens é obrigatório' },
         { status: 400 }
       );
     }
@@ -28,10 +28,7 @@ export async function POST(request: NextRequest) {
             role: 'system',
             content: 'Dê respostas mais curtas, sendo o mais sucinto possível',
           },
-          {
-            role: 'user',
-            content: content,
-          },
+          ...messages,
         ],
         max_tokens: 150,
         temperature: 0.7,

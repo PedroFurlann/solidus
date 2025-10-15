@@ -15,9 +15,9 @@ export interface RootState {
   chat: ChatState;
 }
 
-export const sendMessageToChatbot = createAsyncThunk<string, { content: string }>(
+export const sendMessageToChatbot = createAsyncThunk<string, { messages: { role: string; content: string }[] }>(
   "chat/sendMessageToChatbot",
-  async (message) => {
+  async ({ messages }) => {
     try {
       const response = await fetch('/api/chatbot', {
         method: 'POST',
@@ -25,7 +25,7 @@ export const sendMessageToChatbot = createAsyncThunk<string, { content: string }
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          content: message.content
+          messages: messages
         }),
       });
 
