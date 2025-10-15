@@ -1,6 +1,6 @@
-import { useState, ChangeEvent, KeyboardEvent, useEffect } from "react";
+import { useState, ChangeEvent, KeyboardEvent, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMessageToChatbot, addMessage, ChatMessage } from "../store/store";
+import { sendMessageToChatbot, addMessage, ChatMessage, clearChatHistory } from "../store/store";
 import { RootState } from "../store/store";
 import { toast } from "react-toastify";
 import { api } from "@/services/api";
@@ -11,6 +11,29 @@ export function ChatBot() {
   const [inputMessage, setInputMessage] = useState("");
   const [loadingMessages, setLoadingMessages] = useState(false);
 
+  const loadChatHistory = useCallback(async () => {
+    try {
+      const response = await api.get("/messages");
+      
+      dispatch(clearChatHistory());
+      
+      if (!response.data || response.data.length === 0) {
+        dispatch(addMessage({ content: "Olá! Como posso ajudar?", isUserMessage: false }));
+      } else {
+        response.data.forEach((message: ChatMessage) => {
+          dispatch(addMessage(message));
+        });
+      }
+    } catch (error) {
+      console.log("Erro ao carregar histórico:", error);
+      dispatch(clearChatHistory());
+      dispatch(addMessage({ content: "Olá! Como posso ajudar?", isUserMessage: false }));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    loadChatHistory();
+  }, [loadChatHistory]);
 
   const handleInputMessageChange = async (event: ChangeEvent<HTMLInputElement>) => {
     setInputMessage(event.target.value);
