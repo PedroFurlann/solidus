@@ -22,11 +22,11 @@ export async function POST(request: NextRequest) {
         messages: [
           {
             role: 'system',
-            content: 'You are a helpful investment and financial assistant, be as friendly as possible.',
+            content: 'Você é um assistente útil de investimentos e finanças, seja o mais amigável possível.',
           },
           {
             role: 'system',
-            content: 'Give shorter answers, being as succinct as possible',
+            content: 'Dê respostas mais curtas, sendo o mais sucinto possível',
           },
           {
             role: 'user',
