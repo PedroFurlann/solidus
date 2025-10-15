@@ -11,29 +11,6 @@ export function ChatBot() {
   const [inputMessage, setInputMessage] = useState("");
   const [loadingMessages, setLoadingMessages] = useState(false);
 
-  const loadChatHistory = useCallback(async () => {
-    try {
-      const response = await api.get("/messages");
-      
-      dispatch(clearChatHistory());
-      
-      if (!response.data || response.data.length === 0) {
-        dispatch(addMessage({ content: "Olá! Como posso ajudar?", isUserMessage: false }));
-      } else {
-        response.data.forEach((message: ChatMessage) => {
-          dispatch(addMessage(message));
-        });
-      }
-    } catch (error) {
-      console.log("Erro ao carregar histórico:", error);
-      dispatch(clearChatHistory());
-      dispatch(addMessage({ content: "Olá! Como posso ajudar?", isUserMessage: false }));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    loadChatHistory();
-  }, [loadChatHistory]);
 
   const handleInputMessageChange = async (event: ChangeEvent<HTMLInputElement>) => {
     setInputMessage(event.target.value);
