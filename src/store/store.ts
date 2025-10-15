@@ -1,6 +1,5 @@
 import { api } from "@/services/api";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export interface ChatMessage {
   content: string;
@@ -16,41 +15,26 @@ export interface RootState {
   chat: ChatState;
 }
 
-const CHATBOT_API_URL = "https://api.openai.com/v1/chat/completions";
-
-export const sendMessageToChatbot = createAsyncThunk<string, { role: string; content: string }[]>(
+export const sendMessageToChatbot = createAsyncThunk<string, { content: string }>(
   "chat/sendMessageToChatbot",
   async (message) => {
     try {
-      const response = await axios.post(
-        CHATBOT_API_URL,
-        {
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a helpful investment and financial assistant, be as friendly as possible.",
-            },
-            {
-              role: "system",
-              content: "Give shorter answers, being as succinct as possible",
-            },
-            ...message,
-          ],
+      const response = await fetch('/api/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GPT_KEY}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+        body: JSON.stringify({
+          content: message.content
+        }),
+      });
 
-      await api.post("/messages", {
-        content: response.data.choices[0].message.content, isUserMessage: false
-      })
+      if (!response.ok) {
+        throw new Error('Erro na requisição');
+      }
 
-      return response.data.choices[0].message.content;
+      const data = await response.json();
+      return data.message;
     } catch (error) {
       console.log(error);
       throw new Error(
