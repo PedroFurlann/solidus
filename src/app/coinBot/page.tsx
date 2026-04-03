@@ -227,7 +227,7 @@ export default function CoinBot() {
                 style={{ height: width > 1280 ? 250 : 200, width: width > 1280 ? 250 : 200 }}
               />
             </div>
-            <div className="flex flex-col items-center justify-center gap-6">
+            <div className="flex w-full flex-col items-center justify-center gap-6 px-4 sm:px-6 md:px-8">
               <ChatBot />
               <DialogDeleteMessagesHistoric />
               <button

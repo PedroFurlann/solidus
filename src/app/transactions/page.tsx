@@ -123,17 +123,30 @@ export default function Transactions() {
     "Outros",
   ];
 
+  const isNarrow = width === 0 || width < 640;
+
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: isNarrow ? 2 : 8,
+        right: isNarrow ? 4 : 12,
+        top: isNarrow ? 4 : 8,
+        bottom: isNarrow ? 4 : 8,
+      },
+    },
     plugins: {
       legend: {
+        position: isNarrow ? ("bottom" as const) : ("top" as const),
         labels: {
           font: {
-            size: width > 768 ? 18 : 15,
+            size: width > 768 ? 18 : isNarrow ? 12 : 14,
             family: "Roboto",
             weight: "bold",
           },
           color: "#e4e4e7",
+          boxWidth: isNarrow ? 12 : 40,
         },
       },
       tooltip: {
@@ -144,17 +157,23 @@ export default function Transactions() {
       x: {
         ticks: {
           font: {
-            size: width > 768 ? 16 : 12,
+            size: width > 768 ? 16 : isNarrow ? 10 : 12,
             weight: "bold",
             family: "Roboto",
           },
           color: "#e4e4e7",
+          maxRotation: isNarrow ? 50 : 0,
+          minRotation: isNarrow ? 40 : 0,
+          autoSkip: true,
+        },
+        grid: {
+          color: "rgba(228, 228, 231, 0.08)",
         },
       },
       y: {
         ticks: {
           font: {
-            size: width > 768 ? 18 : 15,
+            size: width > 768 ? 18 : isNarrow ? 11 : 14,
             weight: "bold",
             family: "Roboto",
           },
@@ -162,6 +181,9 @@ export default function Transactions() {
           callback: function (value: any) {
             return "R$ " + value;
           },
+        },
+        grid: {
+          color: "rgba(228, 228, 231, 0.08)",
         },
       },
     },
@@ -560,14 +582,16 @@ export default function Transactions() {
                 }
               />
             </div>
-            <div
-              className={`${
-                width > 600 ? "flex" : "hidden"
-              } items-center justify-center mb-0`}
-            >
+            <div className="mb-8 flex w-full flex-col items-center justify-center px-2 sm:mb-10 sm:px-4 md:px-6">
               <div
-                style={{ width: width > 768 ? 700 : 550, height: 500 }}
-                className="flex items-center justify-center self-center place-self-center"
+                className="
+                  relative w-full max-w-[min(100%,36rem)]
+                  min-h-[220px] h-[min(58vw,19rem)] max-h-[21rem]
+                  sm:max-h-none sm:h-72 sm:max-w-2xl
+                  md:h-80 md:max-w-3xl
+                  lg:h-96 lg:max-w-4xl
+                  xl:max-w-5xl xl:h-[26rem]
+                "
               >
                 <Bar data={chartData} options={chartOptions} />
               </div>
