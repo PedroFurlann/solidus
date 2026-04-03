@@ -70,7 +70,27 @@ export function ChatBot() {
     messagesToSend.push({ role: "user", content: inputMessage });
 
     try {
-      await dispatch(sendMessageToChatbot({ messages: messagesToSend }) as any);
+      const botReply = await dispatch(
+        sendMessageToChatbot({ messages: messagesToSend }) as any
+      ).unwrap();
+
+      try {
+        await api.post("/messages", {
+          content: botReply,
+          isUserMessage: false,
+        });
+      } catch {
+        toast.warning(
+          "Resposta recebida, mas não foi possível salvar no histórico.",
+          {
+            position: "top-right",
+            autoClose: 4000,
+            theme: "dark",
+          }
+        );
+      }
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoadingMessages(false);
     }
