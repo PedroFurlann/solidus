@@ -124,53 +124,59 @@ export default function Login() {
               <div className="flex flex-col gap-6 items-center justify-center md:w-80">
                 <p className="text-2xl text-white font-bold">Login</p>
 
-                <input
-                  className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
-                  type="email"
-                  placeholder="Email"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                    {errors.email.message}
-                  </p>
-                )}
-                <div className="relative w-full">
-                  <input
-                    className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Senha"
-                    {...register("password")}
-                  />
-
-                  {showPassword ? (
-                    <Eye
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
-                      size={20}
-                      onClick={handleTogglePassword}
-                    />
-                  ) : (
-                    <EyeSlash
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
-                      size={20}
-                      onClick={handleTogglePassword}
-                    />
-                  )}
-                </div>
-                {errors.password && (
-                  <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
-                    {errors.password.message}
-                  </p>
-                )}
-
-                <button
-                  type="submit"
-                  onClick={handleSubmit(handleSignIn)}
-                  className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 rounded-md py-3 text-white text-md font-extrabold"
-                  disabled={isSubmitting || isLoadingUserStorageData || loading}
+                <form
+                  className="flex w-full flex-col gap-6"
+                  onSubmit={handleSubmit(handleSignIn)}
                 >
-                  Entrar
-                </button>
+                  <input
+                    className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 text-black focus:ring-amber-400 w-full"
+                    type="email"
+                    placeholder="Email"
+                    autoComplete="email"
+                    {...register("email")}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                      {errors.email.message}
+                    </p>
+                  )}
+                  <div className="relative w-full">
+                    <input
+                      className="border bg-white border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400 text-black w-full"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Senha"
+                      autoComplete="current-password"
+                      {...register("password")}
+                    />
+
+                    {showPassword ? (
+                      <Eye
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
+                        size={20}
+                        onClick={handleTogglePassword}
+                      />
+                    ) : (
+                      <EyeSlash
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-black"
+                        size={20}
+                        onClick={handleTogglePassword}
+                      />
+                    )}
+                  </div>
+                  {errors.password && (
+                    <p className="text-red-500 text-sm font-bold self-start mt-[-12px] mb-[-12px]">
+                      {errors.password.message}
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="bg-amber-400 w-full transition-all ease-in-out duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:bg-gray-400 rounded-md py-3 text-white text-md font-extrabold"
+                    disabled={isSubmitting || isLoadingUserStorageData || loading}
+                  >
+                    Entrar
+                  </button>
+                </form>
                <div className="flex flex-col items-start justify-center gap-4 mt-2">
                <p className="font-bold text-lg text-white">
                   Ainda não possui uma conta?{" "}
