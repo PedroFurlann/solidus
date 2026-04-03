@@ -7,8 +7,6 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function Avatar({ size = "medium", ...rest }: Props) {
-  const [imgUrl, setImgUrl] = useState("http://www.github.com/PedroFurlann.png")
-
   return (
     <div 
     {...rest}

@@ -130,15 +130,16 @@ export default function Transactions() {
     maintainAspectRatio: false,
     layout: {
       padding: {
-        left: isNarrow ? 2 : 8,
-        right: isNarrow ? 4 : 12,
-        top: isNarrow ? 4 : 8,
-        bottom: isNarrow ? 4 : 8,
+        left: isNarrow ? 8 : 16,
+        right: isNarrow ? 12 : 20,
+        top: isNarrow ? 12 : 28,
+        bottom: isNarrow ? 32 : 22,
       },
     },
     plugins: {
       legend: {
         position: isNarrow ? ("bottom" as const) : ("top" as const),
+        align: "center" as const,
         labels: {
           font: {
             size: width > 768 ? 18 : isNarrow ? 12 : 14,
@@ -146,7 +147,9 @@ export default function Transactions() {
             weight: "bold",
           },
           color: "#e4e4e7",
-          boxWidth: isNarrow ? 12 : 40,
+          boxWidth: isNarrow ? 18 : 44,
+          boxPadding: 8,
+          padding: 18,
         },
       },
       tooltip: {
@@ -588,9 +591,9 @@ export default function Transactions() {
                   relative w-full max-w-[min(100%,36rem)]
                   min-h-[220px] h-[min(58vw,19rem)] max-h-[21rem]
                   sm:max-h-none sm:h-72 sm:max-w-2xl
-                  md:h-80 md:max-w-3xl
-                  lg:h-96 lg:max-w-4xl
-                  xl:max-w-5xl xl:h-[26rem]
+                  md:h-72 md:max-w-2xl
+                  lg:h-80 lg:max-w-3xl
+                  xl:max-w-3xl xl:h-[22rem]
                 "
               >
                 <Bar data={chartData} options={chartOptions} />
