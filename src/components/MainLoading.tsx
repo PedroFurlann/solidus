@@ -47,3 +47,4 @@ export function MainLoading({ size = "md" }: Props) {
     </div>
   );
 }
+ 

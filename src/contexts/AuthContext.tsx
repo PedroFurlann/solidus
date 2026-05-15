@@ -114,3 +114,4 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     </AuthContext.Provider>
   );
 }
+ 

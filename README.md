@@ -54,3 +54,4 @@
   <img src="https://github.com/PedroFurlann/solidus/blob/master/public/Captura%20de%20tela%20de%202023-11-04%2017-07-55.png" />
 
 </div>
+ 

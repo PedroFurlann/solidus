@@ -7,4 +7,4 @@ export interface TransactionDTO {
   category?: string;
   amount: number;
   createdAt: Dayjs;
-}
+} 

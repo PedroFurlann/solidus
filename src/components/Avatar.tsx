@@ -20,4 +20,4 @@ export function Avatar({ size = "medium", ...rest }: Props) {
       />
     </div>
   )
-}
+} 

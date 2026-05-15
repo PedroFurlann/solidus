@@ -77,3 +77,4 @@ export function MainHeader({ chosenPage, ...rest }: Props) {
     </div>
   );
 }
+ 
